@@ -13,10 +13,13 @@
 
 class Mick {
     public:
-        Mick(const uint8_t, const uint16_t);
+        Mick(const uint8_t, const uint16_t) noexcept;
 
-        void init();
-        RemCom update();
+        void init() noexcept;
+        RemCom update() noexcept;
+        bool isIdle() const noexcept {
+            return IrReceiver.isIdle();
+        }
 
     private:
         const uint8_t pin;

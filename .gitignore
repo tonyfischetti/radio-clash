@@ -1,6 +1,9 @@
 **/secrets.h
 **/websecrets.h
 **/net_secrets.h
+**/TMP
+**/garbage
+**/garb
 
 **/build-leonardo/
 **/build-uno/

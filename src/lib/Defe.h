@@ -7,9 +7,8 @@
 
 #include <DFPlay.h>
 
-#define MAX_MP3_VOLUME 30
 
-
+static const uint8_t MAX_MP3_VOLUME {30};
 
 // there is but one concern
 // I've just discovered
@@ -24,7 +23,7 @@ static const uint16_t EPS_SHUFFLE_CHANGE {1500};
 
 class Defe {
     public:
-        Defe(const uint8_t, const char**, const uint8_t*);
+        Defe(const uint8_t, const char**, const uint8_t*) noexcept;
 
         void init(Stream&)                  noexcept;
         void startPlaylist(uint8_t)         noexcept;

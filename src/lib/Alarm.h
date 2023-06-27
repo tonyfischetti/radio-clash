@@ -11,20 +11,17 @@
 
 class Alarm {
     public:
-        // TODO TODO: it _will_ take more than just the MP3 player
-        //              just not now
-        Alarm();
+        Alarm()                        noexcept;
 
-        void arm();
-        void disarm();
-        uint8_t getHour();
-        uint8_t getDisplayHour();
-        uint8_t getMinute();
-        void setHour(uint8_t);
-        void setMinute(uint8_t);
-
-        uint8_t isPm();
-        uint8_t isArmed();
+        void arm()                     noexcept;
+        void disarm()                  noexcept;
+        void setHour(uint8_t)          noexcept;
+        void setMinute(uint8_t)        noexcept;
+        uint8_t getHour()        const noexcept;
+        uint8_t getDisplayHour() const noexcept;
+        uint8_t getMinute()      const noexcept;
+        uint8_t isPm()           const noexcept;
+        uint8_t isArmed()        const noexcept;
 
     private:
         uint8_t is_armed_p;

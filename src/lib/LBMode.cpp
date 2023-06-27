@@ -4,12 +4,12 @@
 
 LBMode::LBMode() { }
 
-const char* LBMode::getModeName() {
+const char* LBMode::getModeName() const {
     deebug("lbmode", "getModeName()");
     return mode_name;
 }
 
-const bool LBMode::isAudioNeeder() {
+const bool LBMode::isAudioNeeder() const {
     return false;
 }
 

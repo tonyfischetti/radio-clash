@@ -10,15 +10,13 @@
 
 class Phos {
     public:
-        Phos(const uint8_t, const uint8_t);
-        // Phos(const uint8_t, const uint8_t, IRrecv*);
+        Phos(const uint8_t, const uint8_t)  noexcept;
 
         void init()                         noexcept;
 
     private:
         const uint8_t NUM_NEOPIXELS;
         Adafruit_NeoPixel pixels;
-        // IRrecv* IrReceiver;
 
         bool is_engaged_p;
         uint8_t brightness;

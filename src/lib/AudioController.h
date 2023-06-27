@@ -8,13 +8,13 @@
 
 class AudioController {
     public:
-        AudioController(const uint8_t, const uint8_t);
+        AudioController(const uint8_t, const uint8_t) noexcept;
 
-        void init();
+        void init()                 noexcept;
 
-        void turnOnMP3Audio();
-        void turnOnWebRadioAudio();
-        void turnOnFMAudio();
+        void turnOnMP3Audio()       noexcept;
+        void turnOnWebRadioAudio()  noexcept;
+        void turnOnFMAudio()        noexcept;
 
     private:
         const uint8_t MUX_CONTROL_A;

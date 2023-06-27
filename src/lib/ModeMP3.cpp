@@ -9,16 +9,17 @@ ModeMP3::ModeMP3(Defe& _defe, Sixteen& _sixteen, AudioController& _jefa)
       playlist_select_time  {0} {
 }
 
-const char* ModeMP3::getModeName() {
+const char* ModeMP3::getModeName() const {
     return mode_name;
 }
 
-const bool ModeMP3::isAudioNeeder() {
+const bool ModeMP3::isAudioNeeder() const {
     return true;
 }
 
 // ???
 void ModeMP3::resume() {
+    deebug("mp3 mode", "resuming");
     defe.resume();
 }
 

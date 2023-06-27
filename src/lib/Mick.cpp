@@ -1,17 +1,16 @@
 
 #include "Mick.h"
 
-// TODO TODO TODO: re-order switch from most common to least
 
-Mick::Mick(const uint8_t _pin, const uint16_t _epsilon_ir)
+Mick::Mick(const uint8_t _pin, const uint16_t _epsilon_ir) noexcept
     : pin{_pin}, EPSILON{_epsilon_ir} {
 }
 
-void Mick::init() {
+void Mick::init() noexcept {
     IrReceiver.begin(pin);
 }
 
-RemCom Mick::update() {
+RemCom Mick::update() noexcept {
     static uint64_t previous_ir_signal;
     const uint64_t current_millis = millis();
 

@@ -1,19 +1,15 @@
 
-#include <stdint.h>
-#include <Arduino.h>
-
 #include "ModeTime.h"
 
 
-
 ModeTime::ModeTime(TickTockClock& _rtc, Sixteen& _sixteen)
-    : rtc(_rtc), sixteen(_sixteen) {
-
-    set_time_time = 0;
-    blink_on_p = true;
+    : rtc           {_rtc},
+      sixteen       {_sixteen},
+      set_time_time {0},
+      blink_on_p    {true} {
 }
 
-const char* ModeTime::getModeName() {
+const char* ModeTime::getModeName() const {
     return mode_name;
 }
 
@@ -26,8 +22,9 @@ uint8_t ModeTime::tick() {
 }
 
 uint8_t ModeTime::reCw() {
+    deebug("time mode", "rcCw");
     if (set_time_time) {
-        Serial.println("while is setting mode");
+        deebug("time mode", "  while in setting mode");
         set_time_time = millis();
         switch (selection_bookmark) {
             case 0:
@@ -60,8 +57,9 @@ uint8_t ModeTime::reCw() {
 }
 
 uint8_t ModeTime::reCcw() {
+    deebug("time mode", "rcCcw");
     if (set_time_time) {
-        Serial.println("while is setting mode");
+        deebug("time mode", "  while in setting mode");
         set_time_time = millis();
         switch (selection_bookmark) {
             case 0:
@@ -95,9 +93,9 @@ uint8_t ModeTime::reCcw() {
 
 // TODO TODO: can this be made more efficient?
 uint8_t ModeTime::rePress() {
-    Serial.println("pressed!");
+    deebug("time mode", "pressed");
     if (!set_time_time) {
-        Serial.println("entering time set mode");
+        deebug("mp3 mode", "  entering time set mode");
         set_time_time      = millis();
         selected_year      = rtc.getYear();
         selected_month     = rtc.getMonth();
@@ -107,36 +105,35 @@ uint8_t ModeTime::rePress() {
         selected_minute    = rtc.getMinute();
         selected_pm_p      = rtc.isPm();
         selection_bookmark = 0;
-        Serial.println("here!");
     }
     // is it cool that this is unbounded?
     else if (selection_bookmark == 0) {
-        Serial.println("setting year");
+        deebug("time mode", "  setting year");
         set_time_time = millis();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 1) {
-        Serial.println("setting month");
+        deebug("time mode", "  setting month");
         set_time_time = millis();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 2) {
-        Serial.println("setting day");
+        deebug("time mode", "  setting day");
         set_time_time = millis();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 3) {
-        Serial.println("setting hour");
+        deebug("time mode", "  setting hour");
         set_time_time = millis();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 4) {
-        Serial.println("setting minute");
+        deebug("time mode", "  setting minute");
         set_time_time = millis();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 5) {
-        Serial.println("setting am or pm");
+        deebug("time mode", "  setting am or pm");
         set_time_time = millis();
         if (selected_pm_p)
             selected_hour += 12;
@@ -148,8 +145,7 @@ uint8_t ModeTime::rePress() {
         rtc.setTime(DateTime(selected_year, selected_month, selected_day,
                      selected_hour, selected_minute, 0));
 
-        Serial.println("Done!");
-        Serial.println("about to leave set time mode");
+        deebug("time mode", "  about to leave set time mode");
         set_time_time = 0;
     }
     return 0;

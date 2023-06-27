@@ -11,12 +11,12 @@
 
 class Amber {
     public:
-        Amber(const uint8_t address, TickTockClock&);
+        Amber(const uint8_t address, TickTockClock&) noexcept;
 
-        void init();
-        void update();
-        void setBrightness(const uint8_t);
-        void nextBrightness();
+        void init()                         noexcept;
+        void update()                       noexcept;
+        void setBrightness(const uint8_t)   noexcept;
+        void nextBrightness()               noexcept;
 
     private:
         Adafruit_7segment seg7;

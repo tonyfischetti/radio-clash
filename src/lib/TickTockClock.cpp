@@ -1,20 +1,15 @@
 
-#include <stdint.h>
-#include <Arduino.h>
-
 #include "TickTockClock.h"
 
-
-
-TickTockClock::TickTockClock() {
+TickTockClock::TickTockClock()
+    : year          {2023},
+      month         {4},
+      day           {25},
+      hour          {2},
+      display_hour  {2},
+      minute        {46},
+      is_pm_p       {false} {
     RTC_DS3231 rtc;
-    year         = 2023;
-    month        = 4;
-    day          = 25;
-    hour         = 2;
-    display_hour = 2;
-    minute       = 46;
-    is_pm_p      = false;
 }
 
 
@@ -66,27 +61,27 @@ char* TickTockClock::getTemp() {
     return the_temp;
 }
 
-uint16_t TickTockClock::getYear() {
+uint16_t TickTockClock::getYear() const {
     return year;
 }
 
-uint8_t TickTockClock::getMonth() {
+uint8_t TickTockClock::getMonth() const {
     return month;
 }
 
-uint8_t TickTockClock::getDay() {
+uint8_t TickTockClock::getDay() const {
     return day;
 }
 
-uint8_t TickTockClock::getHour() {
+uint8_t TickTockClock::getHour() const {
     return hour;
 }
 
-uint8_t TickTockClock::getDisplayHour() {
+uint8_t TickTockClock::getDisplayHour() const {
     return display_hour;
 }
 
-uint8_t TickTockClock::getMinute() {
+uint8_t TickTockClock::getMinute() const {
     return minute;
 }
 
@@ -101,6 +96,6 @@ void TickTockClock::setDisplayHour(uint8_t _hour) {
         display_hour = 12;
 }
 
-uint8_t TickTockClock::isPm() {
+uint8_t TickTockClock::isPm() const {
     return is_pm_p;
 }

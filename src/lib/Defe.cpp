@@ -4,7 +4,7 @@
 
 Defe::Defe(const uint8_t  _num_playlists,
            const char**   _playlist_names,
-           const uint8_t* _playlist_lengths)
+           const uint8_t* _playlist_lengths) noexcept
     : NUM_PLAYLISTS     {_num_playlists},
       PLAYLIST_NAMES    {_playlist_names},
       PLAYLIST_LENGTHS  {_playlist_lengths} {

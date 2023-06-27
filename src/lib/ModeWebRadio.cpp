@@ -23,11 +23,11 @@ ModeWebRadio::ModeWebRadio(VS1053& _vica, Kerl& _kerl, Sixteen& _sixteen,
       current_station_index {0} {
 }
 
-const char* ModeWebRadio::getModeName() {
+const char* ModeWebRadio::getModeName() const {
     return mode_name;
 }
 
-const bool ModeWebRadio::isAudioNeeder() {
+const bool ModeWebRadio::isAudioNeeder() const {
     return true;
 }
 
@@ -99,8 +99,9 @@ uint8_t ModeWebRadio::tick() {
 }
 
 uint8_t ModeWebRadio::reCw() {
+    deebug("web radio mode", "reCw()");
     if (webstation_select_time) {
-        deebug("web radio mode", "(while in webstation select mode)");
+        deebug("web radio mode", "  (while in webstation select mode)");
         // reset time (for timeout)
         webstation_select_time = millis();
         if (webstation_select_index == (NUM_WEBSTATIONS-1))
@@ -111,8 +112,9 @@ uint8_t ModeWebRadio::reCw() {
 }
 
 uint8_t ModeWebRadio::reCcw() {
+    deebug("web radio mode", "reCcw()");
     if (webstation_select_time) {
-        deebug("web radio mode", "(while in webstation select mode)");
+        deebug("web radio mode", "  (while in webstation select mode)");
         // reset time (for timeout)
         webstation_select_time = millis();
         if (webstation_select_index == 0)
@@ -126,7 +128,7 @@ uint8_t ModeWebRadio::rePress() {
     deebug("web radio mode", "pressed!");
     // if not already in webstation select mode
     if (!webstation_select_time) {
-        deebug("web radio mode", "entering webstation select mode");
+        deebug("web radio mode", "  entering webstation select mode");
         webstation_select_time = millis();
         webstation_select_index = current_station_index;
     }
@@ -141,6 +143,7 @@ uint8_t ModeWebRadio::rePress() {
 }
 
 uint8_t ModeWebRadio::remRewind() {
+    deebug("web radio mode", "going back a station");
     if (current_station_index == 0)
         return 1;
     kerl.client.stop();
@@ -148,6 +151,7 @@ uint8_t ModeWebRadio::remRewind() {
 }
 
 uint8_t ModeWebRadio::remFastForward() {
+    deebug("web radio mode", "going forward a station");
     if (current_station_index == (NUM_WEBSTATIONS - 1))
         return 1;
     kerl.client.stop();
@@ -157,6 +161,7 @@ uint8_t ModeWebRadio::remFastForward() {
 uint8_t ModeWebRadio::remVolumeUp() {
     if (volume == MAX_WEBRADIO_VOLUME)
         return 1;
+    deebug("web radio mode", "turning volume up");
     ++volume;
     vica.setVolume(volume);
 }
@@ -165,10 +170,9 @@ uint8_t ModeWebRadio::remVolumeDown() {
     deebug("MWR", "volume down");
     if (volume == 0)
         return 1;
+    deebug("web radio mode", "turning volume down");
     --volume;
-    deebug("MWR", "calling");
     vica.setVolume(volume);
-    deebug("MWR", "done");
 }
 
 // TODO TODO TODO: have it display error message (if there's an error)

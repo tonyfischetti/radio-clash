@@ -7,17 +7,19 @@ ModeAlarm::ModeAlarm(TickTockClock& _rtc,
                      Alarm& _alarm,
                      Defe& _defe,
                      AudioController& _jefa)
-    : rtc(_rtc), sixteen(_sixteen), alarm(_alarm), defe(_defe),
-      jefa(_jefa) {
-
-    set_alarm_time = 0;
-    blink_on_p = true;
-    alarm_sounding_p = false;
-    time_alarm_sounded = 0;
-    reupped_alarm_p = true;
+    : rtc                {_rtc},
+      sixteen            {_sixteen},
+      alarm              {_alarm},
+      defe               {_defe},
+      jefa               {_jefa},
+      set_alarm_time     {0},
+      blink_on_p         {true},
+      alarm_sounding_p   {false},
+      time_alarm_sounded {0},
+      reupped_alarm_p    {true} {
 }
 
-const char* ModeAlarm::getModeName() {
+const char* ModeAlarm::getModeName() const {
     return mode_name;
 }
 

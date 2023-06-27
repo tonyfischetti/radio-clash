@@ -13,12 +13,12 @@
 #include "WebStation.h"
 
 
-#define KERL_CONNECTION_TIMEOUT 60000
+static const uint16_t KERL_CONNECTION_TIMEOUT {600000};
 
 
 class Kerl {
     public:
-        Kerl(const uint8_t, const WifiCredential*);
+        Kerl(const uint8_t, const WifiCredential*)              noexcept;
         void init()                                             noexcept;
         uint8_t connectWebKeepAlive()                           noexcept;
         uint8_t connectToAnyNetwork()                           noexcept;

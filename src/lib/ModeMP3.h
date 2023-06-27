@@ -14,34 +14,29 @@
 
 class ModeMP3 final : public LBMode {
     public:
-        ModeMP3(Defe&, Sixteen&, AudioController&);
+        ModeMP3(Defe&, Sixteen&, AudioController&) noexcept;
 
-        const char* getModeName()  override;
-        const bool isAudioNeeder() override;
+        const char* getModeName()  const noexcept override;
+        const bool isAudioNeeder() const noexcept override;
 
-        void resume();
-
-        uint8_t engage()         override;
-        uint8_t suspend()        override;
-
-        uint8_t tick()           override;
-
-        uint8_t reCw()           override;
-        uint8_t reCcw()          override;
-        uint8_t rePress()        override;
-
-        uint8_t remCircleLeft()  override;
-        uint8_t remCircleRight() override;
-        uint8_t remAsterisk()    override;
-        uint8_t remRewind()      override;
-        uint8_t remPlayPause()   override;
-        uint8_t remFastForward() override;
-        uint8_t remVolumeUp()    override;
-        uint8_t remVolumeDown()  override;
-        uint8_t remNetflix()     override;
-        uint8_t remHulu()        override;
-
-        uint8_t display() override;
+        void resume()            noexcept;
+        uint8_t engage()         noexcept override;
+        uint8_t suspend()        noexcept override;
+        uint8_t tick()           noexcept override;
+        uint8_t reCw()           noexcept override;
+        uint8_t reCcw()          noexcept override;
+        uint8_t rePress()        noexcept override;
+        uint8_t remCircleLeft()  noexcept override;
+        uint8_t remCircleRight() noexcept override;
+        uint8_t remAsterisk()    noexcept override;
+        uint8_t remRewind()      noexcept override;
+        uint8_t remPlayPause()   noexcept override;
+        uint8_t remFastForward() noexcept override;
+        uint8_t remVolumeUp()    noexcept override;
+        uint8_t remVolumeDown()  noexcept override;
+        uint8_t remNetflix()     noexcept override;
+        uint8_t remHulu()        noexcept override;
+        uint8_t display()        noexcept override;
 
         const char* mode_name {"MP3 Mode"};
 

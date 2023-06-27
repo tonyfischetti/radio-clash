@@ -8,11 +8,11 @@ ModeLight::ModeLight(Phos& _phos, Sixteen& _sixteen)
       // playlist_select_time  {0} {
 }
 
-const char* ModeLight::getModeName() {
+const char* ModeLight::getModeName() const {
     return mode_name;
 }
 
-const bool ModeLight::isAudioNeeder() {
+const bool ModeLight::isAudioNeeder() const {
     return false;
 }
 

@@ -13,40 +13,33 @@
 #include "WebStation.h"
 
 
+#define CURRENT_STATION web_stations[current_station_index]
 
 // TODO: try 32 and 128!
-#define MP3BUFFERSIZE 64
-
-#define MAX_WEBRADIO_VOLUME 100
-
-#define CURRENT_STATION web_stations[current_station_index]
+static const uint8_t MP3BUFFERSIZE        {64};
+static const uint8_t MAX_WEBRADIO_VOLUME {100};
 
 
 class ModeWebRadio final : public LBMode {
     public:
         ModeWebRadio(VS1053&, Kerl&, Sixteen&, const WebStation**,
-                     const uint8_t, AudioController&);
+                     const uint8_t, AudioController&) noexcept;
 
-        const char* getModeName();
-        const bool isAudioNeeder() override;
+        const char* getModeName()  const noexcept override;
+        const bool isAudioNeeder() const noexcept override;
 
-        uint8_t init();
-
-        uint8_t engage();
-        uint8_t suspend();
-
-        uint8_t tick();
-
-        uint8_t reCw();
-        uint8_t reCcw();
-        uint8_t rePress();
-
-        uint8_t remRewind();
-        uint8_t remFastForward();
-        uint8_t remVolumeUp();
-        uint8_t remVolumeDown();
-
-        uint8_t display();
+        uint8_t init()           noexcept;
+        uint8_t engage()         noexcept override;
+        uint8_t suspend()        noexcept override;
+        uint8_t tick()           noexcept override;
+        uint8_t reCw()           noexcept override;
+        uint8_t reCcw()          noexcept override;
+        uint8_t rePress()        noexcept override;
+        uint8_t remRewind()      noexcept override;
+        uint8_t remFastForward() noexcept override;
+        uint8_t remVolumeUp()    noexcept override;
+        uint8_t remVolumeDown()  noexcept override;
+        uint8_t display()        noexcept override;
 
         const char* mode_name {"Web Radio Mode"};
 
@@ -60,7 +53,7 @@ class ModeWebRadio final : public LBMode {
         AudioController& jefa;
 
         uint64_t webstation_select_time;
-        const uint16_t WEBSTATION_SELECT_TIMEOUT = 5000;
+        const uint16_t WEBSTATION_SELECT_TIMEOUT {5000};
 
         uint8_t webstation_select_index;
 

@@ -3,9 +3,10 @@
 
 
 Kerl::Kerl(const uint8_t _numwebcredentials,
-           const WifiCredential* _wificredentials)
-    : num_wifi_credentials(_numwebcredentials),
-      WIFI_CREDENTIALS(_wificredentials) {
+           const WifiCredential* _wificredentials) noexcept
+    : num_wifi_credentials {_numwebcredentials},
+      WIFI_CREDENTIALS     {_wificredentials},
+      connected_p          {0} {
     WiFiClient client;
 }
 
@@ -15,7 +16,6 @@ void Kerl::init() noexcept {
     WiFi.disconnect();
     connected_p = 0;
 }
-
 
 void Kerl::disconnect() noexcept {
     deebug("kerl", "disconnecting");

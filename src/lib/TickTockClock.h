@@ -1,33 +1,31 @@
 
-
-#include <stdint.h>
-#include <Arduino.h>
-
-#include <RTClib.h>
-
 #ifndef ticktockclock_h
 #define ticktockclock_h
+
+#include "deebug.hpp"
+#include "common.h"
+
+#include <RTClib.h>
 
 
 class TickTockClock {
     public:
-        TickTockClock();
-        void init();
-        void update();
-        uint8_t lostPowerP();
-        void setTime(DateTime);
-        char* getDate();
-        char* getTime();
-        char* getTemp();
-        uint16_t getYear();
-        uint8_t getMonth();
-        uint8_t getDay();
-        uint8_t getHour();
-        uint8_t getDisplayHour();
-        uint8_t getMinute();
-        void setDisplayHour(uint8_t);
-
-        uint8_t isPm();
+        TickTockClock()                       noexcept;
+        void init()                           noexcept;
+        void update()                         noexcept;
+        uint8_t lostPowerP()                  noexcept;
+        void setTime(DateTime)                noexcept;
+        char* getDate()                       noexcept;
+        char* getTime()                       noexcept;
+        char* getTemp()                       noexcept;
+        uint16_t getYear()              const noexcept;
+        uint8_t getMonth()              const noexcept;
+        uint8_t getDay()                const noexcept;
+        uint8_t getHour()               const noexcept;
+        uint8_t getDisplayHour()        const noexcept;
+        uint8_t getMinute()             const noexcept;
+        void setDisplayHour(uint8_t)          noexcept;
+        uint8_t isPm()                  const noexcept;
 
     private:
         DateTime now;
@@ -37,7 +35,6 @@ class TickTockClock {
         char the_time[9];
         char the_temp[5];
 
-        // TODO NOW: YEAR, MONTH, and DAY!!!!
         uint16_t year;
         uint8_t month;
         uint8_t day;
