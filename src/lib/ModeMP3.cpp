@@ -6,7 +6,8 @@ ModeMP3::ModeMP3(Defe& _defe, Sixteen& _sixteen, AudioController& _jefa)
     : defe                  {_defe},
       sixteen               {_sixteen},
       jefa                  {_jefa},
-      playlist_select_time  {0} {
+      playlist_select_time  {0},
+      is_engaged_p          {false} {
 }
 
 const char* ModeMP3::getModeName() const {
@@ -24,16 +25,22 @@ void ModeMP3::resume() {
 }
 
 uint8_t ModeMP3::engage() {
+    if (is_engaged_p) {
+        deebug("mp3 mode", "engaged called but already engaged");
+        return true;
+    }
     deebug("mp3 mode", "engaging");
     jefa.turnOnMP3Audio();
     deebug("mp3 mode", "  starting first playlist");
     defe.startPlaylist(1);
+    is_engaged_p = true;
     return true;
 }
 
 uint8_t ModeMP3::suspend() {
     deebug("mp3 mode", "suspending");
     defe.pause();
+    is_engaged_p = false;
     return true;
 }
 

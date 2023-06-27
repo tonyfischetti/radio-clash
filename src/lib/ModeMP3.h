@@ -49,6 +49,8 @@ class ModeMP3 final : public LBMode {
         const uint16_t PLAYLIST_SELECT_TIMEOUT {5000};
 
         uint8_t playlist_select_index;
+
+        bool is_engaged_p;
 };
 
 #endif

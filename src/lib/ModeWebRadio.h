@@ -62,6 +62,7 @@ class ModeWebRadio final : public LBMode {
         uint8_t initialized_p;
 
         uint8_t suspended_p;
+        bool is_engaged_p;
 
         uint8_t current_station_index;
 };

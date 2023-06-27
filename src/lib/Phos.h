@@ -5,6 +5,8 @@
 #include "deebug.hpp"
 #include "common.h"
 
+#define USE_IRREMOTE_HPP_AS_PLAIN_INCLUDE
+#include <IRremote.hpp>
 #include <Adafruit_NeoPixel.h>
 
 
@@ -13,6 +15,7 @@ class Phos {
         Phos(const uint8_t, const uint8_t)  noexcept;
 
         void init()                         noexcept;
+        void displayUpdate() noexcept;
 
     private:
         const uint8_t NUM_NEOPIXELS;

@@ -20,7 +20,8 @@ ModeWebRadio::ModeWebRadio(VS1053& _vica, Kerl& _kerl, Sixteen& _sixteen,
       suspended_p           {1},
       volume                {100},
       webstation_select_time{0},
-      current_station_index {0} {
+      current_station_index {0},
+      is_engaged_p          {false} {
 }
 
 const char* ModeWebRadio::getModeName() const {
@@ -44,6 +45,10 @@ uint8_t ModeWebRadio::init() {
 }
 
 uint8_t ModeWebRadio::engage() {
+    if (is_engaged_p) {
+        deebug("web radio mode", "engaged called but already engaged");
+        return 0;
+    }
     deebug("web radio mode", "engaging web radio");
     jefa.turnOnWebRadioAudio();
     if (!initialized_p)
@@ -55,6 +60,7 @@ uint8_t ModeWebRadio::engage() {
     deebug("web radio mode", "WiFi connected!");
 
     suspended_p = 0;
+    is_engaged_p = true;
 
     // TODO: PLAY SOMETHING!
 
@@ -65,6 +71,7 @@ uint8_t ModeWebRadio::suspend() {
     // TODO: TURN OFF WIFI?!
     kerl.disconnect();
     suspended_p = 1;
+    is_engaged_p = false;
     return false;
 }
 
