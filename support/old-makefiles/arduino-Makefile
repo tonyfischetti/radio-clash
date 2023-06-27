@@ -1,0 +1,40 @@
+# ARDUINO_DIR = /usr/share/arduino
+ARDUINO_DIR = $(HOME)/.arduino15/packages/arduino
+
+AVRDUDE = $(HOME)/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17/bin/avrdude
+# AVRDUDE_CONF = /usr/share/arduino/hardware/tools/avrdude.conf
+AVRDUDE_CONF = $(HOME)/.arduino15/packages/arduino/tools/avrdude/6.3.0-arduino17/etc/avrdude.conf
+
+BOARDS_TXT = $(HOME)/.arduino15/packages/arduino/hardware/avr/1.8.6/boards.txt
+ARDUINO_LIB_PATH = $(HOME)/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries
+USER_LIB_PATH = /home/tony/Arduino/libraries
+AVR_TOOLS_DIR = $(HOME)/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
+ARDUINO_CORE_PATH = $(HOME)/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino
+ARDUINO_VAR_PATH = $(HOME)/.arduino15/packages/arduino/hardware/avr/1.8.6/variants
+
+
+ARDMK_DIR = ~/.arduino-makefile
+BOARD_TAG = leonardo
+# BOARD_TAG = uno
+ARCHITECTURE  = avr
+MONITOR_PORT  = /dev/ttyACM0
+# MONITOR_PORT  = /dev/ttyUSB0
+MONITOR_BAUDRATE = 115200
+OPTIMIZATION_LEVEL=s
+
+# PROFILE 	enables profiling (pattern timing)
+# DEBUG 	enables a serial debug variable value dump
+# NP64 		for 64 neopixels (otherwise 32 neopixels are assumed)
+# WITH_TIME enables RTC functionality
+
+
+# CPPFLAGS += -DPROFILE -DDEBUG -DNP64
+# CPPFLAGS += -DPROFILE
+# CPPFLAGS += -DPROFILE -DDEBUG -DWITH_TIME
+# CPPFLAGS += -DPROFILE -DDEBUG -DNP64 -DWITH_TIME
+CPPFLAGS += -DPROFILE -DNP64 -DWITH_TIME
+
+# ARDUINO_LIBS = Adafruit_NeoPixel elapsedMillis Wire LiquidCrystal_I2C IRremote Adafruit_BusIO SPI RTClib SoftwareSerial DFRobotDFPlayerMini
+ARDUINO_LIBS = Adafruit_NeoPixel elapsedMillis Wire LiquidCrystal_I2C IRremote Adafruit_BusIO SPI RTClib SoftwareSerial DFPlayerMini_Fast FireTimer
+
+include $(ARDMK_DIR)/Arduino.mk
