@@ -1,6 +1,5 @@
 
-#ifndef audiocontroller_h
-#define audiocontroller_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -20,6 +19,4 @@ class AudioController {
         const uint8_t MUX_CONTROL_A;
         const uint8_t MUX_CONTROL_B;
 };
-
-#endif
 

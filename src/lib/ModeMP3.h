@@ -1,6 +1,5 @@
 
-#ifndef modemp3_h
-#define modemp3_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -53,4 +52,3 @@ class ModeMP3 final : public LBMode {
         bool is_engaged_p;
 };
 
-#endif

@@ -1,6 +1,5 @@
 
-#ifndef ticktockclock_h
-#define ticktockclock_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -43,6 +42,4 @@ class TickTockClock {
         uint8_t minute;
         uint8_t is_pm_p;
 };
-
-#endif
 

@@ -1,10 +1,9 @@
 
-#ifndef remote_commands_h
-#define remote_commands_h
+#pragma once
 
 // This is the second step (see ./remote_codes.h)
 
-enum class RemCom:uint8_t {
+enum class RemCom : uint8_t {
     tv_power,
     source,
     red_power,
@@ -28,8 +27,4 @@ enum class RemCom:uint8_t {
     hulu,
     unknown
 };
-
-
-#endif
-
 

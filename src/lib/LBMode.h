@@ -1,6 +1,5 @@
 
-#ifndef lbmode_h
-#define lbmode_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -52,4 +51,3 @@ class LBMode {
         const char* mode_name {"Base/Interface for Light-Box Modes"};
 };
 
-#endif

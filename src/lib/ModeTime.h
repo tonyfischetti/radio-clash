@@ -1,6 +1,5 @@
 
-#ifndef modetime_h
-#define modetime_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -50,4 +49,3 @@ class ModeTime final : public LBMode {
         uint8_t blink_on_p;
 };
 
-#endif

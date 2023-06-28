@@ -1,6 +1,5 @@
 
-#ifndef phos_h
-#define phos_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -24,6 +23,4 @@ class Phos {
         bool is_engaged_p;
         uint8_t brightness;
 };
-
-#endif
 

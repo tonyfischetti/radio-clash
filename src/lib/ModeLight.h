@@ -1,6 +1,5 @@
 
-#ifndef modelight_h
-#define modelight_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -35,4 +34,3 @@ class ModeLight final : public LBMode {
         // uint8_t playlist_select_index;
 };
 
-#endif

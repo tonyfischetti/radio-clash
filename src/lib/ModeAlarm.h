@@ -1,6 +1,5 @@
 
-#ifndef modealarm_h
-#define modealarm_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -60,4 +59,3 @@ class ModeAlarm final : public LBMode {
         uint8_t reupped_alarm_p;
 };
 
-#endif

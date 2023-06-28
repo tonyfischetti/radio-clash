@@ -1,7 +1,5 @@
 
-#ifndef webstation_h
-#define webstation_h
-
+#pragma once
 
 typedef struct WebStation {
     const char* name;
@@ -10,4 +8,3 @@ typedef struct WebStation {
     const uint16_t port;
 } WebStation;
 
-#endif

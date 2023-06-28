@@ -1,15 +1,10 @@
 
-#ifndef webstationregistry_h
-#define webstationregistry_h
-
-#include <stdint.h>
-#include <Arduino.h>
+#pragma once
 
 #include "WebStation.h"
 
 
-#define NUM_WEBSTATIONS 42
-
+constexpr uint8_t NUM_WEBSTATIONS {42};
 
 
 /*********************************************/
@@ -683,5 +678,3 @@ const WebStation* WEB_STATIONS[NUM_WEBSTATIONS] = {
    &_bcc_world,
 };
 
-
-#endif

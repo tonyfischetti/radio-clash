@@ -1,6 +1,5 @@
 
-#ifndef amber_h
-#define amber_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -25,4 +24,3 @@ class Amber {
         uint8_t brightness;
 };
 
-#endif

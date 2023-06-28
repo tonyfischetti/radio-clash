@@ -1,6 +1,5 @@
 
-#ifndef modewebradio_h
-#define modewebradio_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -16,8 +15,8 @@
 #define CURRENT_STATION web_stations[current_station_index]
 
 // TODO: try 32 and 128!
-static const uint8_t MP3BUFFERSIZE        {64};
-static const uint8_t MAX_WEBRADIO_VOLUME {100};
+static constexpr uint8_t MP3BUFFERSIZE        {64};
+static constexpr uint8_t MAX_WEBRADIO_VOLUME {100};
 
 
 class ModeWebRadio final : public LBMode {
@@ -67,4 +66,3 @@ class ModeWebRadio final : public LBMode {
         uint8_t current_station_index;
 };
 
-#endif

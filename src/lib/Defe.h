@@ -1,6 +1,5 @@
 
-#ifndef defe_h
-#define defe_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -8,7 +7,7 @@
 #include <DFPlay.h>
 
 
-static const uint8_t MAX_MP3_VOLUME {30};
+static constexpr uint8_t MAX_MP3_VOLUME {30};
 
 // there is but one concern
 // I've just discovered
@@ -16,9 +15,9 @@ static const uint8_t MAX_MP3_VOLUME {30};
 //
 // So I have to set unique epsilons/time-blocks
 // for some of the remote commands
-static const uint16_t EPS_TRACK_CHANGE   { 400};
-static const uint16_t EPS_PL_CHANGE      {1500};
-static const uint16_t EPS_SHUFFLE_CHANGE {1500};
+static constexpr uint16_t EPS_TRACK_CHANGE   { 400};
+static constexpr uint16_t EPS_PL_CHANGE      {1500};
+static constexpr uint16_t EPS_SHUFFLE_CHANGE {1500};
 
 
 class Defe {
@@ -86,6 +85,4 @@ class Defe {
         void shuffle_queue()        noexcept;
         void play_df_info_state()   noexcept;
 };
-
-#endif
 

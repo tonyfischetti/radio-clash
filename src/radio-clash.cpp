@@ -130,7 +130,6 @@
 /* -----------------------------------------------------------------------
  * MACROS                                                               */
 
-
 #define CURRENT_MODE M[CMI]
 
 
@@ -139,41 +138,41 @@
  * GLOBALS that would have been macros                                  */
 
 // number of milliseconds to wait for buttons, etc. to settle
-static const uint16_t EPSILON_IR {100};
+static constexpr uint16_t EPSILON_IR {100};
 
 // time-block after mode change
-static const uint16_t EPS_MODE_CHANGE {2000};
+static constexpr uint16_t EPS_MODE_CHANGE {2000};
 
-static const uint16_t MODE_SELECT_TIMEOUT {5000};
+static constexpr uint16_t MODE_SELECT_TIMEOUT {5000};
 
-static const uint8_t ADDRESS_I2C_AMBER   {0x70};
-static const uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
+static constexpr uint8_t ADDRESS_I2C_AMBER   {0x70};
+static constexpr uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
 
 // milliseconds between polling different sensors
-static const uint16_t CHECK_IR_EVERY    {20};
-static const uint16_t CHECK_LCD_EVERY   {50};
-static const uint16_t CHECK_CLOCK_EVERY {100};
-static const uint16_t CHECK_POT_EVERY   {50};
-static const uint16_t CHECK_RE_EVERY    {5};
-static const uint16_t CHECK_DEFE_EVERY  {10};
-static const uint16_t CHECK_AMBER_EVERY {500};
-static const uint16_t CHECK_ALARM_EVERY {1000};
+static constexpr uint16_t CHECK_IR_EVERY    {20};
+static constexpr uint16_t CHECK_LCD_EVERY   {50};
+static constexpr uint16_t CHECK_CLOCK_EVERY {100};
+static constexpr uint16_t CHECK_POT_EVERY   {50};
+static constexpr uint16_t CHECK_RE_EVERY    {5};
+static constexpr uint16_t CHECK_DEFE_EVERY  {10};
+static constexpr uint16_t CHECK_AMBER_EVERY {500};
+static constexpr uint16_t CHECK_ALARM_EVERY {1000};
 // TODO TODO: what are the consequences of making this
 //            more or less frequent?
 
-static const uint8_t NUM_NEOPIXELS      {64};
+static constexpr uint8_t NUM_NEOPIXELS      {64};
 
 // TODO: rethink this
 // TODO: bad but 2 is unstable
-static const uint8_t ANALOG_DEV_TOLERANCE {4};
+static constexpr uint8_t ANALOG_DEV_TOLERANCE {4};
 
 // TODO ACHTUNG NtS
-static const uint8_t NUM_MODES      {4};
+static constexpr uint8_t NUM_MODES      {4};
 
-static const uint8_t INDEX_MP3      {0};
-static const uint8_t INDEX_TIME     {1};
-static const uint8_t INDEX_ALARM    {2};
-static const uint8_t INDEX_WEBRADIO {3};
+static constexpr uint8_t INDEX_MP3      {0};
+static constexpr uint8_t INDEX_TIME     {1};
+static constexpr uint8_t INDEX_ALARM    {2};
+static constexpr uint8_t INDEX_WEBRADIO {3};
 
 
 /* -----------------------------------------------------------------------
@@ -353,11 +352,11 @@ void update_ir() noexcept {
 }
 
 void update_rotary_encoder() noexcept {
-    const uint8_t mres = recoder.readMovement();
-    const uint8_t bres = recoder.readButton();
+    const REEvent mres = recoder.readMovement();
+    const REEvent bres = recoder.readButton();
     // movement
     switch (mres) {
-        case RECODER_CW:
+        case REEvent::RECODER_CW:
             // TODO (EXPLAIN BETTER) POTENTIALLY OVERRIDES MEMBER FUNCTION
             if (!mode_select_time) {
                 deebug("update_rotary...", "passing <clockwise> to current mode");
@@ -372,7 +371,7 @@ void update_rotary_encoder() noexcept {
                 ++TMI;
             }
             return;
-        case RECODER_CCW:
+        case REEvent::RECODER_CCW:
             // TODO (EXPLAIN BETTER) POTENTIALLY OVERRIDES MEMBER FUNCTION
             if (!mode_select_time) {
                 deebug("update_rotary...", "passing <counter-clockwise> to current mode");
@@ -390,7 +389,8 @@ void update_rotary_encoder() noexcept {
     }
     // button
     switch (bres) {
-        case RECODER_PRESS:
+        deebug("tmp", "bres: %d", bres);
+        case REEvent::RECODER_PRESS:
             // TODO (EXPLAIN BETTER) POTENTIALLY OVERRIDES MEMBER FUNCTION
             if (!mode_select_time)
                 CURRENT_MODE->rePress();
@@ -400,7 +400,7 @@ void update_rotary_encoder() noexcept {
                 change_mode(TMI);
             }
             return;
-        case RECODER_PRESS_AND_HOLD:
+        case REEvent::RECODER_PRESS_AND_HOLD:
             if(!mode_select_time) {
                 deebug("update_rotary...", "entering mode selection mode");
                 mode_select_time = millis();

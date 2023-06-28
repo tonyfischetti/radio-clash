@@ -1,6 +1,5 @@
 
-#ifndef mick_h
-#define mick_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -26,4 +25,3 @@ class Mick {
         const uint8_t EPSILON;
 };
 
-#endif

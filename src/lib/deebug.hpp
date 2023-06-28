@@ -1,6 +1,5 @@
 
-#ifndef DEEBUG_HPP
-#define DEEBUG_HPP
+#pragma once
 
 #include <cstdarg>
 #include <cstdio>
@@ -20,4 +19,3 @@ static void secret_debug_helper(const char* mod_name, const char* fmt, ...) {
     printf("\n");
 }
 
-#endif

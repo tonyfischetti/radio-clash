@@ -1,6 +1,5 @@
 
-#ifndef alarm_h
-#define alarm_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -30,6 +29,4 @@ class Alarm {
         uint8_t target_minute;
         uint8_t is_pm_p;
 };
-
-#endif
 

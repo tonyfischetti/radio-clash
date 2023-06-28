@@ -1,7 +1,7 @@
-#ifndef playlist_names_h
-#define playlist_names_h
 
-#define NUM_PLAYLISTS 97
+#pragma once
+
+constexpr uint8_t NUM_PLAYLISTS {97};
 
 const char* playlist_names[] = {
     "A Tribe Calle...",
@@ -103,7 +103,7 @@ const char* playlist_names[] = {
     "  _the smiths   "
 };
 
-const uint8_t playlist_lengths[] = {
+constexpr uint8_t playlist_lengths[] = {
     23,
     23,
     25,
@@ -203,6 +203,3 @@ const uint8_t playlist_lengths[] = {
     65
 };
 
-
-
-#endif

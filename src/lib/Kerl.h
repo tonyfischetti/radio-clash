@@ -1,6 +1,5 @@
 
-#ifndef kerl_h
-#define kerl_h
+#pragma once
 
 #include "deebug.hpp"
 #include "common.h"
@@ -13,7 +12,7 @@
 #include "WebStation.h"
 
 
-static const uint16_t KERL_CONNECTION_TIMEOUT {600000};
+static constexpr uint16_t KERL_CONNECTION_TIMEOUT {60000};
 
 
 class Kerl {
@@ -34,6 +33,4 @@ class Kerl {
         uint8_t connected_p;
         uint8_t using_index;
 };
-
-#endif
 
