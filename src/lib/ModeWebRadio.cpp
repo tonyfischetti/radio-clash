@@ -18,7 +18,7 @@ ModeWebRadio::ModeWebRadio(VS1053& _vica, Kerl& _kerl, Sixteen& _sixteen,
       jefa                  {_jefa},
       initialized_p         {0},
       suspended_p           {1},
-      volume                {100},
+      volume                {87},
       webstation_select_time{0},
       current_station_index {0},
       is_engaged_p          {false} {
@@ -147,6 +147,21 @@ uint8_t ModeWebRadio::rePress() {
         current_station_index = webstation_select_index;
     }
     return true;
+}
+
+uint8_t ModeWebRadio::remOK() {
+    deebug("web radio mode", "remOK() is going to masquerade as a rePress");
+    return rePress();
+}
+
+uint8_t ModeWebRadio::remCircleLeft() {
+    deebug("web radio mode", "remCircleLeft() is going to masquerade as a reCcw");
+    return reCcw();
+}
+
+uint8_t ModeWebRadio::remCircleRight() {
+    deebug("web radio mode", "remCircleRight() is going to masquerade as a reCw");
+    return reCw();
 }
 
 uint8_t ModeWebRadio::remRewind() {

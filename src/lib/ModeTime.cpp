@@ -151,6 +151,23 @@ uint8_t ModeTime::rePress() {
     return 0;
 }
 
+/*
+uint8_t ModeTime::remOK() {
+    deebug("time mode", "remOK() is going to masquerade as a rePress");
+    return rePress();
+}
+
+uint8_t ModeTime::remCircleLeft() {
+    deebug("time mode", "remCircleLeft() is going to masquerade as a reCcw");
+    return reCcw();
+}
+
+uint8_t ModeTime::remCircleRight() {
+    deebug("time mode", "remCircleRight() is going to masquerade as a reCw");
+    return reCw();
+}
+*/
+
 uint8_t ModeTime::display() {
     if (!set_time_time) {
         snprintf(sixteen.line0, 17, "   %s        ", rtc.getDate());

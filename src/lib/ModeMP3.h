@@ -25,6 +25,7 @@ class ModeMP3 final : public LBMode {
         uint8_t reCw()           noexcept override;
         uint8_t reCcw()          noexcept override;
         uint8_t rePress()        noexcept override;
+        uint8_t remOK()          noexcept override;
         uint8_t remCircleLeft()  noexcept override;
         uint8_t remCircleRight() noexcept override;
         uint8_t remAsterisk()    noexcept override;

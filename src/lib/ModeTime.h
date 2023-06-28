@@ -17,11 +17,16 @@ class ModeTime final : public LBMode {
 
         const char* getModeName() const noexcept override;
 
-        uint8_t tick()      noexcept;
-        uint8_t reCw()      noexcept;
-        uint8_t reCcw()     noexcept;
-        uint8_t rePress()   noexcept;
-        uint8_t display()   noexcept;
+        uint8_t tick()           noexcept;
+        uint8_t reCw()           noexcept override;
+        uint8_t reCcw()          noexcept override;
+        uint8_t rePress()        noexcept override;
+        /*
+        uint8_t remOK()          noexcept override;
+        uint8_t remCircleLeft()  noexcept override;
+        uint8_t remCircleRight() noexcept override;
+        */
+        uint8_t display()        noexcept override;
 
         const char* mode_name {"Time mode"};
 

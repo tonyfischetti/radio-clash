@@ -185,6 +185,21 @@ uint8_t ModeAlarm::rePress() {
     return 0;
 }
 
+uint8_t ModeAlarm::remOK() {
+    deebug("alarm mode", "remOK() is going to masquerade as a rePress");
+    return rePress();
+}
+
+uint8_t ModeAlarm::remCircleLeft() {
+    deebug("alarm mode", "remCircleLeft() is going to masquerade as a reCcw");
+    return reCcw();
+}
+
+uint8_t ModeAlarm::remCircleRight() {
+    deebug("alarm mode", "remCircleRight() is going to masquerade as a reCw");
+    return reCw();
+}
+
 uint8_t ModeAlarm::display() {
     if (!set_alarm_time) {
         snprintf(sixteen.line0, 17, "Alarm mode               ");

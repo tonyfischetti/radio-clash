@@ -138,7 +138,7 @@
  * GLOBALS that would have been macros                                  */
 
 // number of milliseconds to wait for buttons, etc. to settle
-static constexpr uint16_t EPSILON_IR {100};
+static constexpr uint16_t EPSILON_IR {150};
 
 // time-block after mode change
 static constexpr uint16_t EPS_MODE_CHANGE {2000};
@@ -149,13 +149,13 @@ static constexpr uint8_t ADDRESS_I2C_AMBER   {0x70};
 static constexpr uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
 
 // milliseconds between polling different sensors
-static constexpr uint16_t CHECK_IR_EVERY    {20};
-static constexpr uint16_t CHECK_LCD_EVERY   {50};
-static constexpr uint16_t CHECK_CLOCK_EVERY {100};
-static constexpr uint16_t CHECK_POT_EVERY   {50};
-static constexpr uint16_t CHECK_RE_EVERY    {5};
-static constexpr uint16_t CHECK_DEFE_EVERY  {10};
-static constexpr uint16_t CHECK_AMBER_EVERY {500};
+static constexpr uint16_t CHECK_IR_EVERY      {20};
+static constexpr uint16_t CHECK_LCD_EVERY     {50};
+static constexpr uint16_t CHECK_CLOCK_EVERY  {100};
+static constexpr uint16_t CHECK_POT_EVERY     {50};
+static constexpr uint16_t CHECK_RE_EVERY       {5};
+static constexpr uint16_t CHECK_DEFE_EVERY    {10};
+static constexpr uint16_t CHECK_AMBER_EVERY  {500};
 static constexpr uint16_t CHECK_ALARM_EVERY {1000};
 // TODO TODO: what are the consequences of making this
 //            more or less frequent?
@@ -169,6 +169,7 @@ static constexpr uint8_t ANALOG_DEV_TOLERANCE {4};
 // TODO ACHTUNG NtS
 static constexpr uint8_t NUM_MODES      {4};
 
+// TODO: use enum class
 static constexpr uint8_t INDEX_MP3      {0};
 static constexpr uint8_t INDEX_TIME     {1};
 static constexpr uint8_t INDEX_ALARM    {2};
@@ -283,15 +284,28 @@ void update_ir() noexcept {
             break;
         case RemCom::circle_up:
             deebug("update_ir", "    circle up");
-            if (CMI == (NUM_MODES-1))
+            if (!mode_select_time)
+                TMI = CMI;
+            mode_select_time = millis();
+            if (TMI == (NUM_MODES-1))
                 break;
-            change_mode(CMI+1);
+            ++TMI;
             break;
         case RemCom::circle_down:
             deebug("update_ir", "    circle down");
-            if (CMI == 0)
+            if (!mode_select_time)
+                TMI = CMI;
+            mode_select_time = millis();
+            if (TMI == 0)
                 break;
-            change_mode(CMI-1);
+            --TMI;
+            break;
+        case RemCom::ok:
+            deebug("update_ir", "    OK");
+            if (mode_select_time)
+                change_mode(TMI);
+            else
+                CURRENT_MODE->remOK();
             break;
         case RemCom::source:
             deebug("update_ir", "    source");
@@ -343,10 +357,6 @@ void update_ir() noexcept {
         case RemCom::mute:
             deebug("update_ir", "    mute");
             CURRENT_MODE->remMute();
-            break;
-        case RemCom::ok:
-            deebug("update_ir", "    OK");
-            CURRENT_MODE->remOK();
             break;
     }
 }
@@ -401,7 +411,7 @@ void update_rotary_encoder() noexcept {
             }
             return;
         case REEvent::RECODER_PRESS_AND_HOLD:
-            if(!mode_select_time) {
+            if (!mode_select_time) {
                 deebug("update_rotary...", "entering mode selection mode");
                 mode_select_time = millis();
                 TMI = CMI;
@@ -569,6 +579,7 @@ void update_all_devices(uint8_t force_update_p=false) noexcept {
         (millis() - mode_select_time) > MODE_SELECT_TIMEOUT) {
         deebug("update_all...", "exiting mode select mode");
         mode_select_time = 0;
+        TMI = CMI;
     }
 
 }

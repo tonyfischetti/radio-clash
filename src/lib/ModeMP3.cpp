@@ -96,16 +96,19 @@ uint8_t ModeMP3::rePress() {
     return true;
 }
 
+uint8_t ModeMP3::remOK() {
+    deebug("mp3 mode", "remOK() is going to masquerade as a rePress");
+    return rePress();
+}
+
 uint8_t ModeMP3::remCircleLeft() {
-    deebug("mp3 mode", "going back one playlist?");
-    defe.backOnePlaylist();
-    return true;
+    deebug("mp3 mode", "remCircleLeft() is going to masquerade as a reCcw");
+    return reCcw();
 }
 
 uint8_t ModeMP3::remCircleRight() {
-    deebug("mp3 mode", "going forward one playlist?");
-    defe.forwardOnePlaylist();
-    return true;
+    deebug("mp3 mode", "remCircleRight() is going to masquerade as a reCw");
+    return reCw();
 }
 
 uint8_t ModeMP3::remAsterisk() {

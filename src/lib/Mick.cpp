@@ -12,14 +12,14 @@ void Mick::init() noexcept {
 
 RemCom Mick::update() noexcept {
     static uint64_t previous_ir_signal;
-    const uint64_t current_millis = millis();
+    const uint64_t current_millis {millis()};
 
     if (IrReceiver.decode()) {
         IrReceiver.resume();
 
-        const uint8_t  command  = IrReceiver.decodedIRData.command;
-        const uint16_t address  = IrReceiver.decodedIRData.address;
-        const uint8_t  protocol = IrReceiver.decodedIRData.protocol;
+        const uint8_t  command  {IrReceiver.decodedIRData.command};
+        const uint16_t address  {IrReceiver.decodedIRData.address};
+        const uint8_t  protocol {IrReceiver.decodedIRData.protocol};
 
         deebug("mick", "received ir signal...");
         deebug("mick", "  command:  %d", command);
@@ -59,7 +59,6 @@ RemCom Mick::update() noexcept {
                         return RemCom::circle_down;
                     case SOURCE_CODE:
                         return RemCom::source;
-
                     case TV_POWER_CODE:
                         // double function
                         if (address == VISIO_ADDRESS)

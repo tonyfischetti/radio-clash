@@ -34,6 +34,9 @@ class ModeWebRadio final : public LBMode {
         uint8_t reCw()           noexcept override;
         uint8_t reCcw()          noexcept override;
         uint8_t rePress()        noexcept override;
+        uint8_t remOK()          noexcept override;
+        uint8_t remCircleLeft()  noexcept override;
+        uint8_t remCircleRight() noexcept override;
         uint8_t remRewind()      noexcept override;
         uint8_t remFastForward() noexcept override;
         uint8_t remVolumeUp()    noexcept override;
