@@ -273,7 +273,7 @@ WebStation _indie_88 {
 };
 
 // usa19.fastcast4u.com:2030/;
-WebStation _bob's_ska {
+WebStation _bobs_ska {
     "   Bob's Ska    ",
     "usa19.fastcast4u.com",
     "/;",
@@ -660,7 +660,7 @@ const WebStation* WEB_STATIONS[NUM_WEBSTATIONS] = {
     &_indie_spectrum,
     &_radio_robotic,
     &_indie_88,
-    &_bob's_ska,
+    &_bobs_ska,
     &_got_indie_p,
     &_radio_pepito,
     &_le_son_parisien,
