@@ -152,9 +152,8 @@ static constexpr uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
 static constexpr uint16_t CHECK_IR_EVERY      {20};
 static constexpr uint16_t CHECK_LCD_EVERY     {50};
 static constexpr uint16_t CHECK_CLOCK_EVERY  {100};
-static constexpr uint16_t CHECK_POT_EVERY     {50};
+static constexpr uint16_t CHECK_POT_EVERY    {300};
 static constexpr uint16_t CHECK_RE_EVERY       {5};
-static constexpr uint16_t CHECK_DEFE_EVERY    {10};
 static constexpr uint16_t CHECK_AMBER_EVERY  {500};
 static constexpr uint16_t CHECK_ALARM_EVERY {1000};
 // TODO TODO: what are the consequences of making this

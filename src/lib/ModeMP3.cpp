@@ -45,6 +45,8 @@ uint8_t ModeMP3::suspend() {
 }
 
 uint8_t ModeMP3::tick() {
+    if (!is_engaged_p)
+        return 1;
     // reset from playlist select mode if it times out
     if (playlist_select_time &&
         (millis() - playlist_select_time) > PLAYLIST_SELECT_TIMEOUT)

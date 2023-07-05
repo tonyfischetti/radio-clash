@@ -172,7 +172,6 @@ WebStation _soma_u80s {
     "/u80s-128-mp3",
     80
 };
-/// 9, 6, 
 
 // jenny.torontocast.com:2000/stream/alt-80-1/stream
 WebStation _alt_80 {
@@ -181,7 +180,6 @@ WebStation _alt_80 {
     "/stream/alt-80-1/stream",
     2000
 };
-/// 9
 
 // ice5.somafm.com/poptron-128-mp3
 WebStation _soma_poptron {
@@ -222,7 +220,6 @@ WebStation _dark_edge {
     "/stream/1/",
     8002
 };
-/// 9
 
 // ais-edge103-live365-dal02.cdnstream.com/a66424
 WebStation _xx_radio {
