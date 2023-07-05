@@ -23,7 +23,6 @@ class Kerl {
         uint8_t connectToAnyNetwork()                           noexcept;
         void disconnect()                                       noexcept;
         uint8_t connectClientKeepAlive(const WebStation*)       noexcept;
-        uint8_t fillMP3Buffer(uint8_t*, uint8_t)                noexcept;
 
         WiFiClient client;
 

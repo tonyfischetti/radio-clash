@@ -91,13 +91,3 @@ uint8_t Kerl::connectClientKeepAlive(const WebStation* astation) noexcept {
     return 0;
 }
 
-uint8_t Kerl::fillMP3Buffer(uint8_t* mp3buff, uint8_t buffersize) noexcept {
-    // deebug("kerl", "fillMP3Buffer()");
-    if (client.available()) {
-        // deebug("kerl", "  client available");
-        return client.read(mp3buff, buffersize);
-    }
-    // deebug("kerl", "  ! client NOT available");
-    return 0;
-}
-

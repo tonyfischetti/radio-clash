@@ -98,9 +98,11 @@ uint8_t ModeWebRadio::tick() {
         return 2;
     }
 
-    uint8_t bytesread = kerl.fillMP3Buffer(mp3buff, MP3BUFFERSIZE);
-    if (bytesread) {
-        vica.playChunk(mp3buff, bytesread);
+    if (kerl.client.available()) {
+        uint8_t bytesread = kerl.client.read(mp3buff, MP3BUFFERSIZE);
+        if (bytesread) {
+            vica.playChunk(mp3buff, bytesread);
+        }
     }
     return 0;
 }
