@@ -3,7 +3,23 @@
 
 #include "WebStation.h"
 
-constexpr uint8_t NUM_WEBSTATIONS {71};
+constexpr uint8_t NUM_WEBSTATIONS {73};
+
+
+// stream.revma.ihrhls.com/zc1465
+WebStation _q1043 {
+    "     Q104.3     ",
+    "stream.revma.ihrhls.com",
+    "/zc1465",
+    80
+};
+
+WebStation _power105 {
+    "  Power 105.1   ",
+    "stream.revma.ihrhls.com",
+    "/zc1481",
+    80
+};
 
 
 /*********************************************/
@@ -624,6 +640,9 @@ WebStation _bcc_world {
 
 
 const WebStation* WEB_STATIONS[NUM_WEBSTATIONS] = {
+    &_q1043,
+    &_power105,
+
     &_agrinio,
     &_hit_935,
     &_skai,
