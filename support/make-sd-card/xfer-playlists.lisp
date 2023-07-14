@@ -101,48 +101,49 @@
   "U2"
   "Wu-Tang Killa Bees"
   "Young Galaxy"
-  "_belle and sebastian"
   "_the beatles"
-  "_the cure"
+  "_belle and sebaastian"
   "_the smiths"
+  "_cure+radiohead"
+  "_pixies_stars_velvet"
+  "_sd misc"
 ))
 
 
 (defvar /number-of-playlists/ (length /playlists-to-push/))
 
-
-(zsh (fn "rm -rf ~A/.Track-1000" /sd-location/) :echo t)
-(terpri)
+; (zsh (fn "rm -rf ~A/.Track-1000" /sd-location/) :echo t)
+; (terpri)
 
 
 (defun get-playlist-length (aplaylist)
   (let ((playlist-path (fn •~A/~A• /playlist-location/ aplaylist)))
-    (ft "-> ~A~%" playlist-path)
+    (ft "getting playlist length [~A]~%" playlist-path)
     (-<>
       (fn •cat ~A | ack 'mp3$' | wc -l• (escape-namestring/shell playlist-path))
       (zsh <>)
       (parse-integer <>))))
 
 
-(for-each /playlists-to-push/
-  (let ((folder-name (fn •~A/~2,'0D• /sd-location/ index!))
-        (playlist-path (fn •~A/~A• /playlist-location/ value!))
-        (playlist-num index!))
-    (when (< playlist-num 99) (continue!)) ;; oops
-    (zsh (fn •mkdir -p ~A• folder-name) :echo t)
-    (for-each/line playlist-path
-        (let ((source-name (~r value! "^.+?music" /music-library/))
-              (dest-name (if (<= playlist-num 15)
-                           (fn •~A/~4,'0D.mp3• folder-name index!)
-                           (fn •~A/~3,'0D.mp3• folder-name index!))))
-          (when (> index! 255) (break!))
-          (zsh (fn •cp ~A ~A• (escape-namestring/shell source-name) dest-name)
-               :echo t)))))
+; (for-each /playlists-to-push/
+;   (let ((folder-name (fn •~A/~2,'0D• /sd-location/ index!))
+;         (playlist-path (fn •~A/~A• /playlist-location/ value!))
+;         (playlist-num index!))
+;     ; (when (< playlist-num 98) (continue!)) ;; oops
+;     (zsh (fn •mkdir -p ~A• folder-name) :echo t)
+;     (for-each/line playlist-path
+;         (let ((source-name (~r value! "^.+?music" /music-library/))
+;               (dest-name (if (<= playlist-num 15)
+;                            (fn •~A/~4,'0D.mp3• folder-name index!)
+;                            (fn •~A/~3,'0D.mp3• folder-name index!))))
+;           (when (> index! 255) (break!))
+;           (zsh (fn •cp ~A ~A• (escape-namestring/shell source-name) dest-name)
+;                :echo t)))))
 
 
 (with-a-file "playlist_names.h" :w
-  (format stream! "#ifndef playlist_names_h~%#define playlist_names_h~%~%")
-  (format stream! "#define NUM_PLAYLISTS ~A~%~%" /number-of-playlists/)
+  (format stream! "~%#pragma once~%~%")
+  (format stream! "constexpr uint8_t NUM_PLAYLISTS {~A}~%~%" /number-of-playlists/)
   (format stream! "const char* playlist_names[] = {~%")
   (for-each /playlists-to-push/
     (let ((cleaned (~ra value! "[^A-Za-z0-9,. -]" "_")))
@@ -154,7 +155,7 @@
       (format stream! "~%")))
   (format stream! "};~%~%")
 
-  (format stream! "const uint8_t playlist_lengths[] = {~%")
+  (format stream! "constexpr uint8_t playlist_lengths[] = {~%")
   (for-each/list /playlists-to-push/
     (let ((realname value!))
       (let ((cleaned (~ra value! "[^A-Za-z0-9,. -]" "_")))
@@ -162,8 +163,7 @@
         (unless (= index! /number-of-playlists/)
           (format stream! ","))
         (format stream! "~%"))))
-  (format stream! "};~%~%")
-  (format stream! "~%~%#endif"))
+  (format stream! "};~%~%"))
 
 
 

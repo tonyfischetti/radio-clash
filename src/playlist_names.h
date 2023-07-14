@@ -1,7 +1,7 @@
 
 #pragma once
 
-constexpr uint8_t NUM_PLAYLISTS {97};
+constexpr uint8_t NUM_PLAYLISTS {99}
 
 const char* playlist_names[] = {
     "A Tribe Calle...",
@@ -97,10 +97,12 @@ const char* playlist_names[] = {
     "       U2       ",
     "Wu-Tang Killa...",
     "  Young Galaxy  ",
-    "_belle and se...",
     "  _the beatles  ",
-    "   _the cure    ",
-    "  _the smiths   "
+    "_belle and se...",
+    "  _the smiths   ",
+    "_cure_radiohead ",
+    "_pixies_stars...",
+    "    _sd misc    "
 };
 
 constexpr uint8_t playlist_lengths[] = {
@@ -197,9 +199,11 @@ constexpr uint8_t playlist_lengths[] = {
     28,
     45,
     18,
-    110,
     117,
-    55,
-    65
+    110,
+    65,
+    121,
+    163,
+    233
 };
 
