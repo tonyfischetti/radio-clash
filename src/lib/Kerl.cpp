@@ -61,6 +61,7 @@ uint8_t Kerl::connectToAnyNetwork() noexcept {
         for (auto j = 0; j < num_wifi_credentials; j++) {
             if (!strcmp(&this_ssid[0], WIFI_CREDENTIALS[j].ssid)) {
                 deebug("kerl", "    ! using %s", &this_ssid[0]);
+                deebug("kerl", "    ! rssi: %4d", WiFi.RSSI(i));
                 using_index = j;
                 if (connectWebKeepAlive() > 0)
                     return 1;
