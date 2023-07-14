@@ -97,9 +97,9 @@
 #define IR_PIN  39
 #define SDA     21
 #define SCL     22
-#define POT0    34
-#define POT1    35
-#define POT2    32
+            #define POT0    34
+            #define POT1    35
+            #define POT2    32
 #ifdef ROTARY_REVERSED
 #define RE_CLK  25
 #define RE_DT   33
@@ -152,7 +152,7 @@ static constexpr uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
 static constexpr uint16_t CHECK_IR_EVERY      {20};
 static constexpr uint16_t CHECK_LCD_EVERY     {50};
 static constexpr uint16_t CHECK_CLOCK_EVERY  {100};
-static constexpr uint16_t CHECK_POT_EVERY    {300};
+            // static constexpr uint16_t CHECK_POT_EVERY    {300};
 static constexpr uint16_t CHECK_RE_EVERY       {5};
 static constexpr uint16_t CHECK_AMBER_EVERY  {500};
 static constexpr uint16_t CHECK_ALARM_EVERY {1000};
@@ -422,43 +422,6 @@ void update_rotary_encoder() noexcept {
 }
 
 
-    /******* ANALOG *******/
-
-void update_pot0() noexcept {
-    static uint8_t previous_vol0;
-    // TODO: change resolution
-    const uint8_t current_vol0 = map(analogRead(POT0), 0, 4095, 30, 0);
-    if (analog_changed_sufficiently_p(previous_vol0, current_vol0,
-                                      ANALOG_DEV_TOLERANCE)) {
-        deebug("update_pot0", "pot changed sufficiently");
-        previous_vol0 = current_vol0;
-        // TODO TODO: what about others?!
-        defe.setVolume(current_vol0);
-        deebug("update_pot0", "  set volume at: %d", current_vol0);
-    }
-}
-
-void update_pot1() noexcept {
-    static uint8_t previous_vol1;
-    // TODO: change resolution
-    const uint8_t current_vol1 = map(analogRead(POT1), 0, 4095, 30, 0);
-    if (analog_changed_sufficiently_p(previous_vol1, current_vol1,
-                                      ANALOG_DEV_TOLERANCE)) {
-        deebug("update_pot1", "pot changed sufficiently");
-    }
-}
-
-void update_pot2() noexcept {
-    static uint8_t previous_vol2;
-    // TODO: change resolution
-    const uint8_t current_vol2 = map(analogRead(POT2), 0, 4095, 30, 0);
-    if (analog_changed_sufficiently_p(previous_vol2, current_vol2,
-                                      ANALOG_DEV_TOLERANCE)) {
-        deebug("update_pot2", "pot changed sufficiently");
-    }
-}
-
-
 /* -----------------------------------------------------------------------
  * DISPLAY FUNCTIONS                                                    */
 
@@ -534,12 +497,6 @@ void update_all_devices(uint8_t force_update_p=false) noexcept {
                 CURRENT_MODE->display();
         }
         lcd_timer = 0;
-    }
-    if (pot_timer > CHECK_POT_EVERY || force_update_p) {
-        update_pot0();
-        // update_pot1();
-        // update_pot2();
-        pot_timer = 0;
     }
     // TODO: TRY WITHOUT THIS
     if (re_timer > CHECK_RE_EVERY || force_update_p) {
