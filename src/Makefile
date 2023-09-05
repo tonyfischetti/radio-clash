@@ -11,8 +11,8 @@ SKETCH = $(PWD)/radio-clash.cpp
 # The weird build_opt.h errors are from a race condition. but it's worth it
 # BUILD_THREADS=1
 
-# BUILD_EXTRA_FLAGS += -DDEBUG -DROTARY_REVERSED
-BUILD_EXTRA_FLAGS += -DROTARY_REVERSED
+# BUILD_EXTRA_FLAGS += -DROTARY_REVERSED
+BUILD_EXTRA_FLAGS += -DDEBUG -DROTARY_REVERSED
 # BUILD_EXTRA_FLAGS += -DDF_DEBUG -DDFPLAY_DEBUG_SERIAL=Serial
 
 BUILD_EXTRA_FLAGS += -Wall -fno-exceptions -fno-unwind-tables

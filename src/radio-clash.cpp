@@ -97,9 +97,11 @@
 #define IR_PIN  39
 #define SDA     21
 #define SCL     22
+/*
             #define POT0    34
             #define POT1    35
             #define POT2    32
+            */
 #ifdef ROTARY_REVERSED
 #define RE_CLK  25
 #define RE_DT   33
@@ -120,10 +122,11 @@
 // EN, 5V, and GND, too
 
 #define MUX_CONTROL_A       13
-#define MUX_CONTROL_B        0   // TODO TODO TODO
-#define BASE_FM_I2C         12
+//real
+#define MUX_CONTROL_B       32
+#define BASE_FM_I2C         15
 
-#define NEOPIXEL_PIN        15
+// #define NEOPIXEL_PIN        15
 
 
 
@@ -193,7 +196,7 @@ static Alarm             spirit76;
 static VS1053            vica(VSCS, VSDCS, VSDREQ);
 static AudioController   jefa(MUX_CONTROL_A, MUX_CONTROL_B);
 static Amber             amber(ADDRESS_I2C_AMBER, rtc);
-static Phos              phos(NEOPIXEL_PIN, NUM_NEOPIXELS);
+// static Phos              phos(NEOPIXEL_PIN, NUM_NEOPIXELS);
 
 static ModeMP3           mp3_mode(defe, sixteen, jefa);
 static ModeTime          time_mode(rtc, sixteen);
@@ -552,6 +555,11 @@ void setup() {
 
     deebug("setup", "::alice glass:: HI!");
 
+    deebug("tryin", "...");
+    pinMode(MUX_CONTROL_B, OUTPUT);
+    deebug("tryin", "done?");
+
+
     jefa.init();
     deebug("setup", "jefa started");
     defe.init(Serial2);
@@ -566,8 +574,10 @@ void setup() {
     deebug("setup", "rtc started");
     amber.init();
     deebug("setup", "amber started");
+    /*
     phos.init();
     deebug("setup", "phos started");
+    */
 
     show_home();
     deebug("setup", "displaying home screen");
