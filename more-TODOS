@@ -1,0 +1,33 @@
+[LB]
+  - make a macro for debugging (time, __FILE__, etc...)
+  - Look at Makefile
+    • -std=c++20
+  - is it in stereo?
+  - Use overloading instead of default parameters
+  - implement IR control override
+  - change analog reading settings
+  - save things to EEPROM
+  - dynamically change update times
+  - Someone uses the folling code it ensure the right thing plays...
+    ```
+    void playTrack(uint8_t track) {
+        player.stop();
+        delay(200);
+        player.play(track);
+        delay(200);
+        int file = player.readCurrentFileNumber();
+
+        while (file != track) {
+            player.play(track);
+            delay(200);
+            file = player.readCurrentFileNumber();
+        }
+    }
+    ```
+
+[LB electronics]
+  - Does more grounding of SD hood (or connectors) help?
+  - Try to use a 470uF across the power pins of the amplifier
+    (or the "supply" pins)
+  - Ask question (on forum) about combing audios into one (no transistor?)
+
