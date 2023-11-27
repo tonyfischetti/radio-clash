@@ -19,18 +19,18 @@ class ModeAlarm final : public LBMode {
                   Defe&, AudioController&) noexcept;
 
         const char* getModeName()   const noexcept override;
-        uint8_rc tick()                    noexcept override;
-        uint8_rc reCw()                    noexcept override;
-        uint8_rc reCcw()                   noexcept override;
-        uint8_rc rePress()                 noexcept override;
-        uint8_rc remOK()                   noexcept override;
-        uint8_rc remCircleLeft()           noexcept override;
-        uint8_rc remCircleRight()          noexcept override;
-        uint8_rc display()                 noexcept override;
+        uint8_rc tick()                   noexcept override;
+        uint8_rc reCw()                   noexcept override;
+        uint8_rc reCcw()                  noexcept override;
+        uint8_rc rePress()                noexcept override;
+        uint8_rc remOK()                  noexcept override;
+        uint8_rc remCircleLeft()          noexcept override;
+        uint8_rc remCircleRight()         noexcept override;
+        uint8_rc display()                noexcept override;
 
         const uint8_rc isSounding() const noexcept;
-        void soundAlarm()                noexcept;
-        void turnOffAlarm()              noexcept;
+        void soundAlarm()                 noexcept;
+        void turnOffAlarm()               noexcept;
 
         const char* mode_name {"Alarm mode"};
 

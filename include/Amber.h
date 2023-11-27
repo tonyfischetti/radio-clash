@@ -14,7 +14,7 @@ class Amber {
 
         void init()                         noexcept;
         void update()                       noexcept;
-        void setBrightness(const uint8_rc)   noexcept;
+        void setBrightness(const uint8_rc)  noexcept;
         void nextBrightness()               noexcept;
 
     private:

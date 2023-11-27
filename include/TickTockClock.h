@@ -12,19 +12,19 @@ class TickTockClock {
         TickTockClock()                       noexcept;
         void init()                           noexcept;
         void update()                         noexcept;
-        uint8_rc lostPowerP()                  noexcept;
+        uint8_rc lostPowerP()                 noexcept;
         void setTime(DateTime)                noexcept;
         char* getDate()                       noexcept;
         char* getTime()                       noexcept;
         char* getTemp()                       noexcept;
-        uint16_rc getYear()              const noexcept;
-        uint8_rc getMonth()              const noexcept;
-        uint8_rc getDay()                const noexcept;
-        uint8_rc getHour()               const noexcept;
-        uint8_rc getDisplayHour()        const noexcept;
-        uint8_rc getMinute()             const noexcept;
-        void setDisplayHour(uint8_rc)          noexcept;
-        uint8_rc isPm()                  const noexcept;
+        uint16_rc getYear()             const noexcept;
+        uint8_rc getMonth()             const noexcept;
+        uint8_rc getDay()               const noexcept;
+        uint8_rc getHour()              const noexcept;
+        uint8_rc getDisplayHour()       const noexcept;
+        uint8_rc getMinute()            const noexcept;
+        void setDisplayHour(uint8_rc)         noexcept;
+        uint8_rc isPm()                 const noexcept;
 
     private:
         DateTime now;

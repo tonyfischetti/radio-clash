@@ -39,8 +39,8 @@ class ModeTime final : public LBMode {
 
         uint64_rc set_time_time;
 
-        const uint32_rc SET_TIME_TIMEOUT = 5000;
-        const uint16_rc BLINK_FREQUENCY = 500;
+        const uint32_rc SET_TIME_TIMEOUT {5000};
+        const uint16_rc BLINK_FREQUENCY  {500};
 
         uint16_rc selected_year;
         uint8_rc  selected_month;

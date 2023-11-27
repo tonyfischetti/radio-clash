@@ -25,8 +25,8 @@ class Defe {
         Defe(const uint8_rc, const char**, const uint8_rc*) noexcept;
 
         void init(Stream&)                  noexcept;
-        void startPlaylist(uint8_rc)         noexcept;
-        void startAlarm(uint8_rc, uint8_rc)   noexcept;
+        void startPlaylist(uint8_rc)        noexcept;
+        void startAlarm(uint8_rc, uint8_rc) noexcept;
         void stopAlarm()                    noexcept;
         void previousTrack()                noexcept;
         void nextTrack()                    noexcept;
@@ -38,7 +38,7 @@ class Defe {
         void shuffleOff()                   noexcept;
         void shuffleOn()                    noexcept;
         void toggleShuffle()                noexcept;
-        void setVolume(uint8_rc)             noexcept;
+        void setVolume(uint8_rc)            noexcept;
         void volumeDown()                   noexcept;
         void volumeUp()                     noexcept;
         void pause()                        noexcept;
@@ -48,7 +48,7 @@ class Defe {
         void dumpInfo()                     noexcept;
 
         const uint8_rc getPlaylistIndex()     const noexcept;
-        const char* getPlaylistName()        const noexcept;
+        const char* getPlaylistName()         const noexcept;
         const char* getPlaylistName(uint8_rc) const noexcept;
         const uint8_rc getTrackNum()          const noexcept;
         const uint8_rc getNumTracks()         const noexcept;

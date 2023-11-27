@@ -17,12 +17,12 @@ static constexpr uint16_rc KERL_CONNECTION_TIMEOUT {60000};
 
 class Kerl {
     public:
-        Kerl(const uint8_rc, const WifiCredential*)              noexcept;
+        Kerl(const uint8_rc, const WifiCredential*)             noexcept;
         void init()                                             noexcept;
-        uint8_rc connectWebKeepAlive()                           noexcept;
-        uint8_rc connectToAnyNetwork()                           noexcept;
+        uint8_rc connectWebKeepAlive()                          noexcept;
+        uint8_rc connectToAnyNetwork()                          noexcept;
         void disconnect()                                       noexcept;
-        uint8_rc connectClientKeepAlive(const WebStation*)       noexcept;
+        uint8_rc connectClientKeepAlive(const WebStation*)      noexcept;
 
         WiFiClient client;
 

@@ -32,28 +32,28 @@ static constexpr bool OFF       {false};
 
 class Phos {
     public:
-        Phos(const uint8_rc, const uint8_rc)    noexcept;
+        Phos(const uint8_rc, const uint8_rc)  noexcept;
 
         void init()                           noexcept;
         void displayUpdate()                  noexcept;
-        void setPixelColor(const uint8_rc)     noexcept;
+        void setPixelColor(const uint8_rc)    noexcept;
         void displayRGBwColors()              noexcept;
         void turnOffPixels()                  noexcept;
         void displayExactColor(const uint8_rc,
-                               const uint8_rc,
-                               const uint8_rc,
-                               const uint8_rc) noexcept;
+                              const uint8_rc,
+                              const uint8_rc,
+                              const uint8_rc) noexcept;
         void displayDot(const uint8_rc,
                         const bool,
                         const bool)           noexcept;
         bool roomToGoP(const bool,
-                       const uint8_rc)         noexcept;
+                       const uint8_rc)        noexcept;
         void updateNPCount()                  noexcept;
         bool shiftColor(const bool,
                         const uint8_rc,
                         const bool)           noexcept;
         bool crossfadeColors(const uint8_rc,
-                             const uint8_rc)   noexcept;
+                             const uint8_rc)  noexcept;
 
     private:
         Adafruit_NeoPixel pixels;

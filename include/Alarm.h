@@ -10,10 +10,10 @@
 
 class Alarm {
     public:
-        Alarm()                        noexcept;
+        Alarm()                         noexcept;
 
-        void arm()                     noexcept;
-        void disarm()                  noexcept;
+        void arm()                      noexcept;
+        void disarm()                   noexcept;
         void setHour(uint8_rc)          noexcept;
         void setMinute(uint8_rc)        noexcept;
         uint8_rc getHour()        const noexcept;

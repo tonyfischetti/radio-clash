@@ -33,7 +33,8 @@ void TickTockClock::update() {
 
     snprintf(the_time, 10, "%2d:%02d %s", display_hour, minute,
             is_pm_p ? "pm" : "am");
-    snprintf(the_temp, 6, "%2ld C", (int)round(rtc.getTemperature()));
+    snprintf(the_temp, 6, "%2ld C",
+            static_cast<int>(round(rtc.getTemperature())));
 }
 
 
@@ -46,16 +47,13 @@ void TickTockClock::setTime(DateTime _dt) {
     rtc.adjust(_dt);
 }
 
-
 char* TickTockClock::getDate() {
     return the_date;
 }
 
-
 char* TickTockClock::getTime() {
     return the_time;
 }
-
 
 char* TickTockClock::getTemp() {
     return the_temp;
@@ -87,13 +85,16 @@ uint8_rc TickTockClock::getMinute() const {
 
 void TickTockClock::setDisplayHour(uint8_rc _hour) {
     hour = _hour;
-    if (hour >= 12)
+    if (hour >= 12) {
         is_pm_p = true;
-    else
+    }
+    else {
         is_pm_p = false;
+    }
     display_hour = hour % 12;
-    if (display_hour == 0)
+    if (display_hour == 0) {
         display_hour = 12;
+    }
 }
 
 uint8_rc TickTockClock::isPm() const {
