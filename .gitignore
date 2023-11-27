@@ -6,11 +6,15 @@
 **/garb
 **/web-station-reviews.h
 
-**/build-leonardo/
-**/build-uno/
+build/
+target/
 
 compilation-text
 garb
+
+**/build-leonardo/
+**/build-uno/
+
 *.bin
 *.eep
 *.sizeok
