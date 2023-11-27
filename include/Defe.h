@@ -7,7 +7,7 @@
 #include <DFPlay.h>
 
 
-static constexpr uint8_t MAX_MP3_VOLUME {30};
+static constexpr uint8_rc MAX_MP3_VOLUME {30};
 
 // there is but one concern
 // I've just discovered
@@ -15,18 +15,18 @@ static constexpr uint8_t MAX_MP3_VOLUME {30};
 //
 // So I have to set unique epsilons/time-blocks
 // for some of the remote commands
-static constexpr uint16_t EPS_TRACK_CHANGE   { 400};
-static constexpr uint16_t EPS_PL_CHANGE      {1500};
-static constexpr uint16_t EPS_SHUFFLE_CHANGE {1500};
+static constexpr uint16_rc EPS_TRACK_CHANGE   { 400};
+static constexpr uint16_rc EPS_PL_CHANGE      {1500};
+static constexpr uint16_rc EPS_SHUFFLE_CHANGE {1500};
 
 
 class Defe {
     public:
-        Defe(const uint8_t, const char**, const uint8_t*) noexcept;
+        Defe(const uint8_rc, const char**, const uint8_rc*) noexcept;
 
         void init(Stream&)                  noexcept;
-        void startPlaylist(uint8_t)         noexcept;
-        void startAlarm(uint8_t, uint8_t)   noexcept;
+        void startPlaylist(uint8_rc)         noexcept;
+        void startAlarm(uint8_rc, uint8_rc)   noexcept;
         void stopAlarm()                    noexcept;
         void previousTrack()                noexcept;
         void nextTrack()                    noexcept;
@@ -38,7 +38,7 @@ class Defe {
         void shuffleOff()                   noexcept;
         void shuffleOn()                    noexcept;
         void toggleShuffle()                noexcept;
-        void setVolume(uint8_t)             noexcept;
+        void setVolume(uint8_rc)             noexcept;
         void volumeDown()                   noexcept;
         void volumeUp()                     noexcept;
         void pause()                        noexcept;
@@ -47,39 +47,39 @@ class Defe {
         void manage()                       noexcept;
         void dumpInfo()                     noexcept;
 
-        const uint8_t getPlaylistIndex()     const noexcept;
+        const uint8_rc getPlaylistIndex()     const noexcept;
         const char* getPlaylistName()        const noexcept;
-        const char* getPlaylistName(uint8_t) const noexcept;
-        const uint8_t getTrackNum()          const noexcept;
-        const uint8_t getNumTracks()         const noexcept;
-        const uint8_t getVolume()            const noexcept;
-        const uint8_t getNumPlaylists()      const noexcept;
+        const char* getPlaylistName(uint8_rc) const noexcept;
+        const uint8_rc getTrackNum()          const noexcept;
+        const uint8_rc getNumTracks()         const noexcept;
+        const uint8_rc getVolume()            const noexcept;
+        const uint8_rc getNumPlaylists()      const noexcept;
 
-        const uint8_t isPlaying()     const noexcept;
-        const uint8_t isStopped()     const noexcept;
-        const uint8_t isOnRepeat()    const noexcept;
-        const uint8_t isOnShuffle()   const noexcept;
+        const uint8_rc isPlaying()     const noexcept;
+        const uint8_rc isStopped()     const noexcept;
+        const uint8_rc isOnRepeat()    const noexcept;
+        const uint8_rc isOnShuffle()   const noexcept;
 
     private:
-        const uint8_t NUM_PLAYLISTS;
+        const uint8_rc NUM_PLAYLISTS;
         const char** PLAYLIST_NAMES;
-        const uint8_t* PLAYLIST_LENGTHS;
+        const uint8_rc* PLAYLIST_LENGTHS;
         Stream* stream;
         DFPlay MP3Player;
-        uint8_t num_folders;
-        uint8_t folder;
-        uint8_t volume;
-        uint8_t track;
-        uint8_t num_tracks;
-        uint8_t* queue;
+        uint8_rc num_folders;
+        uint8_rc folder;
+        uint8_rc volume;
+        uint8_rc track;
+        uint8_rc num_tracks;
+        uint8_rc* queue;
         char playlist_name[17];
-        uint8_t repeat_p;
-        uint8_t shuffle_p;
-        uint8_t playing_p;
-        uint8_t stopped_p;
-        uint8_t paused_p;
-        uint8_t play_pending_p;
-        uint8_t alarm_sounding_p;
+        uint8_rc repeat_p;
+        uint8_rc shuffle_p;
+        uint8_rc playing_p;
+        uint8_rc stopped_p;
+        uint8_rc paused_p;
+        uint8_rc play_pending_p;
+        uint8_rc alarm_sounding_p;
 
         void make_seq_queue()       noexcept;
         void shuffle_queue()        noexcept;

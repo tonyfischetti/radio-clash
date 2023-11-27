@@ -3,7 +3,7 @@
 
 // This is the second step (see ./remote_codes.h)
 
-enum class RemCom : uint8_t {
+enum class RemCom : uint8_rc {
     tv_power,
     source,
     red_power,

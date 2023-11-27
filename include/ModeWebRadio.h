@@ -15,33 +15,33 @@
 #define CURRENT_STATION web_stations[current_station_index]
 
 // TODO: try 32 and 128!
-static constexpr uint8_t MP3BUFFERSIZE        {64};
-static constexpr uint8_t MAX_WEBRADIO_VOLUME {100};
+static constexpr uint8_rc MP3BUFFERSIZE        {64};
+static constexpr uint8_rc MAX_WEBRADIO_VOLUME {100};
 
 
 class ModeWebRadio final : public LBMode {
     public:
         ModeWebRadio(VS1053&, Kerl&, Sixteen&, const WebStation**,
-                     const uint8_t, AudioController&) noexcept;
+                     const uint8_rc, AudioController&) noexcept;
 
         const char* getModeName()  const noexcept override;
         const bool isAudioNeeder() const noexcept override;
 
-        uint8_t init()           noexcept;
-        uint8_t engage()         noexcept override;
-        uint8_t suspend()        noexcept override;
-        uint8_t tick()           noexcept override;
-        uint8_t reCw()           noexcept override;
-        uint8_t reCcw()          noexcept override;
-        uint8_t rePress()        noexcept override;
-        uint8_t remOK()          noexcept override;
-        uint8_t remCircleLeft()  noexcept override;
-        uint8_t remCircleRight() noexcept override;
-        uint8_t remRewind()      noexcept override;
-        uint8_t remFastForward() noexcept override;
-        uint8_t remVolumeUp()    noexcept override;
-        uint8_t remVolumeDown()  noexcept override;
-        uint8_t display()        noexcept override;
+        uint8_rc init()           noexcept;
+        uint8_rc engage()         noexcept override;
+        uint8_rc suspend()        noexcept override;
+        uint8_rc tick()           noexcept override;
+        uint8_rc reCw()           noexcept override;
+        uint8_rc reCcw()          noexcept override;
+        uint8_rc rePress()        noexcept override;
+        uint8_rc remOK()          noexcept override;
+        uint8_rc remCircleLeft()  noexcept override;
+        uint8_rc remCircleRight() noexcept override;
+        uint8_rc remRewind()      noexcept override;
+        uint8_rc remFastForward() noexcept override;
+        uint8_rc remVolumeUp()    noexcept override;
+        uint8_rc remVolumeDown()  noexcept override;
+        uint8_rc display()        noexcept override;
 
         const char* mode_name {"Web Radio Mode"};
 
@@ -51,21 +51,21 @@ class ModeWebRadio final : public LBMode {
         Kerl& kerl;
         Sixteen& sixteen;
         const WebStation** web_stations;
-        const uint8_t NUM_WEBSTATIONS;
+        const uint8_rc NUM_WEBSTATIONS;
         AudioController& jefa;
 
-        uint64_t webstation_select_time;
-        const uint16_t WEBSTATION_SELECT_TIMEOUT {5000};
+        uint64_rc webstation_select_time;
+        const uint16_rc WEBSTATION_SELECT_TIMEOUT {5000};
 
-        uint8_t webstation_select_index;
+        uint8_rc webstation_select_index;
 
         uint8_t mp3buff[MP3BUFFERSIZE];
-        uint8_t volume;
-        uint8_t initialized_p;
+        uint8_rc volume;
+        uint8_rc initialized_p;
 
-        uint8_t suspended_p;
+        uint8_rc suspended_p;
         bool is_engaged_p;
 
-        uint8_t current_station_index;
+        uint8_rc current_station_index;
 };
 

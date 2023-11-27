@@ -23,7 +23,7 @@ const char* ModeAlarm::getModeName() const {
     return mode_name;
 }
 
-uint8_t ModeAlarm::tick() {
+uint8_rc ModeAlarm::tick() {
     if (set_alarm_time &&
         (millis() - set_alarm_time) > SET_ALARM_TIMEOUT)
         set_alarm_time = 0;
@@ -51,7 +51,7 @@ uint8_t ModeAlarm::tick() {
     return 0;
 }
 
-const uint8_t ModeAlarm::isSounding() const {
+const uint8_rc ModeAlarm::isSounding() const {
     return alarm_sounding_p;
 }
 
@@ -73,7 +73,7 @@ void ModeAlarm::turnOffAlarm() {
     defe.stopAlarm();
 }
 
-uint8_t ModeAlarm::reCw() {
+uint8_rc ModeAlarm::reCw() {
     deebug("alarm mode", "rcCw");
     if (set_alarm_time) {
         deebug("alarm mode", "  while in setting mode");
@@ -102,7 +102,7 @@ uint8_t ModeAlarm::reCw() {
     return true;
 }
 
-uint8_t ModeAlarm::reCcw() {
+uint8_rc ModeAlarm::reCcw() {
     deebug("alarm mode", "rcCcw");
     if (set_alarm_time) {
         deebug("alarm mode", "  while in setting mode");
@@ -131,7 +131,7 @@ uint8_t ModeAlarm::reCcw() {
     return true;
 }
 
-uint8_t ModeAlarm::rePress() {
+uint8_rc ModeAlarm::rePress() {
     deebug("alarm mode", "rePress()");
     if (isSounding()) {
         deebug("alarm mode", "    sounding but turning off");
@@ -185,22 +185,22 @@ uint8_t ModeAlarm::rePress() {
     return 0;
 }
 
-uint8_t ModeAlarm::remOK() {
+uint8_rc ModeAlarm::remOK() {
     deebug("alarm mode", "remOK() is going to masquerade as a rePress");
     return rePress();
 }
 
-uint8_t ModeAlarm::remCircleLeft() {
+uint8_rc ModeAlarm::remCircleLeft() {
     deebug("alarm mode", "remCircleLeft() is going to masquerade as a reCcw");
     return reCcw();
 }
 
-uint8_t ModeAlarm::remCircleRight() {
+uint8_rc ModeAlarm::remCircleRight() {
     deebug("alarm mode", "remCircleRight() is going to masquerade as a reCw");
     return reCw();
 }
 
-uint8_t ModeAlarm::display() {
+uint8_rc ModeAlarm::display() {
     if (!set_alarm_time) {
         snprintf(sixteen.line0, 17, "Alarm mode               ");
         snprintf(sixteen.line1, 17, "%2d:%02d %s %s           ",

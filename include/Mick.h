@@ -12,7 +12,7 @@
 
 class Mick {
     public:
-        Mick(const uint8_t, const uint16_t) noexcept;
+        Mick(const uint8_rc, const uint16_rc) noexcept;
 
         void init() noexcept;
         RemCom update() noexcept;
@@ -21,7 +21,7 @@ class Mick {
         }
 
     private:
-        const uint8_t pin;
-        const uint8_t EPSILON;
+        const uint8_rc pin;
+        const uint8_rc EPSILON;
 };
 

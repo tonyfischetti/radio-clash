@@ -17,16 +17,16 @@ class ModeTime final : public LBMode {
 
         const char* getModeName() const noexcept override;
 
-        uint8_t tick()           noexcept;
-        uint8_t reCw()           noexcept override;
-        uint8_t reCcw()          noexcept override;
-        uint8_t rePress()        noexcept override;
+        uint8_rc tick()           noexcept;
+        uint8_rc reCw()           noexcept override;
+        uint8_rc reCcw()          noexcept override;
+        uint8_rc rePress()        noexcept override;
         /*
-        uint8_t remOK()          noexcept override;
-        uint8_t remCircleLeft()  noexcept override;
-        uint8_t remCircleRight() noexcept override;
+        uint8_rc remOK()          noexcept override;
+        uint8_rc remCircleLeft()  noexcept override;
+        uint8_rc remCircleRight() noexcept override;
         */
-        uint8_t display()        noexcept override;
+        uint8_rc display()        noexcept override;
 
         const char* mode_name {"Time mode"};
 
@@ -37,20 +37,20 @@ class ModeTime final : public LBMode {
 
         elapsedMillis blink_timer;
 
-        uint64_t set_time_time;
+        uint64_rc set_time_time;
 
-        const uint32_t SET_TIME_TIMEOUT = 5000;
-        const uint16_t BLINK_FREQUENCY = 500;
+        const uint32_rc SET_TIME_TIMEOUT = 5000;
+        const uint16_rc BLINK_FREQUENCY = 500;
 
-        uint16_t selected_year;
-        uint8_t  selected_month;
-        uint8_t  selected_day;
-        uint8_t  selected_hour;
-        uint8_t  selected_minute;
-        uint8_t  selected_pm_p;
+        uint16_rc selected_year;
+        uint8_rc  selected_month;
+        uint8_rc  selected_day;
+        uint8_rc  selected_hour;
+        uint8_rc  selected_minute;
+        uint8_rc  selected_pm_p;
 
-        uint8_t selection_bookmark;
+        uint8_rc selection_bookmark;
         
-        uint8_t blink_on_p;
+        uint8_rc blink_on_p;
 };
 

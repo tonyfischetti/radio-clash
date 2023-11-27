@@ -19,16 +19,16 @@ class ModeAlarm final : public LBMode {
                   Defe&, AudioController&) noexcept;
 
         const char* getModeName()   const noexcept override;
-        uint8_t tick()                    noexcept override;
-        uint8_t reCw()                    noexcept override;
-        uint8_t reCcw()                   noexcept override;
-        uint8_t rePress()                 noexcept override;
-        uint8_t remOK()                   noexcept override;
-        uint8_t remCircleLeft()           noexcept override;
-        uint8_t remCircleRight()          noexcept override;
-        uint8_t display()                 noexcept override;
+        uint8_rc tick()                    noexcept override;
+        uint8_rc reCw()                    noexcept override;
+        uint8_rc reCcw()                   noexcept override;
+        uint8_rc rePress()                 noexcept override;
+        uint8_rc remOK()                   noexcept override;
+        uint8_rc remCircleLeft()           noexcept override;
+        uint8_rc remCircleRight()          noexcept override;
+        uint8_rc display()                 noexcept override;
 
-        const uint8_t isSounding() const noexcept;
+        const uint8_rc isSounding() const noexcept;
         void soundAlarm()                noexcept;
         void turnOffAlarm()              noexcept;
 
@@ -43,22 +43,22 @@ class ModeAlarm final : public LBMode {
 
         elapsedMillis blink_timer;
 
-        uint64_t set_alarm_time;
+        uint64_rc set_alarm_time;
 
-        const uint32_t SET_ALARM_TIMEOUT {5000};
-        const uint16_t BLINK_FREQUENCY    {500};
+        const uint32_rc SET_ALARM_TIMEOUT {5000};
+        const uint16_rc BLINK_FREQUENCY    {500};
 
-        uint8_t selected_hour;
-        uint8_t selected_minute;
-        uint8_t selected_pm_p;
-        uint8_t selected_armed_p;
+        uint8_rc selected_hour;
+        uint8_rc selected_minute;
+        uint8_rc selected_pm_p;
+        uint8_rc selected_armed_p;
 
-        uint8_t selection_bookmark;
+        uint8_rc selection_bookmark;
         
-        uint8_t blink_on_p;
+        uint8_rc blink_on_p;
 
-        uint8_t alarm_sounding_p;
-        uint64_t time_alarm_sounded;
-        uint8_t reupped_alarm_p;
+        uint8_rc alarm_sounding_p;
+        uint64_rc time_alarm_sounded;
+        uint8_rc reupped_alarm_p;
 };
 

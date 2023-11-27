@@ -14,19 +14,19 @@ class Alarm {
 
         void arm()                     noexcept;
         void disarm()                  noexcept;
-        void setHour(uint8_t)          noexcept;
-        void setMinute(uint8_t)        noexcept;
-        uint8_t getHour()        const noexcept;
-        uint8_t getDisplayHour() const noexcept;
-        uint8_t getMinute()      const noexcept;
-        uint8_t isPm()           const noexcept;
-        uint8_t isArmed()        const noexcept;
+        void setHour(uint8_rc)          noexcept;
+        void setMinute(uint8_rc)        noexcept;
+        uint8_rc getHour()        const noexcept;
+        uint8_rc getDisplayHour() const noexcept;
+        uint8_rc getMinute()      const noexcept;
+        uint8_rc isPm()           const noexcept;
+        uint8_rc isArmed()        const noexcept;
 
     private:
-        uint8_t is_armed_p;
-        uint8_t target_hour;
-        uint8_t target_display_hour;
-        uint8_t target_minute;
-        uint8_t is_pm_p;
+        uint8_rc is_armed_p;
+        uint8_rc target_hour;
+        uint8_rc target_display_hour;
+        uint8_rc target_minute;
+        uint8_rc is_pm_p;
 };
 

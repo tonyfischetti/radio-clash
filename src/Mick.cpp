@@ -2,7 +2,7 @@
 #include "Mick.h"
 
 
-Mick::Mick(const uint8_t _pin, const uint16_t _epsilon_ir) noexcept
+Mick::Mick(const uint8_rc _pin, const uint16_rc _epsilon_ir) noexcept
     : pin{_pin}, EPSILON{_epsilon_ir} {
 }
 
@@ -11,15 +11,15 @@ void Mick::init() noexcept {
 }
 
 RemCom Mick::update() noexcept {
-    static uint64_t previous_ir_signal;
-    const uint64_t current_millis {millis()};
+    static uint64_rc previous_ir_signal;
+    const uint64_rc current_millis {millis()};
 
     if (IrReceiver.decode()) {
         IrReceiver.resume();
 
-        const uint8_t  command  {IrReceiver.decodedIRData.command};
-        const uint16_t address  {IrReceiver.decodedIRData.address};
-        const uint8_t  protocol {IrReceiver.decodedIRData.protocol};
+        const uint8_rc  command  {IrReceiver.decodedIRData.command};
+        const uint16_rc address  {IrReceiver.decodedIRData.address};
+        const uint8_rc  protocol {IrReceiver.decodedIRData.protocol};
 
         deebug("mick", "received ir signal...");
         deebug("mick", "  command:  %d", command);

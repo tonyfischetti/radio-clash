@@ -8,7 +8,7 @@
 
 ModeWebRadio::ModeWebRadio(VS1053& _vica, Kerl& _kerl, Sixteen& _sixteen,
                            const WebStation** _web_stations,
-                           const uint8_t _NUM_WEBSTATIONS,
+                           const uint8_rc _NUM_WEBSTATIONS,
                            AudioController& _jefa)
     : vica                  {_vica},
       kerl                  {_kerl},
@@ -32,7 +32,7 @@ const bool ModeWebRadio::isAudioNeeder() const {
     return true;
 }
 
-uint8_t ModeWebRadio::init() {
+uint8_rc ModeWebRadio::init() {
     deebug("web radio mode", "init-ing web radio");
     SPI.begin();
     // TODO: error checking?!
@@ -44,7 +44,7 @@ uint8_t ModeWebRadio::init() {
     return 0;
 }
 
-uint8_t ModeWebRadio::engage() {
+uint8_rc ModeWebRadio::engage() {
     if (is_engaged_p) {
         deebug("web radio mode", "engaged called but already engaged");
         return 0;
@@ -67,7 +67,7 @@ uint8_t ModeWebRadio::engage() {
     return 0;
 }
 
-uint8_t ModeWebRadio::suspend() {
+uint8_rc ModeWebRadio::suspend() {
     // TODO: TURN OFF WIFI?!
     kerl.disconnect();
     suspended_p = 1;
@@ -75,7 +75,7 @@ uint8_t ModeWebRadio::suspend() {
     return false;
 }
 
-uint8_t ModeWebRadio::tick() {
+uint8_rc ModeWebRadio::tick() {
 
     if (suspended_p)
         return 1;
@@ -107,7 +107,7 @@ uint8_t ModeWebRadio::tick() {
     return 0;
 }
 
-uint8_t ModeWebRadio::reCw() {
+uint8_rc ModeWebRadio::reCw() {
     deebug("web radio mode", "reCw()");
     if (webstation_select_time) {
         deebug("web radio mode", "  (while in webstation select mode)");
@@ -120,7 +120,7 @@ uint8_t ModeWebRadio::reCw() {
     return true;
 }
 
-uint8_t ModeWebRadio::reCcw() {
+uint8_rc ModeWebRadio::reCcw() {
     deebug("web radio mode", "reCcw()");
     if (webstation_select_time) {
         deebug("web radio mode", "  (while in webstation select mode)");
@@ -133,7 +133,7 @@ uint8_t ModeWebRadio::reCcw() {
     return true;
 }
 
-uint8_t ModeWebRadio::rePress() {
+uint8_rc ModeWebRadio::rePress() {
     deebug("web radio mode", "pressed!");
     // if not already in webstation select mode
     if (!webstation_select_time) {
@@ -151,22 +151,22 @@ uint8_t ModeWebRadio::rePress() {
     return true;
 }
 
-uint8_t ModeWebRadio::remOK() {
+uint8_rc ModeWebRadio::remOK() {
     deebug("web radio mode", "remOK() is going to masquerade as a rePress");
     return rePress();
 }
 
-uint8_t ModeWebRadio::remCircleLeft() {
+uint8_rc ModeWebRadio::remCircleLeft() {
     deebug("web radio mode", "remCircleLeft() is going to masquerade as a reCcw");
     return reCcw();
 }
 
-uint8_t ModeWebRadio::remCircleRight() {
+uint8_rc ModeWebRadio::remCircleRight() {
     deebug("web radio mode", "remCircleRight() is going to masquerade as a reCw");
     return reCw();
 }
 
-uint8_t ModeWebRadio::remRewind() {
+uint8_rc ModeWebRadio::remRewind() {
     deebug("web radio mode", "going back a station");
     if (current_station_index == 0)
         return 1;
@@ -174,7 +174,7 @@ uint8_t ModeWebRadio::remRewind() {
     --current_station_index;
 }
 
-uint8_t ModeWebRadio::remFastForward() {
+uint8_rc ModeWebRadio::remFastForward() {
     deebug("web radio mode", "going forward a station");
     if (current_station_index == (NUM_WEBSTATIONS - 1))
         return 1;
@@ -182,7 +182,7 @@ uint8_t ModeWebRadio::remFastForward() {
     ++current_station_index;
 }
 
-uint8_t ModeWebRadio::remVolumeUp() {
+uint8_rc ModeWebRadio::remVolumeUp() {
     if (volume == MAX_WEBRADIO_VOLUME)
         return 1;
     deebug("web radio mode", "turning volume up");
@@ -190,7 +190,7 @@ uint8_t ModeWebRadio::remVolumeUp() {
     vica.setVolume(volume);
 }
 
-uint8_t ModeWebRadio::remVolumeDown() {
+uint8_rc ModeWebRadio::remVolumeDown() {
     deebug("MWR", "volume down");
     if (volume == 0)
         return 1;
@@ -200,7 +200,7 @@ uint8_t ModeWebRadio::remVolumeDown() {
 }
 
 // TODO TODO TODO: have it display error message (if there's an error)
-uint8_t ModeWebRadio::display() {
+uint8_rc ModeWebRadio::display() {
     // if it's not in webstation select mode
     if (!webstation_select_time) {
         snprintf(sixteen.line0, 17, "%s                 ",

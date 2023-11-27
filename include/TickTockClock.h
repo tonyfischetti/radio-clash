@@ -12,19 +12,19 @@ class TickTockClock {
         TickTockClock()                       noexcept;
         void init()                           noexcept;
         void update()                         noexcept;
-        uint8_t lostPowerP()                  noexcept;
+        uint8_rc lostPowerP()                  noexcept;
         void setTime(DateTime)                noexcept;
         char* getDate()                       noexcept;
         char* getTime()                       noexcept;
         char* getTemp()                       noexcept;
-        uint16_t getYear()              const noexcept;
-        uint8_t getMonth()              const noexcept;
-        uint8_t getDay()                const noexcept;
-        uint8_t getHour()               const noexcept;
-        uint8_t getDisplayHour()        const noexcept;
-        uint8_t getMinute()             const noexcept;
-        void setDisplayHour(uint8_t)          noexcept;
-        uint8_t isPm()                  const noexcept;
+        uint16_rc getYear()              const noexcept;
+        uint8_rc getMonth()              const noexcept;
+        uint8_rc getDay()                const noexcept;
+        uint8_rc getHour()               const noexcept;
+        uint8_rc getDisplayHour()        const noexcept;
+        uint8_rc getMinute()             const noexcept;
+        void setDisplayHour(uint8_rc)          noexcept;
+        uint8_rc isPm()                  const noexcept;
 
     private:
         DateTime now;
@@ -34,12 +34,12 @@ class TickTockClock {
         char the_time[9];
         char the_temp[5];
 
-        uint16_t year;
-        uint8_t month;
-        uint8_t day;
-        uint8_t hour;
-        uint8_t display_hour;
-        uint8_t minute;
-        uint8_t is_pm_p;
+        uint16_rc year;
+        uint8_rc month;
+        uint8_rc day;
+        uint8_rc hour;
+        uint8_rc display_hour;
+        uint8_rc minute;
+        uint8_rc is_pm_p;
 };
 

@@ -19,19 +19,19 @@ void Alarm::disarm() noexcept {
     is_armed_p = false;
 }
 
-uint8_t Alarm::getHour() const noexcept {
+uint8_rc Alarm::getHour() const noexcept {
     return target_hour;
 }
 
-uint8_t Alarm::getDisplayHour() const noexcept {
+uint8_rc Alarm::getDisplayHour() const noexcept {
     return target_display_hour;
 }
 
-uint8_t Alarm::getMinute() const noexcept {
+uint8_rc Alarm::getMinute() const noexcept {
     return target_minute;
 }
 
-void Alarm::setHour(uint8_t _hour) noexcept {
+void Alarm::setHour(uint8_rc _hour) noexcept {
     target_hour = _hour;
     if (target_hour >= 12)
         is_pm_p = true;
@@ -42,15 +42,15 @@ void Alarm::setHour(uint8_t _hour) noexcept {
         target_display_hour = 12;
 }
 
-void Alarm::setMinute(uint8_t _minute) noexcept {
+void Alarm::setMinute(uint8_rc _minute) noexcept {
     target_minute = _minute;
 }
 
-uint8_t Alarm::isPm() const noexcept {
+uint8_rc Alarm::isPm() const noexcept {
     return is_pm_p;
 }
 
-uint8_t Alarm::isArmed() const noexcept {
+uint8_rc Alarm::isArmed() const noexcept {
     return is_armed_p;
 }
 

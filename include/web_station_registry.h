@@ -3,7 +3,7 @@
 
 #include "WebStation.h"
 
-constexpr uint8_t NUM_WEBSTATIONS {71};
+constexpr uint8_rc NUM_WEBSTATIONS {71};
 
 
 

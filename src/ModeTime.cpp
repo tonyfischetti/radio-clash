@@ -13,7 +13,7 @@ const char* ModeTime::getModeName() const {
     return mode_name;
 }
 
-uint8_t ModeTime::tick() {
+uint8_rc ModeTime::tick() {
     rtc.update();
     if (set_time_time &&
         (millis() - set_time_time) > SET_TIME_TIMEOUT)
@@ -21,7 +21,7 @@ uint8_t ModeTime::tick() {
     return true;
 }
 
-uint8_t ModeTime::reCw() {
+uint8_rc ModeTime::reCw() {
     deebug("time mode", "rcCw");
     if (set_time_time) {
         deebug("time mode", "  while in setting mode");
@@ -56,7 +56,7 @@ uint8_t ModeTime::reCw() {
     return true;
 }
 
-uint8_t ModeTime::reCcw() {
+uint8_rc ModeTime::reCcw() {
     deebug("time mode", "rcCcw");
     if (set_time_time) {
         deebug("time mode", "  while in setting mode");
@@ -92,7 +92,7 @@ uint8_t ModeTime::reCcw() {
 }
 
 // TODO TODO: can this be made more efficient?
-uint8_t ModeTime::rePress() {
+uint8_rc ModeTime::rePress() {
     deebug("time mode", "pressed");
     if (!set_time_time) {
         deebug("mp3 mode", "  entering time set mode");
@@ -152,23 +152,23 @@ uint8_t ModeTime::rePress() {
 }
 
 /*
-uint8_t ModeTime::remOK() {
+uint8_rc ModeTime::remOK() {
     deebug("time mode", "remOK() is going to masquerade as a rePress");
     return rePress();
 }
 
-uint8_t ModeTime::remCircleLeft() {
+uint8_rc ModeTime::remCircleLeft() {
     deebug("time mode", "remCircleLeft() is going to masquerade as a reCcw");
     return reCcw();
 }
 
-uint8_t ModeTime::remCircleRight() {
+uint8_rc ModeTime::remCircleRight() {
     deebug("time mode", "remCircleRight() is going to masquerade as a reCw");
     return reCw();
 }
 */
 
-uint8_t ModeTime::display() {
+uint8_rc ModeTime::display() {
     if (!set_time_time) {
         snprintf(sixteen.line0, 17, "   %s        ", rtc.getDate());
         snprintf(sixteen.line1, 17, " %s  %s      ", rtc.getTime(),

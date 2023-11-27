@@ -7,7 +7,7 @@
 
 class AudioController {
     public:
-        AudioController(const uint8_t, const uint8_t) noexcept;
+        AudioController(const uint8_rc, const uint8_rc) noexcept;
 
         void init()                 noexcept;
 
@@ -16,7 +16,7 @@ class AudioController {
         void turnOnFMAudio()        noexcept;
 
     private:
-        const uint8_t MUX_CONTROL_A;
-        const uint8_t MUX_CONTROL_B;
+        const uint8_rc MUX_CONTROL_A;
+        const uint8_rc MUX_CONTROL_B;
 };
 

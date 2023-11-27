@@ -21,7 +21,7 @@
 
 /********** TODO TODO TODO TODO ***************/
 
-// you know what? tracks should only be uint8_t
+// you know what? tracks should only be uint8_rc
 // the lisp script can skip anything over that
 // Or, _at least, it can be a change-able typedef
 
@@ -35,9 +35,9 @@
 // use more `const`s in constructors, etc...
 
 
-// TODO TODO: add an `uint8_t isActive()` member function
+// TODO TODO: add an `uint8_rc isActive()` member function
 //            to decide whether to tick it
-//            or `uint8_t isRunning()`
+//            or `uint8_rc isRunning()`
 
 // TODO: oops, it looks like the pot1 and pot2 affect pot0
 
@@ -138,41 +138,41 @@
  * GLOBALS that would have been macros                                  */
 
 // number of milliseconds to wait for buttons, etc. to settle
-static constexpr uint16_t EPSILON_IR {150};
+static constexpr uint16_rc EPSILON_IR {150};
 
 // time-block after mode change
-static constexpr uint16_t EPS_MODE_CHANGE {2000};
+static constexpr uint16_rc EPS_MODE_CHANGE {2000};
 
-static constexpr uint16_t MODE_SELECT_TIMEOUT {5000};
+static constexpr uint16_rc MODE_SELECT_TIMEOUT {5000};
 
-static constexpr uint8_t ADDRESS_I2C_AMBER   {0x70};
-static constexpr uint8_t ADDRESS_I2C_SIXTEEN {0x3F};
+static constexpr uint8_rc ADDRESS_I2C_AMBER   {0x70};
+static constexpr uint8_rc ADDRESS_I2C_SIXTEEN {0x3F};
 
 // milliseconds between polling different sensors
-static constexpr uint16_t CHECK_IR_EVERY      {20};
-static constexpr uint16_t CHECK_LCD_EVERY     {50};
-static constexpr uint16_t CHECK_CLOCK_EVERY  {100};
-static constexpr uint16_t CHECK_POT_EVERY    {300};
-static constexpr uint16_t CHECK_RE_EVERY       {5};
-static constexpr uint16_t CHECK_AMBER_EVERY  {500};
-static constexpr uint16_t CHECK_ALARM_EVERY {1000};
+static constexpr uint16_rc CHECK_IR_EVERY      {20};
+static constexpr uint16_rc CHECK_LCD_EVERY     {50};
+static constexpr uint16_rc CHECK_CLOCK_EVERY  {100};
+static constexpr uint16_rc CHECK_POT_EVERY    {300};
+static constexpr uint16_rc CHECK_RE_EVERY       {5};
+static constexpr uint16_rc CHECK_AMBER_EVERY  {500};
+static constexpr uint16_rc CHECK_ALARM_EVERY {1000};
 // TODO TODO: what are the consequences of making this
 //            more or less frequent?
 
-static constexpr uint8_t NUM_NEOPIXELS      {64};
+static constexpr uint8_rc NUM_NEOPIXELS      {64};
 
 // TODO: rethink this
 // TODO: bad but 2 is unstable
-static constexpr uint8_t ANALOG_DEV_TOLERANCE {4};
+static constexpr uint8_rc ANALOG_DEV_TOLERANCE {4};
 
 // TODO ACHTUNG NtS
-static constexpr uint8_t NUM_MODES      {4};
+static constexpr uint8_rc NUM_MODES      {4};
 
 // TODO: use enum class
-static constexpr uint8_t INDEX_MP3      {0};
-static constexpr uint8_t INDEX_TIME     {1};
-static constexpr uint8_t INDEX_ALARM    {2};
-static constexpr uint8_t INDEX_WEBRADIO {3};
+static constexpr uint8_rc INDEX_MP3      {0};
+static constexpr uint8_rc INDEX_TIME     {1};
+static constexpr uint8_rc INDEX_ALARM    {2};
+static constexpr uint8_rc INDEX_WEBRADIO {3};
 
 
 /* -----------------------------------------------------------------------
@@ -209,15 +209,15 @@ static ModeWebRadio      webradio_mode(vica, kerl, sixteen, WEB_STATIONS,
 static LBMode *M[NUM_MODES] = { &mp3_mode, &time_mode, &alarm_mode, &webradio_mode };
 
 // holds the index of the current active mode
-static uint8_t CMI {INDEX_MP3};
+static uint8_rc CMI {INDEX_MP3};
 
 // holds the index of the current mode using the audio
-static uint8_t AMI {CMI};
+static uint8_rc AMI {CMI};
 
 // holds the index of the mode that may be switched to
-static uint8_t TMI {CMI};
+static uint8_rc TMI {CMI};
 
-static uint64_t mode_select_time {0};
+static uint64_rc mode_select_time {0};
 
 static bool lcd_on_p {true};
 
@@ -238,10 +238,10 @@ static elapsedMillis alarm_timer;
 /* -----------------------------------------------------------------------
  * (SOME) PROTOTYPES                                                    */
 
-uint8_t analog_changed_sufficiently_p(const uint8_t, const uint8_t,
-                                      const uint8_t) noexcept;
+uint8_rc analog_changed_sufficiently_p(const uint8_t, const uint8_t,
+                                      const uint8_rc) noexcept;
 
-void change_mode(const uint8_t new_index) noexcept;
+void change_mode(const uint8_rc new_index) noexcept;
 
 
 /* -----------------------------------------------------------------------
@@ -425,9 +425,9 @@ void update_rotary_encoder() noexcept {
     /******* ANALOG *******/
 
 void update_pot0() noexcept {
-    static uint8_t previous_vol0;
+    static uint8_rc previous_vol0;
     // TODO: change resolution
-    const uint8_t current_vol0 = map(analogRead(POT0), 0, 4095, 30, 0);
+    const uint8_rc current_vol0 = map(analogRead(POT0), 0, 4095, 30, 0);
     if (analog_changed_sufficiently_p(previous_vol0, current_vol0,
                                       ANALOG_DEV_TOLERANCE)) {
         deebug("update_pot0", "pot changed sufficiently");
@@ -439,9 +439,9 @@ void update_pot0() noexcept {
 }
 
 void update_pot1() noexcept {
-    static uint8_t previous_vol1;
+    static uint8_rc previous_vol1;
     // TODO: change resolution
-    const uint8_t current_vol1 = map(analogRead(POT1), 0, 4095, 30, 0);
+    const uint8_rc current_vol1 = map(analogRead(POT1), 0, 4095, 30, 0);
     if (analog_changed_sufficiently_p(previous_vol1, current_vol1,
                                       ANALOG_DEV_TOLERANCE)) {
         deebug("update_pot1", "pot changed sufficiently");
@@ -449,9 +449,9 @@ void update_pot1() noexcept {
 }
 
 void update_pot2() noexcept {
-    static uint8_t previous_vol2;
+    static uint8_rc previous_vol2;
     // TODO: change resolution
-    const uint8_t current_vol2 = map(analogRead(POT2), 0, 4095, 30, 0);
+    const uint8_rc current_vol2 = map(analogRead(POT2), 0, 4095, 30, 0);
     if (analog_changed_sufficiently_p(previous_vol2, current_vol2,
                                       ANALOG_DEV_TOLERANCE)) {
         deebug("update_pot2", "pot changed sufficiently");
@@ -482,8 +482,8 @@ void show_mode_select() noexcept {
  * HELPER FUNCTIONS                                                     */
 
 bool ok_to_change_modes_p() {
-    static uint64_t previous;
-    const uint64_t current {millis()};
+    static uint64_rc previous;
+    const uint64_rc current {millis()};
     if ((current - previous) > EPS_MODE_CHANGE) {
         previous = current;
         return true;
@@ -491,7 +491,7 @@ bool ok_to_change_modes_p() {
     return false;
 }
 
-void change_mode(const uint8_t new_index) noexcept {
+void change_mode(const uint8_rc new_index) noexcept {
     if (!ok_to_change_modes_p()) {
         deebug("main", "directive to change modes belayed");
         TMI = CMI;
@@ -511,17 +511,17 @@ void change_mode(const uint8_t new_index) noexcept {
     CURRENT_MODE->engage();
 }
 
-uint8_t analog_changed_sufficiently_p(const uint8_t previous,
-                                      const uint8_t current,
-                                      const uint8_t TOLERANCE =
-                                        ANALOG_DEV_TOLERANCE) noexcept {
+uint8_rc analog_changed_sufficiently_p(const uint8_t previous,
+                                       const uint8_t current,
+                                       const uint8_rc TOLERANCE =
+                                       ANALOG_DEV_TOLERANCE) noexcept {
     if (abs(current - previous) > TOLERANCE)
         return true;
     return false;
 }
 
 
-void update_all_devices(uint8_t force_update_p=false) noexcept {
+void update_all_devices(uint8_rc force_update_p=false) noexcept {
     if (ir_timer > CHECK_IR_EVERY || force_update_p) {
         update_ir();
         ir_timer = 0;

@@ -2,7 +2,7 @@
 #include "Amber.h"
 
 
-Amber::Amber(const uint8_t _address, TickTockClock& _rtc) noexcept
+Amber::Amber(const uint8_rc _address, TickTockClock& _rtc) noexcept
     : rtc         {_rtc},
       seg_address {_address},
       brightness  {15} {
@@ -19,7 +19,7 @@ void Amber::update() noexcept {
     seg7.writeDisplay();
 }
 
-void Amber::setBrightness(const uint8_t new_brightness) noexcept {
+void Amber::setBrightness(const uint8_rc new_brightness) noexcept {
     brightness = new_brightness;
     if (brightness > 15)
         brightness = 0;

@@ -17,10 +17,10 @@ class ModeLight final : public LBMode {
         const char* getModeName()  const noexcept override;
         const bool isAudioNeeder() const noexcept override;
 
-        uint8_t engage()  noexcept override;
-        uint8_t suspend() noexcept override;
-        uint8_t tick()    noexcept override;
-        uint8_t display() noexcept override;
+        uint8_rc engage()  noexcept override;
+        uint8_rc suspend() noexcept override;
+        uint8_rc tick()    noexcept override;
+        uint8_rc display() noexcept override;
 
         const char* mode_name {"Light Mode"};
 
@@ -28,9 +28,9 @@ class ModeLight final : public LBMode {
         Phos& phos;
         Sixteen& sixteen;
 
-        // uint64_t playlist_select_time;
-        // const uint16_t PLAYLIST_SELECT_TIMEOUT {5000};
+        // uint64_rc playlist_select_time;
+        // const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
         //
-        // uint8_t playlist_select_index;
+        // uint8_rc playlist_select_index;
 };
 

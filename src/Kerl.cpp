@@ -2,7 +2,7 @@
 #include "Kerl.h"
 
 
-Kerl::Kerl(const uint8_t _numwebcredentials,
+Kerl::Kerl(const uint8_rc _numwebcredentials,
            const WifiCredential* _wificredentials) noexcept
     : num_wifi_credentials {_numwebcredentials},
       WIFI_CREDENTIALS     {_wificredentials},
@@ -24,13 +24,13 @@ void Kerl::disconnect() noexcept {
 }
 
 // TODO: BLOCKING!!! BAD!!!! SPINNING!!!
-uint8_t Kerl::connectWebKeepAlive() noexcept {
+uint8_rc Kerl::connectWebKeepAlive() noexcept {
     // deebug("kerl", "calling connectWebKeepAlive()");
-    if (const uint8_t wstatus = WiFi.status(); wstatus != WL_CONNECTED) {
+    if (const uint8_rc wstatus = WiFi.status(); wstatus != WL_CONNECTED) {
         deebug("kerl", "  it's not connected!!");
         deebug("kerl", "  status code: +%d", wstatus);
         connected_p = 0;
-        const uint64_t began = millis();
+        const uint64_rc began = millis();
         WiFi.begin(WIFI_CREDENTIALS[using_index].ssid,
                    WIFI_CREDENTIALS[using_index].pw);
         while (WiFi.status() != WL_CONNECTED) {
@@ -47,9 +47,9 @@ uint8_t Kerl::connectWebKeepAlive() noexcept {
     return 0;
 }
 
-uint8_t Kerl::connectToAnyNetwork() noexcept {
+uint8_rc Kerl::connectToAnyNetwork() noexcept {
     deebug("kerl", "connectToAnyNetwork() called");
-    const uint16_t found = WiFi.scanNetworks();
+    const uint16_rc found = WiFi.scanNetworks();
     if (!found) {
         deebug("kerl", "  no networks found... returning error code");
         return 1;
@@ -73,7 +73,7 @@ uint8_t Kerl::connectToAnyNetwork() noexcept {
     return 1;
 }
 
-uint8_t Kerl::connectClientKeepAlive(const WebStation* astation) noexcept {
+uint8_rc Kerl::connectClientKeepAlive(const WebStation* astation) noexcept {
     if (!client.connected()) {
         deebug("kerl", "connectClientKeep... says 'not connected'");
         char* request;

@@ -2,8 +2,8 @@
 #include "AudioController.h"
 
 
-AudioController::AudioController(const uint8_t _control_a,
-                                 const uint8_t _control_b) noexcept
+AudioController::AudioController(const uint8_rc _control_a,
+                                 const uint8_rc _control_b) noexcept
     : MUX_CONTROL_A {_control_a},
       MUX_CONTROL_B {_control_b} {
 }

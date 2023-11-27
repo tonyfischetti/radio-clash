@@ -14,37 +14,37 @@ class LBMode {
         virtual const char* getModeName()  const noexcept;
         virtual const bool isAudioNeeder() const noexcept;
 
-        virtual uint8_t tick()      noexcept;
-        virtual uint8_t engage()    noexcept;
-        virtual uint8_t suspend()   noexcept;
-        virtual uint8_t reCw()      noexcept;
-        virtual uint8_t reCcw()     noexcept;
-        virtual uint8_t rePress()   noexcept;
+        virtual uint8_rc tick()      noexcept;
+        virtual uint8_rc engage()    noexcept;
+        virtual uint8_rc suspend()   noexcept;
+        virtual uint8_rc reCw()      noexcept;
+        virtual uint8_rc reCcw()     noexcept;
+        virtual uint8_rc rePress()   noexcept;
 
         /* these are reserved
-         * virtual uint8_t remTVPower();
-         * virtual uint8_t remSource();
-         * virtual uint8_t remRedPower(); */
+         * virtual uint8_rc remTVPower();
+         * virtual uint8_rc remSource();
+         * virtual uint8_rc remRedPower(); */
 
-        virtual uint8_t remOK()             noexcept;
-        virtual uint8_t remBack()           noexcept;
-        virtual uint8_t remHome()           noexcept;
-        virtual uint8_t remCircleLeft()     noexcept;
-        virtual uint8_t remCircleRight()    noexcept;
-        virtual uint8_t remMute()           noexcept;
-        virtual uint8_t remCircleUp()       noexcept;
-        virtual uint8_t remCircleDown()     noexcept;
-        virtual uint8_t remAsterisk()       noexcept;
-        virtual uint8_t remRewind()         noexcept;
-        virtual uint8_t remPlayPause()      noexcept;
-        virtual uint8_t remFastForward()    noexcept;
-        virtual uint8_t remVolumeUp()       noexcept;
-        virtual uint8_t remVolumeDown()     noexcept;
-        virtual uint8_t remChannelUp()      noexcept;
-        virtual uint8_t remChannelDown()    noexcept;
-        virtual uint8_t remNetflix()        noexcept;
-        virtual uint8_t remHulu()           noexcept;
-        virtual uint8_t display()           noexcept;
+        virtual uint8_rc remOK()             noexcept;
+        virtual uint8_rc remBack()           noexcept;
+        virtual uint8_rc remHome()           noexcept;
+        virtual uint8_rc remCircleLeft()     noexcept;
+        virtual uint8_rc remCircleRight()    noexcept;
+        virtual uint8_rc remMute()           noexcept;
+        virtual uint8_rc remCircleUp()       noexcept;
+        virtual uint8_rc remCircleDown()     noexcept;
+        virtual uint8_rc remAsterisk()       noexcept;
+        virtual uint8_rc remRewind()         noexcept;
+        virtual uint8_rc remPlayPause()      noexcept;
+        virtual uint8_rc remFastForward()    noexcept;
+        virtual uint8_rc remVolumeUp()       noexcept;
+        virtual uint8_rc remVolumeDown()     noexcept;
+        virtual uint8_rc remChannelUp()      noexcept;
+        virtual uint8_rc remChannelDown()    noexcept;
+        virtual uint8_rc remNetflix()        noexcept;
+        virtual uint8_rc remHulu()           noexcept;
+        virtual uint8_rc display()           noexcept;
 
         const bool audio_needer {false};
 

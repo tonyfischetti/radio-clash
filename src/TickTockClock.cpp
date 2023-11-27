@@ -37,7 +37,7 @@ void TickTockClock::update() {
 }
 
 
-uint8_t TickTockClock::lostPowerP() {
+uint8_rc TickTockClock::lostPowerP() {
     return rtc.lostPower();
 }
 
@@ -61,31 +61,31 @@ char* TickTockClock::getTemp() {
     return the_temp;
 }
 
-uint16_t TickTockClock::getYear() const {
+uint16_rc TickTockClock::getYear() const {
     return year;
 }
 
-uint8_t TickTockClock::getMonth() const {
+uint8_rc TickTockClock::getMonth() const {
     return month;
 }
 
-uint8_t TickTockClock::getDay() const {
+uint8_rc TickTockClock::getDay() const {
     return day;
 }
 
-uint8_t TickTockClock::getHour() const {
+uint8_rc TickTockClock::getHour() const {
     return hour;
 }
 
-uint8_t TickTockClock::getDisplayHour() const {
+uint8_rc TickTockClock::getDisplayHour() const {
     return display_hour;
 }
 
-uint8_t TickTockClock::getMinute() const {
+uint8_rc TickTockClock::getMinute() const {
     return minute;
 }
 
-void TickTockClock::setDisplayHour(uint8_t _hour) {
+void TickTockClock::setDisplayHour(uint8_rc _hour) {
     hour = _hour;
     if (hour >= 12)
         is_pm_p = true;
@@ -96,6 +96,6 @@ void TickTockClock::setDisplayHour(uint8_t _hour) {
         display_hour = 12;
 }
 
-uint8_t TickTockClock::isPm() const {
+uint8_rc TickTockClock::isPm() const {
     return is_pm_p;
 }

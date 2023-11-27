@@ -2,9 +2,9 @@
 #include "Defe.h"
 
 
-Defe::Defe(const uint8_t  _num_playlists,
+Defe::Defe(const uint8_rc  _num_playlists,
            const char**   _playlist_names,
-           const uint8_t* _playlist_lengths) noexcept
+           const uint8_rc* _playlist_lengths) noexcept
     : NUM_PLAYLISTS     {_num_playlists},
       PLAYLIST_NAMES    {_playlist_names},
       PLAYLIST_LENGTHS  {_playlist_lengths} {
@@ -25,7 +25,7 @@ void Defe::init(Stream& _stream) noexcept {
     // We can have a little dynamic memory allocation, as a treat
     // start_playlist always frees this->queue
     deebug("defe", "free heap before malloc: %ld", ESP.getFreeHeap());
-    queue = (uint8_t*) malloc(sizeof(uint8_t));
+    queue = (uint8_rc*) malloc(sizeof(uint8_rc));
     deebug("defe", "after malloc: %ld", ESP.getFreeHeap());
 }
 
@@ -37,9 +37,9 @@ void Defe::play_df_info_state() noexcept {
 void Defe::make_seq_queue() noexcept {
     deebug("defe", "making sequential queue");
     deebug("defe", "free heap before malloc: %ld", ESP.getFreeHeap());
-    queue = (uint8_t*) malloc(num_tracks * sizeof(uint8_t));
+    queue = (uint8_rc*) malloc(num_tracks * sizeof(uint8_rc));
     deebug("defe", "after malloc: %ld", ESP.getFreeHeap());
-    for (uint8_t i = 0; i < num_tracks; i++) {
+    for (uint8_rc i = 0; i < num_tracks; i++) {
         queue[i] = i+1;
     }
 }
@@ -52,21 +52,21 @@ void Defe::shuffle_queue() noexcept {
      * We ain't here to cause no trouble;
      * we're just here to do THE FISCHER-YATES SHUFFLE
      */
-    uint8_t tmp;
-    for (uint8_t i=0; i < (num_tracks-2); i++) {
-        uint8_t rn = random(i, num_tracks);
+    uint8_rc tmp;
+    for (uint8_rc i=0; i < (num_tracks-2); i++) {
+        uint8_rc rn = random(i, num_tracks);
         tmp = queue[rn];
         queue[rn] = queue[i];
         queue[i] = tmp;
     }
 #ifdef DF_DEBUG
-    for (uint8_t i = 0; i < num_tracks; i++) {
+    for (uint8_rc i = 0; i < num_tracks; i++) {
         deebug("defe", "    [%d] -> %d", i, queue[i]);
     }
 #endif
 }
 
-void Defe::startPlaylist(uint8_t _pl_number) noexcept {
+void Defe::startPlaylist(uint8_rc _pl_number) noexcept {
     deebug("defe", "starting playlist: %d", _pl_number);
     free(queue);
     folder = _pl_number;
@@ -81,13 +81,13 @@ void Defe::startPlaylist(uint8_t _pl_number) noexcept {
     play_df_info_state();
 }
 
-void Defe::startAlarm(uint8_t _pl_number, uint8_t _track_number) noexcept {
+void Defe::startAlarm(uint8_rc _pl_number, uint8_rc _track_number) noexcept {
     deebug("defe", "starting alarm");
     free(queue);
     folder = _pl_number;
     track = 1;
     deebug("defe", "free heap before malloc: %ld", ESP.getFreeHeap());
-    queue = (uint8_t*) malloc(sizeof(uint8_t));
+    queue = (uint8_rc*) malloc(sizeof(uint8_rc));
     deebug("defe", "after malloc: %ld", ESP.getFreeHeap());
     queue[0] = _track_number;
     num_tracks = 0;
@@ -105,8 +105,8 @@ void Defe::stopAlarm() noexcept {
 }
 
 bool ok_to_change_track_p(bool reset_p=true) noexcept {
-    static uint64_t previous;
-    const uint64_t current {millis()};
+    static uint64_rc previous;
+    const uint64_rc current {millis()};
     if ((current - previous) > EPS_TRACK_CHANGE) {
         if (reset_p)
             previous = current;
@@ -145,8 +145,8 @@ void Defe::nextTrack() noexcept {
 }
 
 bool ok_to_change_playlist_p(bool reset_p=true) noexcept {
-    static uint64_t previous;
-    const uint64_t current = millis();
+    static uint64_rc previous;
+    const uint64_rc current = millis();
     if ((current - previous) > EPS_PL_CHANGE) {
         if (reset_p)
             previous = current;
@@ -198,8 +198,8 @@ void Defe::toggleRepeat() noexcept {
 }
 
 bool ok_to_change_shuffle_p(bool reset_p=true) noexcept {
-    static uint64_t previous;
-    const uint64_t current = millis();
+    static uint64_rc previous;
+    const uint64_rc current = millis();
     if (((current - previous) > EPS_SHUFFLE_CHANGE) &&
         ok_to_change_playlist_p(false) &&
         ok_to_change_track_p(false)) {
@@ -237,7 +237,7 @@ void Defe::toggleShuffle() noexcept {
     startPlaylist(folder);
 }
 
-void Defe::setVolume(uint8_t _volume) noexcept {
+void Defe::setVolume(uint8_rc _volume) noexcept {
     if (alarm_sounding_p) {
         deebug("defe", "alarm sounding... rejecting volume change");
         return;
@@ -340,7 +340,7 @@ void Defe::dumpInfo() noexcept {
 #endif
 }
 
-const uint8_t Defe::getPlaylistIndex() const noexcept {
+const uint8_rc Defe::getPlaylistIndex() const noexcept {
     return folder-1;
 }
 
@@ -348,39 +348,39 @@ const char* Defe::getPlaylistName() const noexcept {
     return playlist_name;
 }
 
-const char* Defe::getPlaylistName(uint8_t specific_playlist) const noexcept {
+const char* Defe::getPlaylistName(uint8_rc specific_playlist) const noexcept {
     return (char*)PLAYLIST_NAMES[specific_playlist-1];
 }
 
-const uint8_t Defe::getTrackNum() const noexcept {
+const uint8_rc Defe::getTrackNum() const noexcept {
     return queue[track-1];
 }
 
-const uint8_t Defe::getNumTracks() const noexcept {
+const uint8_rc Defe::getNumTracks() const noexcept {
     return num_tracks;
 }
 
-const uint8_t Defe::getVolume() const noexcept {
+const uint8_rc Defe::getVolume() const noexcept {
     return volume;
 }
 
-const uint8_t Defe::getNumPlaylists() const noexcept {
+const uint8_rc Defe::getNumPlaylists() const noexcept {
     return NUM_PLAYLISTS;
 }
 
-const uint8_t Defe::isPlaying() const noexcept {
+const uint8_rc Defe::isPlaying() const noexcept {
     return playing_p;
 }
 
-const uint8_t Defe::isStopped() const noexcept {
+const uint8_rc Defe::isStopped() const noexcept {
     return stopped_p;
 }
 
-const uint8_t Defe::isOnRepeat() const noexcept {
+const uint8_rc Defe::isOnRepeat() const noexcept {
     return repeat_p;
 }
 
-const uint8_t Defe::isOnShuffle() const noexcept {
+const uint8_rc Defe::isOnShuffle() const noexcept {
     return shuffle_p;
 }
 

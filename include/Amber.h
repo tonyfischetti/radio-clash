@@ -10,17 +10,17 @@
 
 class Amber {
     public:
-        Amber(const uint8_t address, TickTockClock&) noexcept;
+        Amber(const uint8_rc address, TickTockClock&) noexcept;
 
         void init()                         noexcept;
         void update()                       noexcept;
-        void setBrightness(const uint8_t)   noexcept;
+        void setBrightness(const uint8_rc)   noexcept;
         void nextBrightness()               noexcept;
 
     private:
         Adafruit_7segment seg7;
         TickTockClock& rtc;
-        const uint8_t seg_address;
-        uint8_t brightness;
+        const uint8_rc seg_address;
+        uint8_rc brightness;
 };
 

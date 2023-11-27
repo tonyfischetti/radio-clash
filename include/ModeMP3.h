@@ -19,24 +19,24 @@ class ModeMP3 final : public LBMode {
         const bool isAudioNeeder() const noexcept override;
 
         void resume()            noexcept;
-        uint8_t engage()         noexcept override;
-        uint8_t suspend()        noexcept override;
-        uint8_t tick()           noexcept override;
-        uint8_t reCw()           noexcept override;
-        uint8_t reCcw()          noexcept override;
-        uint8_t rePress()        noexcept override;
-        uint8_t remOK()          noexcept override;
-        uint8_t remCircleLeft()  noexcept override;
-        uint8_t remCircleRight() noexcept override;
-        uint8_t remAsterisk()    noexcept override;
-        uint8_t remRewind()      noexcept override;
-        uint8_t remPlayPause()   noexcept override;
-        uint8_t remFastForward() noexcept override;
-        uint8_t remVolumeUp()    noexcept override;
-        uint8_t remVolumeDown()  noexcept override;
-        uint8_t remNetflix()     noexcept override;
-        uint8_t remHulu()        noexcept override;
-        uint8_t display()        noexcept override;
+        uint8_rc engage()         noexcept override;
+        uint8_rc suspend()        noexcept override;
+        uint8_rc tick()           noexcept override;
+        uint8_rc reCw()           noexcept override;
+        uint8_rc reCcw()          noexcept override;
+        uint8_rc rePress()        noexcept override;
+        uint8_rc remOK()          noexcept override;
+        uint8_rc remCircleLeft()  noexcept override;
+        uint8_rc remCircleRight() noexcept override;
+        uint8_rc remAsterisk()    noexcept override;
+        uint8_rc remRewind()      noexcept override;
+        uint8_rc remPlayPause()   noexcept override;
+        uint8_rc remFastForward() noexcept override;
+        uint8_rc remVolumeUp()    noexcept override;
+        uint8_rc remVolumeDown()  noexcept override;
+        uint8_rc remNetflix()     noexcept override;
+        uint8_rc remHulu()        noexcept override;
+        uint8_rc display()        noexcept override;
 
         const char* mode_name {"MP3 Mode"};
 
@@ -45,10 +45,10 @@ class ModeMP3 final : public LBMode {
         Sixteen& sixteen;
         AudioController& jefa;
 
-        uint64_t playlist_select_time;
-        const uint16_t PLAYLIST_SELECT_TIMEOUT {5000};
+        uint64_rc playlist_select_time;
+        const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
 
-        uint8_t playlist_select_index;
+        uint8_rc playlist_select_index;
 
         bool is_engaged_p;
 };

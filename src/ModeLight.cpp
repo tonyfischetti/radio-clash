@@ -17,23 +17,23 @@ const bool ModeLight::isAudioNeeder() const {
 }
 
 
-uint8_t ModeLight::engage() {
+uint8_rc ModeLight::engage() {
     deebug("light mode", "engaging");
     return true;
 }
 
-uint8_t ModeLight::suspend() {
+uint8_rc ModeLight::suspend() {
     deebug("light mode", "suspending");
     return true;
 }
 
-uint8_t ModeLight::tick() {
+uint8_rc ModeLight::tick() {
 
     return 0;
 }
 
 
-uint8_t ModeLight::display() {
+uint8_rc ModeLight::display() {
     snprintf(sixteen.line0, 17, "Light Mode");
     sixteen.update();
     return true;

@@ -24,7 +24,7 @@ void ModeMP3::resume() {
     defe.resume();
 }
 
-uint8_t ModeMP3::engage() {
+uint8_rc ModeMP3::engage() {
     if (is_engaged_p) {
         deebug("mp3 mode", "engaged called but already engaged");
         return true;
@@ -37,14 +37,14 @@ uint8_t ModeMP3::engage() {
     return true;
 }
 
-uint8_t ModeMP3::suspend() {
+uint8_rc ModeMP3::suspend() {
     deebug("mp3 mode", "suspending");
     defe.pause();
     is_engaged_p = false;
     return true;
 }
 
-uint8_t ModeMP3::tick() {
+uint8_rc ModeMP3::tick() {
     if (!is_engaged_p)
         return 1;
     // reset from playlist select mode if it times out
@@ -55,7 +55,7 @@ uint8_t ModeMP3::tick() {
     return 0;
 }
 
-uint8_t ModeMP3::reCw() {
+uint8_rc ModeMP3::reCw() {
     deebug("mp3 mode", "rcCw");
     if (playlist_select_time) {
         deebug("mp3 mode", "  while in setting mode");
@@ -68,7 +68,7 @@ uint8_t ModeMP3::reCw() {
     return true;
 }
 
-uint8_t ModeMP3::reCcw() {
+uint8_rc ModeMP3::reCcw() {
     deebug("mp3 mode", "rcCcw");
     if (playlist_select_time) {
         deebug("mp3 mode", "  while in setting mode");
@@ -81,7 +81,7 @@ uint8_t ModeMP3::reCcw() {
     return true;
 }
 
-uint8_t ModeMP3::rePress() {
+uint8_rc ModeMP3::rePress() {
     deebug("mp3 mode", "pressed");
     // if not already in playlist select mode
     if (!playlist_select_time) {
@@ -98,34 +98,34 @@ uint8_t ModeMP3::rePress() {
     return true;
 }
 
-uint8_t ModeMP3::remOK() {
+uint8_rc ModeMP3::remOK() {
     deebug("mp3 mode", "remOK() is going to masquerade as a rePress");
     return rePress();
 }
 
-uint8_t ModeMP3::remCircleLeft() {
+uint8_rc ModeMP3::remCircleLeft() {
     deebug("mp3 mode", "remCircleLeft() is going to masquerade as a reCcw");
     return reCcw();
 }
 
-uint8_t ModeMP3::remCircleRight() {
+uint8_rc ModeMP3::remCircleRight() {
     deebug("mp3 mode", "remCircleRight() is going to masquerade as a reCw");
     return reCw();
 }
 
-uint8_t ModeMP3::remAsterisk() {
+uint8_rc ModeMP3::remAsterisk() {
     deebug("mp3 mode", "toggling shuffle?");
     defe.toggleShuffle();
     return true;
 }
 
-uint8_t ModeMP3::remRewind() {
+uint8_rc ModeMP3::remRewind() {
     deebug("mp3 mode", "going to previous track?");
     defe.previousTrack();
     return true;
 }
 
-uint8_t ModeMP3::remPlayPause() {
+uint8_rc ModeMP3::remPlayPause() {
     if (defe.isPlaying()) {
         deebug("mp3 mode", "pausing?");
         defe.pause();
@@ -137,37 +137,37 @@ uint8_t ModeMP3::remPlayPause() {
     return true;
 }
 
-uint8_t ModeMP3::remFastForward() {
+uint8_rc ModeMP3::remFastForward() {
     deebug("mp3 mode", "going to next track?");
     defe.nextTrack();
     return true;
 }
 
-uint8_t ModeMP3::remVolumeUp() {
+uint8_rc ModeMP3::remVolumeUp() {
     deebug("mp3 mode", "turning volume up?");
     defe.volumeUp();
     return true;
 }
 
-uint8_t ModeMP3::remVolumeDown() {
+uint8_rc ModeMP3::remVolumeDown() {
     deebug("mp3 mode", "turning volume down?");
     defe.volumeDown();
     return true;
 }
 
-uint8_t ModeMP3::remNetflix() {
+uint8_rc ModeMP3::remNetflix() {
     deebug("mp3 mode", "starting climatewave playlist?");
     defe.startPlaylist(CLIMATEWAVE_PLAYLIST);
     return true;
 }
 
-uint8_t ModeMP3::remHulu() {
+uint8_rc ModeMP3::remHulu() {
     deebug("mp3 mode", "starting alternative playlist?");
     defe.startPlaylist(THE_ALTERNATIVE_PLAYLIST);
     return true;
 }
 
-uint8_t ModeMP3::display() {
+uint8_rc ModeMP3::display() {
     // if it's not in playlist select mode
     if (!playlist_select_time) {
         snprintf(sixteen.line0, 17, "%s", defe.getPlaylistName());
