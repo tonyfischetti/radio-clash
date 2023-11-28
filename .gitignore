@@ -9,6 +9,8 @@
 build/
 target/
 
+**/tags
+
 compilation-text
 garb
 
