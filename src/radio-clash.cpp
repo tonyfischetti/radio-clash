@@ -141,25 +141,25 @@
 static constexpr uint16_rc EPSILON_IR {150};
 
 // time-block after mode change
-static constexpr uint16_rc EPS_MODE_CHANGE {2000};
+static constexpr uint16_rc EPS_MODE_CHANGE     {2000};
 
 static constexpr uint16_rc MODE_SELECT_TIMEOUT {5000};
 
-static constexpr uint8_rc ADDRESS_I2C_AMBER   {0x70};
-static constexpr uint8_rc ADDRESS_I2C_SIXTEEN {0x3F};
+static constexpr uint8_rc ADDRESS_I2C_AMBER    {0x70};
+static constexpr uint8_rc ADDRESS_I2C_SIXTEEN  {0x3F};
 
 // milliseconds between polling different sensors
-static constexpr uint16_rc CHECK_IR_EVERY      {20};
-static constexpr uint16_rc CHECK_LCD_EVERY     {50};
-static constexpr uint16_rc CHECK_CLOCK_EVERY  {100};
-static constexpr uint16_rc CHECK_POT_EVERY    {300};
-static constexpr uint16_rc CHECK_RE_EVERY       {5};
-static constexpr uint16_rc CHECK_AMBER_EVERY  {500};
-static constexpr uint16_rc CHECK_ALARM_EVERY {1000};
+static constexpr uint16_rc CHECK_IR_EVERY       {20};
+static constexpr uint16_rc CHECK_LCD_EVERY      {50};
+static constexpr uint16_rc CHECK_CLOCK_EVERY   {100};
+static constexpr uint16_rc CHECK_POT_EVERY     {300};
+static constexpr uint16_rc CHECK_RE_EVERY        {5};
+static constexpr uint16_rc CHECK_AMBER_EVERY   {500};
+static constexpr uint16_rc CHECK_ALARM_EVERY  {1000};
 // TODO TODO: what are the consequences of making this
 //            more or less frequent?
 
-static constexpr uint8_rc NUM_NEOPIXELS      {64};
+static constexpr uint8_rc NUM_NEOPIXELS {64};
 
 // TODO: rethink this
 // TODO: bad but 2 is unstable
