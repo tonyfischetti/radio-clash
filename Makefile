@@ -36,7 +36,7 @@ ELFSIZE  	:= $(ESPMAINROOT)/tools/xtensa-esp32-elf/bin/xtensa-esp32-elf-size
 CXXFLAGS    := -Wall -Os -w -c -MMD
 CXXFLAGS    += -std=gnu++17 -ggdb ##### TRY OTHERS
 ifeq ($(COMPTYPE), debug)
-	CXXFLAGS += -DDEBUG # -fsanitize=address -fsanitize=undefined
+	CXXFLAGS += -DDEBUG # -fsanitize=address -fsanitize=undefined DCORE_DEBUG_LEVEL=X???
 endif
 
 CXXFLAGS    += -DROTARY_REVERSED
@@ -49,6 +49,7 @@ CXXFLAGS    += -DARDUINO_ARCH_ESP32 -DARDUINO_BOARD=\"Node32s\"
 CXXFLAGS    += -DARDUINO_VARIANT=\"node32s\" -DARDUINO_PARTITION_default
 CXXFLAGS    += -DESP32 -DCORE_DEBUG_LEVEL=0 -DARDUINO_USB_CDC_ON_BOOT=0
 
+# some (most?) of these don't work
 CXXFLAGS    += -fno-exceptions -fno-unwind-tables -Wno-frame-address
 CXXFLAGS    += -ffunction-sections -fdata-sections -Wno-error=unused-function
 CXXFLAGS    += -Wno-error=unused-variable -Wno-error=deprecated-declarations
