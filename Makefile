@@ -3,9 +3,6 @@
 
 # COMPTYPE  := debug
 
-OS          := $(shell uname -s)
-ARCH        := $(shell uname -m)
-
 HOME 		:= /home/tony
 
 TTY 		:= /dev/ttyUSB0
@@ -27,10 +24,12 @@ PARTTOOL 	:= $(ESPMAINROOT)/tools/gen_esp32part.py
 ESPTOOL  	:= $(ESPMAINROOT)/tools/esptool.py
 ELFSIZE  	:= $(ESPMAINROOT)/tools/xtensa-esp32-elf/bin/xtensa-esp32-elf-size
 
+# --------------------------------------------------------------- #
 
 .PHONY: all clean mrproper dist check test install begin help done verify \
 	    size flash monitor
 
+# --------------------------------------------------------------- #
 
 # TODO: should have CFLAGS? -std=gnu99
 
@@ -72,6 +71,8 @@ ESPINCSROOT  	:= $(ESPMAINROOT)tools/sdk/esp32/include/
 ESPLIBS 	 	:= $(ESPMAINROOT)tools/sdk/esp32/lib \
 				   $(ESPMAINROOT)tools/sdk/esp32/ld \
 				   $(ESPMAINROOT)tools/sdk/esp32/dio_qspi
+
+# --------------------------------------------------------------- #
 
 ESPINCSBASE     := newlib/platform_include freertos/include \
 	freertos/include/esp_additions/freertos freertos/port/xtensa/include \
@@ -158,6 +159,7 @@ CXXFLAGS    	+= -I$(INCDIR) -I$(INCDIRcntrb)
 CXXFLAGS    	+= $(addprefix -I, $(ESPINCS))
 
 # ------------------------------------------------------------------------- #
+
 LDFLAGS := -Wl,--Map=build/radio-clash.map \
 	-L$(ESPMAINROOT)tools/sdk/esp32/lib -L$(ESPMAINROOT)tools/sdk/esp32/ld \
 	-L$(ESPMAINROOT)tools/sdk/esp32/dio_qspi -T esp32.rom.redefined.ld \
@@ -265,7 +267,6 @@ vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIRcntrb)
 vpath %.o   $(BUILDDIR)
 
-
 COS := HWCDC stdlib_noniso esp32-hal-ledc FirmwareMSC esp32-hal-sigmadelta \
 	   esp32-hal-rgb-led IPAddress Stream esp32-hal-matrix WMath MD5Builder \
 	   esp32-hal-touch cbuf USBMSC esp32-hal-uart esp32-hal-psram \
@@ -290,6 +291,9 @@ MOS  := HWCDC FirmwareMSC IPAddress Stream WMath MD5Builder cbuf USBMSC USB \
 		ModeTime ModeWebRadio Phos TickTockClock buildinfo radio-clash
 OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
 
+
+# --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 all: begin $(COREOBJS) $(OBJS) $(BUILDDIR)/arduino.ar $(BUILDDIR)/user_obj.ar \
@@ -370,18 +374,28 @@ $(BUILDDIR)/ModeTime.o: $(SRCDIR)/ModeTime.cpp $(INCDIR)/ModeTime.h $(SRCDIR)/LB
 
 $(BUILDDIR)/%.o: %.cpp %.h
 	@mkdir -p $(BUILDDIR)
-	$(info [*] compilingB		{ $@ })
+	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 
 $(BUILDDIR)/%.o: %.cpp
 	@mkdir -p $(BUILDDIR)
-	$(info [*] compilingB		{ $@ })
+	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 
 $(BUILDDIR)/%.o: %.c
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+
+$(BUILDDIR)/VS1053.o: $(SRCDIRcntrb)/VS1053.cpp $(INCDIRcntrb)/VS1053.h $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
+	@mkdir -p $(BUILDDIR)
+	$(info [*] compiling		{ $@ })
+	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+
+$(BUILDDIR)/Sixteen.o: $(SRCDIRcntrb)/Sixteen.cpp $(INCDIRcntrb)/Sixteen.h $(INCDIRcntrb)/LiquidCrystal_I2C.h $(SRCDIRcntrb)/LiquidCrystal_I2C.cpp
+	@mkdir -p $(BUILDDIR)
+	$(info [*] compiling		{ $@ })
+	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 
 
 
