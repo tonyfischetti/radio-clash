@@ -1,7 +1,4 @@
 
-# uses commit 0d84018d969309addacbcc3e3782c1fadc95fbc8 from
-#   https://github.com/espressif/arduino-esp32.git
-
 .DELETE_ON_ERROR:
 
 # COMPTYPE  := debug
