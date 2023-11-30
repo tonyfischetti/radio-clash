@@ -54,8 +54,9 @@ class ModeWebRadio final : public LBMode {
         const uint8_rc NUM_WEBSTATIONS;
         AudioController& jefa;
 
-        uint64_rc webstation_select_time;
         const uint16_rc WEBSTATION_SELECT_TIMEOUT {5000};
+
+        Timeout webstation_select_TMO;
 
         uint8_rc webstation_select_index;
 

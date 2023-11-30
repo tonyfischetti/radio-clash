@@ -27,10 +27,5 @@ class ModeLight final : public LBMode {
     private:
         Phos& phos;
         Sixteen& sixteen;
-
-        // uint64_rc playlist_select_time;
-        // const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
-        //
-        // uint8_rc playlist_select_index;
 };
 

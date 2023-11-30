@@ -5,7 +5,6 @@
 ModeLight::ModeLight(Phos& _phos, Sixteen& _sixteen)
     : phos                  {_phos},
       sixteen               {_sixteen} {
-      // playlist_select_time  {0} {
 }
 
 const char* ModeLight::getModeName() const {

@@ -19,9 +19,9 @@ ModeWebRadio::ModeWebRadio(VS1053& _vica, Kerl& _kerl, Sixteen& _sixteen,
       initialized_p         {0},
       suspended_p           {1},
       volume                {87},
-      webstation_select_time{0},
       current_station_index {0},
-      is_engaged_p          {false} {
+      is_engaged_p          {false},
+      webstation_select_TMO {WEBSTATION_SELECT_TIMEOUT} {
 }
 
 const char* ModeWebRadio::getModeName() const {
@@ -80,11 +80,6 @@ uint8_rc ModeWebRadio::tick() {
     if (suspended_p)
         return 1;
 
-    // reset from webstation select mode if it times out
-    if (webstation_select_time &&
-        (millis() - webstation_select_time) > WEBSTATION_SELECT_TIMEOUT)
-        webstation_select_time = 0;
-
     if (kerl.connectWebKeepAlive() > 0) {
         deebug("web radio mode", "SOMETHING'S WRONG WITH WEB CONNECTION!");
         if (kerl.connectToAnyNetwork() > 0) {
@@ -109,10 +104,9 @@ uint8_rc ModeWebRadio::tick() {
 
 uint8_rc ModeWebRadio::reCw() {
     deebug("web radio mode", "reCw()");
-    if (webstation_select_time) {
+    if (!webstation_select_TMO.hasExpired()) {
         deebug("web radio mode", "  (while in webstation select mode)");
-        // reset time (for timeout)
-        webstation_select_time = millis();
+        webstation_select_TMO.reset();
         if (webstation_select_index == (NUM_WEBSTATIONS-1))
             return true;
         ++webstation_select_index;
@@ -122,10 +116,9 @@ uint8_rc ModeWebRadio::reCw() {
 
 uint8_rc ModeWebRadio::reCcw() {
     deebug("web radio mode", "reCcw()");
-    if (webstation_select_time) {
+    if (!webstation_select_TMO.hasExpired()) {
         deebug("web radio mode", "  (while in webstation select mode)");
-        // reset time (for timeout)
-        webstation_select_time = millis();
+        webstation_select_TMO.reset();
         if (webstation_select_index == 0)
             return true;
         --webstation_select_index;
@@ -136,15 +129,15 @@ uint8_rc ModeWebRadio::reCcw() {
 uint8_rc ModeWebRadio::rePress() {
     deebug("web radio mode", "pressed!");
     // if not already in webstation select mode
-    if (!webstation_select_time) {
+    if (webstation_select_TMO.hasExpired()) {
         deebug("web radio mode", "  entering webstation select mode");
-        webstation_select_time = millis();
+        webstation_select_TMO.reset();
         webstation_select_index = current_station_index;
     }
     else {
         // choose the current webstation selection index
         deebug("web radio mode", "about to leave webstation select mode");
-        webstation_select_time = 0;
+        webstation_select_TMO.expire();
         kerl.client.stop();
         current_station_index = webstation_select_index;
     }
@@ -202,7 +195,7 @@ uint8_rc ModeWebRadio::remVolumeDown() {
 // TODO TODO TODO: have it display error message (if there's an error)
 uint8_rc ModeWebRadio::display() {
     // if it's not in webstation select mode
-    if (!webstation_select_time) {
+    if (webstation_select_TMO.hasExpired()) {
         snprintf(sixteen.line0, 17, "%s                 ",
                  CURRENT_STATION->name);
         snprintf(sixteen.line1, 17, "  volume: +%d          ", volume);
