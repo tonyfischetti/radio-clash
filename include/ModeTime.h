@@ -37,10 +37,10 @@ class ModeTime final : public LBMode {
 
         elapsedMillis blink_timer;
 
-        uint64_rc set_time_time;
-
         const uint32_rc SET_TIME_TIMEOUT {5000};
         const uint16_rc BLINK_FREQUENCY  {500};
+
+        Timeout set_time_TMO;
 
         uint16_rc selected_year;
         uint8_rc  selected_month;

@@ -5,8 +5,8 @@
 ModeTime::ModeTime(TickTockClock& _rtc, Sixteen& _sixteen)
     : rtc           {_rtc},
       sixteen       {_sixteen},
-      set_time_time {0},
-      blink_on_p    {true} {
+      blink_on_p    {true},
+      set_time_TMO  {SET_TIME_TIMEOUT} {
 }
 
 const char* ModeTime::getModeName() const {
@@ -15,17 +15,14 @@ const char* ModeTime::getModeName() const {
 
 uint8_rc ModeTime::tick() {
     rtc.update();
-    if (set_time_time &&
-        (millis() - set_time_time) > SET_TIME_TIMEOUT)
-        set_time_time = 0;
     return true;
 }
 
 uint8_rc ModeTime::reCw() {
     deebug("time mode", "rcCw");
-    if (set_time_time) {
+    if (!set_time_TMO.hasExpired()) {
         deebug("time mode", "  while in setting mode");
-        set_time_time = millis();
+        set_time_TMO.reset();
         switch (selection_bookmark) {
             case 0:
                 ++selected_year;
@@ -58,9 +55,9 @@ uint8_rc ModeTime::reCw() {
 
 uint8_rc ModeTime::reCcw() {
     deebug("time mode", "rcCcw");
-    if (set_time_time) {
+    if (!set_time_TMO.hasExpired()) {
         deebug("time mode", "  while in setting mode");
-        set_time_time = millis();
+        set_time_TMO.reset();
         switch (selection_bookmark) {
             case 0:
                 --selected_year;
@@ -94,9 +91,9 @@ uint8_rc ModeTime::reCcw() {
 // TODO TODO: can this be made more efficient?
 uint8_rc ModeTime::rePress() {
     deebug("time mode", "pressed");
-    if (!set_time_time) {
+    if (set_time_TMO.hasExpired()) {
         deebug("mp3 mode", "  entering time set mode");
-        set_time_time      = millis();
+        set_time_TMO.reset();
         selected_year      = rtc.getYear();
         selected_month     = rtc.getMonth();
         selected_day       = rtc.getDay();
@@ -105,36 +102,37 @@ uint8_rc ModeTime::rePress() {
         selected_minute    = rtc.getMinute();
         selected_pm_p      = rtc.isPm();
         selection_bookmark = 0;
+        deebug("mp3 mode", "  HERE!!");
     }
     // is it cool that this is unbounded?
     else if (selection_bookmark == 0) {
         deebug("time mode", "  setting year");
-        set_time_time = millis();
+        set_time_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 1) {
         deebug("time mode", "  setting month");
-        set_time_time = millis();
+        set_time_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 2) {
         deebug("time mode", "  setting day");
-        set_time_time = millis();
+        set_time_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 3) {
         deebug("time mode", "  setting hour");
-        set_time_time = millis();
+        set_time_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 4) {
         deebug("time mode", "  setting minute");
-        set_time_time = millis();
+        set_time_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 5) {
         deebug("time mode", "  setting am or pm");
-        set_time_time = millis();
+        set_time_TMO.reset();
         if (selected_pm_p)
             selected_hour += 12;
         else if (selected_hour == 12)
@@ -146,7 +144,7 @@ uint8_rc ModeTime::rePress() {
                      selected_hour, selected_minute, 0));
 
         deebug("time mode", "  about to leave set time mode");
-        set_time_time = 0;
+        set_time_TMO.expire();
     }
     return 0;
 }
@@ -169,7 +167,7 @@ uint8_rc ModeTime::remCircleRight() {
 */
 
 uint8_rc ModeTime::display() {
-    if (!set_time_time) {
+    if (set_time_TMO.hasExpired()) {
         snprintf(sixteen.line0, 17, "   %s        ", rtc.getDate());
         snprintf(sixteen.line1, 17, " %s  %s      ", rtc.getTime(),
                  rtc.getTemp());
