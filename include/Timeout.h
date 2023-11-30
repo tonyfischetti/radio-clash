@@ -3,14 +3,15 @@
 
 #include <common.h>
 
-struct Stopwatch {
+struct Timeout {
 
-    Stopwatch(uint64_rc); 
+    Timeout(uint64_rc); 
     bool hasExpired();
     void reset();
+    void expire();
 
   private:
     uint64_rc began;
     const uint64_rc expiry;
-    bool expired_p {false};
+    bool expired_p {true};
 };

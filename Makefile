@@ -1,7 +1,7 @@
 
 .DELETE_ON_ERROR:
 
-# COMPTYPE  := debug
+COMPTYPE  := debug
 
 HOME 		:= /home/tony
 
@@ -287,7 +287,7 @@ MOS  := HWCDC FirmwareMSC IPAddress Stream WMath MD5Builder cbuf USBMSC USB \
 		Adafruit_GFX Adafruit_GrayOLED Adafruit_SPITFT glcdfont \
 		Adafruit_LEDBackpack Adafruit_NeoPixel esp esp8266 kendyte_k210 \
 		DFPlay VS1053 LiquidCrystal_I2C RTC_DS1307 RTC_DS3231 RTC_Micros \
-		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Stopwatch \
+		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Timeout \
 		Alarm Amber AudioController Defe Kerl LBMode Mick ModeAlarm ModeLight \
 		ModeMP3 ModeTime ModeWebRadio Phos TickTockClock buildinfo radio-clash
 OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
@@ -337,27 +337,27 @@ $(BUILDDIR)/Mick.o: $(SRCDIR)/Mick.cpp $(INCDIR)/Mick.h $(INCDIR)/deebug.hpp $(I
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/ModeLight.o: $(SRCDIR)/ModeLight.cpp $(INCDIR)/ModeLight.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+$(BUILDDIR)/ModeLight.o: $(SRCDIR)/ModeLight.cpp $(INCDIR)/ModeLight.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/ModeWebRadio.o: $(SRCDIR)/ModeWebRadio.cpp $(INCDIR)/ModeWebRadio.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+$(BUILDDIR)/ModeWebRadio.o: $(SRCDIR)/ModeWebRadio.cpp $(INCDIR)/ModeWebRadio.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/ModeAlarm.o: $(SRCDIR)/ModeAlarm.cpp $(INCDIR)/ModeAlarm.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+$(BUILDDIR)/ModeAlarm.o: $(SRCDIR)/ModeAlarm.cpp $(INCDIR)/ModeAlarm.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/ModeMP3.o: $(SRCDIR)/ModeMP3.cpp $(INCDIR)/ModeMP3.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+$(BUILDDIR)/ModeMP3.o: $(SRCDIR)/ModeMP3.cpp $(INCDIR)/ModeMP3.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/ModeTime.o: $(SRCDIR)/ModeTime.cpp $(INCDIR)/ModeTime.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+$(BUILDDIR)/ModeTime.o: $(SRCDIR)/ModeTime.cpp $(INCDIR)/ModeTime.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)

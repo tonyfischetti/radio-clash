@@ -6,8 +6,8 @@ ModeMP3::ModeMP3(Defe& _defe, Sixteen& _sixteen, AudioController& _jefa)
     : defe                  {_defe},
       sixteen               {_sixteen},
       jefa                  {_jefa},
-      playlist_select_time  {0},
-      is_engaged_p          {false} {
+      is_engaged_p          {false},
+      playlist_select_TMO   {PLAYLIST_SELECT_TIMEOUT} {
 }
 
 const char* ModeMP3::getModeName() const {
@@ -47,20 +47,15 @@ uint8_rc ModeMP3::suspend() {
 uint8_rc ModeMP3::tick() {
     if (!is_engaged_p)
         return 1;
-    // reset from playlist select mode if it times out
-    if (playlist_select_time &&
-        (millis() - playlist_select_time) > PLAYLIST_SELECT_TIMEOUT)
-        playlist_select_time = 0;
     defe.manage();
     return 0;
 }
 
 uint8_rc ModeMP3::reCw() {
     deebug("mp3 mode", "rcCw");
-    if (playlist_select_time) {
+    if (!playlist_select_TMO.hasExpired()) {
         deebug("mp3 mode", "  while in setting mode");
-        // reset time (for timeout)
-        playlist_select_time = millis();
+        playlist_select_TMO.reset();
         if (playlist_select_index == (defe.getNumPlaylists()-1))
             return true;
         ++playlist_select_index;
@@ -70,10 +65,9 @@ uint8_rc ModeMP3::reCw() {
 
 uint8_rc ModeMP3::reCcw() {
     deebug("mp3 mode", "rcCcw");
-    if (playlist_select_time) {
+    if (!playlist_select_TMO.hasExpired()) {
         deebug("mp3 mode", "  while in setting mode");
-        // reset time (for timeout)
-        playlist_select_time = millis();
+        playlist_select_TMO.reset();
         if (playlist_select_index == 0)
             return true;
         --playlist_select_index;
@@ -84,15 +78,15 @@ uint8_rc ModeMP3::reCcw() {
 uint8_rc ModeMP3::rePress() {
     deebug("mp3 mode", "pressed");
     // if not already in playlist select mode
-    if (!playlist_select_time) {
+    if (playlist_select_TMO.hasExpired()) {
         deebug("mp3 mode", "  entering playlist select mode");
-        playlist_select_time = millis();
+        playlist_select_TMO.reset();
         playlist_select_index = defe.getPlaylistIndex();
     }
     else {
         // choose the current playlist selection index
         deebug("mp3 mode", "  about to leave playlist select mode");
-        playlist_select_time = 0;
+        playlist_select_TMO.expire();
         defe.startPlaylist(playlist_select_index+1);
     }
     return true;
@@ -169,7 +163,7 @@ uint8_rc ModeMP3::remHulu() {
 
 uint8_rc ModeMP3::display() {
     // if it's not in playlist select mode
-    if (!playlist_select_time) {
+    if (playlist_select_TMO.hasExpired()) {
         snprintf(sixteen.line0, 17, "%s", defe.getPlaylistName());
         snprintf(sixteen.line1, 17, "%d/%d  +%d           ",
                 defe.getTrackNum(), defe.getNumTracks(),

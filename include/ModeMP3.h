@@ -45,8 +45,8 @@ class ModeMP3 final : public LBMode {
         Sixteen& sixteen;
         AudioController& jefa;
 
-        uint64_rc playlist_select_time;
         const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
+        Timeout playlist_select_TMO;
 
         uint8_rc playlist_select_index;
 
