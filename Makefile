@@ -287,9 +287,9 @@ MOS  := HWCDC FirmwareMSC IPAddress Stream WMath MD5Builder cbuf USBMSC USB \
 		Adafruit_GFX Adafruit_GrayOLED Adafruit_SPITFT glcdfont \
 		Adafruit_LEDBackpack Adafruit_NeoPixel esp esp8266 kendyte_k210 \
 		DFPlay VS1053 LiquidCrystal_I2C RTC_DS1307 RTC_DS3231 RTC_Micros \
-		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Alarm Amber \
-		AudioController Defe Kerl LBMode Mick ModeAlarm ModeLight ModeMP3 \
-		ModeTime ModeWebRadio Phos TickTockClock buildinfo radio-clash
+		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Stopwatch \
+		Alarm Amber AudioController Defe Kerl LBMode Mick ModeAlarm ModeLight \
+		ModeMP3 ModeTime ModeWebRadio Phos TickTockClock buildinfo radio-clash
 OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
 
 
@@ -332,11 +332,6 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/%.h $(INCDIR)/deebug.hpp $(INCDIR)/co
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
-$(BUILDDIR)/radio-clash.o: $(SRCDIR)/radio-clash.cpp $(INCDIR)/deebug.hpp $(INCDIR)/common.h $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h $(INCDIR)/remote_commands.h $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-
 $(BUILDDIR)/Mick.o: $(SRCDIR)/Mick.cpp $(INCDIR)/Mick.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h $(INCDIR)/remote_commands.h $(INCDIR)/remote_codes.h $(INCDIRcntrb)/IRremote.hpp $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
@@ -363,6 +358,11 @@ $(BUILDDIR)/ModeMP3.o: $(SRCDIR)/ModeMP3.cpp $(INCDIR)/ModeMP3.h $(SRCDIR)/LBMod
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
 $(BUILDDIR)/ModeTime.o: $(SRCDIR)/ModeTime.cpp $(INCDIR)/ModeTime.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+	@mkdir -p $(BUILDDIR)
+	$(info [*] compiling		{ $@ })
+	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+
+$(BUILDDIR)/radio-clash.o: $(SRCDIR)/radio-clash.cpp $(INCDIR)/deebug.hpp $(INCDIR)/common.h $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h $(INCDIR)/remote_commands.h $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
 	@mkdir -p $(BUILDDIR)
 	$(info [*] compiling		{ $@ })
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
