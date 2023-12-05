@@ -12,11 +12,11 @@ ModeAlarm::ModeAlarm(TickTockClock& _rtc,
       alarm              {_alarm},
       defe               {_defe},
       jefa               {_jefa},
-      set_alarm_time     {0},
       blink_on_p         {true},
       alarm_sounding_p   {false},
       time_alarm_sounded {0},
-      reupped_alarm_p    {true} {
+      reupped_alarm_p    {true},
+      set_alarm_TMO      {SET_ALARM_TIMEOUT} {
 }
 
 const char* ModeAlarm::getModeName() const {
@@ -24,9 +24,6 @@ const char* ModeAlarm::getModeName() const {
 }
 
 uint8_rc ModeAlarm::tick() {
-    if (set_alarm_time &&
-        (millis() - set_alarm_time) > SET_ALARM_TIMEOUT)
-        set_alarm_time = 0;
     if (isSounding()) {
         /* this is to get around a limitation of DFplayer...          *
          *   without this, if the player is paused, the alarm won't   *
@@ -75,9 +72,9 @@ void ModeAlarm::turnOffAlarm() {
 
 uint8_rc ModeAlarm::reCw() {
     deebug("alarm mode", "rcCw");
-    if (set_alarm_time) {
+    if (!set_alarm_TMO.hasExpired()) {
         deebug("alarm mode", "  while in setting mode");
-        set_alarm_time = millis();
+        set_alarm_TMO.reset();
         switch (selection_bookmark) {
             case 0:
                 if (selected_hour != 12)
@@ -104,9 +101,9 @@ uint8_rc ModeAlarm::reCw() {
 
 uint8_rc ModeAlarm::reCcw() {
     deebug("alarm mode", "rcCcw");
-    if (set_alarm_time) {
+    if (!set_alarm_TMO.hasExpired()) {
         deebug("alarm mode", "  while in setting mode");
-        set_alarm_time = millis();
+        set_alarm_TMO.reset();
         switch (selection_bookmark) {
             case 0:
                 if (selected_hour != 1)
@@ -138,9 +135,9 @@ uint8_rc ModeAlarm::rePress() {
         turnOffAlarm();
         return 0;
     }
-    if (!set_alarm_time) {
+    if (set_alarm_TMO.hasExpired()) {
         deebug("alarm mode", "entering alarm set mode");
-        set_alarm_time     = millis();
+        set_alarm_TMO.reset();
         selected_hour      = alarm.getDisplayHour();
         selected_minute    = alarm.getMinute();
         selected_pm_p      = alarm.isPm();
@@ -148,15 +145,15 @@ uint8_rc ModeAlarm::rePress() {
         selection_bookmark = 0;
     }
     else if (selection_bookmark == 0) {
-        set_alarm_time = millis();
+        set_alarm_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 1) {
-        set_alarm_time = millis();
+        set_alarm_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 2) {
-        set_alarm_time = millis();
+        set_alarm_TMO.reset();
         ++selection_bookmark;
     }
     else if (selection_bookmark == 3) {
@@ -180,7 +177,7 @@ uint8_rc ModeAlarm::rePress() {
         }
 
         deebug("alarm mode", "  about to leave set alarm mode");
-        set_alarm_time = 0;
+        set_alarm_TMO.expire();
     }
     return 0;
 }
@@ -201,7 +198,7 @@ uint8_rc ModeAlarm::remCircleRight() {
 }
 
 uint8_rc ModeAlarm::display() {
-    if (!set_alarm_time) {
+    if (set_alarm_TMO.hasExpired()) {
         snprintf(sixteen.line0, 17, "Alarm mode               ");
         snprintf(sixteen.line1, 17, "%2d:%02d %s %s           ",
                  alarm.getDisplayHour(),

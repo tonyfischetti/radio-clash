@@ -43,10 +43,13 @@ class ModeAlarm final : public LBMode {
 
         elapsedMillis blink_timer;
 
+        // TODO: no
         uint64_rc set_alarm_time;
 
         const uint32_rc SET_ALARM_TIMEOUT {5000};
         const uint16_rc BLINK_FREQUENCY    {500};
+
+        Timeout set_alarm_TMO;
 
         uint8_rc selected_hour;
         uint8_rc selected_minute;
