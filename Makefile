@@ -273,20 +273,17 @@ COS := HWCDC stdlib_noniso esp32-hal-ledc FirmwareMSC esp32-hal-sigmadelta \
 	   esp32-hal-touch cbuf USBMSC esp32-hal-uart esp32-hal-psram \
 	   esp32-hal-time esp32-hal-adc esp32-hal-cpu USB Print wiring_shift \
 	   WString main firmware_msc_fat esp32-hal-dac cencode cdecode USBCDC \
-	   esp32-hal-rmt base64 esp32-hal-spi FunctionalInterrupt \
+	   esp32-hal-rmt base64 esp32-hal-spi \
 	   esp32-hal-tinyusb esp32-hal-bt Tone esp32-hal-timer Esp IPv6Address \
 	   esp32-hal-i2c esp32-hal-misc HardwareSerial esp32-hal-i2c-slave \
-	   wiring_pulse esp32-hal-gpio StreamString
+	   wiring_pulse esp32-hal-gpio StreamString \
+	   Wire SPI WiFi WiFiAP WiFiClient WiFiGeneric WiFiMulti WiFiSTA WiFiScan \
+	   WiFiServer WiFiUdp
 COREOBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(COS)))
 
-MOS  := HWCDC FirmwareMSC IPAddress Stream WMath MD5Builder cbuf USBMSC USB \
-		Print WString FunctionalInterrupt Tone USBCDC IPv6Address \
-		StreamString HardwareSerial base64 Esp main Wire SPI WiFi WiFiAP \
-		WiFiClient WiFiGeneric WiFiMulti WiFiSTA WiFiScan WiFiScan WiFiServer \
-		WiFiUdp Adafruit_I2CDevice Adafruit_SPIDevice Adafruit_GFX glcdfont \
+MOS  := Adafruit_I2CDevice Adafruit_SPIDevice Adafruit_GFX glcdfont \
 		Adafruit_LEDBackpack Adafruit_NeoPixel esp esp8266 kendyte_k210 \
-		DFPlay VS1053 LiquidCrystal_I2C RTC_DS1307 RTC_DS3231 RTC_Micros \
-		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Timeout \
+		DFPlay VS1053 LiquidCrystal_I2C RTC_DS3231 RTClib Recoder Sixteen Timeout \
 		Alarm Amber AudioController Defe Kerl LBMode Mick ModeAlarm ModeLight \
 		ModeMP3 ModeTime ModeWebRadio Phos TickTockClock buildinfo radio-clash
 OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
@@ -296,11 +293,13 @@ OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
 # --------------------------------------------------------------- #
 
 
-all: begin createbuilddir $(COREOBJS) $(OBJS) $(BUILDDIR)/arduino.ar \
+all: begin createbuilddir $(OBJS) $(BUILDDIR)/arduino.ar \
 	 $(BUILDDIR)/user_obj.ar $(BUILDDIR)/radio-clash.elf \
 	 $(BUILDDIR)/radio-clash.partitions.bin $(BUILDDIR)/radio-clash.bin \
 	 $(BUILDDIR)/radio-clash.bootloader.bin size done
 
+# core objects must be built before downstream objects
+$(OBJS): $(COREOBJS)
 
 begin:
 	@echo "$$(tput bold)$$(tput setaf 3)Building radio-clash$$(tput sgr0)"
