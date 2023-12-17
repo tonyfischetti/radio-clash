@@ -165,6 +165,7 @@ uint8_rc ModeWebRadio::remRewind() {
         return 1;
     kerl.client.stop();
     --current_station_index;
+    return 0;
 }
 
 uint8_rc ModeWebRadio::remFastForward() {
@@ -173,6 +174,7 @@ uint8_rc ModeWebRadio::remFastForward() {
         return 1;
     kerl.client.stop();
     ++current_station_index;
+    return 0;
 }
 
 uint8_rc ModeWebRadio::remVolumeUp() {
@@ -181,6 +183,7 @@ uint8_rc ModeWebRadio::remVolumeUp() {
     deebug("web radio mode", "turning volume up");
     ++volume;
     vica.setVolume(volume);
+    return 0;
 }
 
 uint8_rc ModeWebRadio::remVolumeDown() {
@@ -190,6 +193,7 @@ uint8_rc ModeWebRadio::remVolumeDown() {
     deebug("web radio mode", "turning volume down");
     --volume;
     vica.setVolume(volume);
+    return 0;
 }
 
 // TODO TODO TODO: have it display error message (if there's an error)

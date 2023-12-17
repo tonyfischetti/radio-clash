@@ -27,13 +27,13 @@ void TickTockClock::update() {
     hour    = now.hour();
     minute  = now.minute();
 
-    snprintf(the_date, 12, "%d-%02d-%02d", year, month, day);
+    snprintf(the_date, 11, "%d-%02d-%02d", year, month, day);
 
     setDisplayHour(hour);
 
-    snprintf(the_time, 10, "%2d:%02d %s", display_hour, minute,
+    snprintf(the_time, 9, "%2d:%02d %s", display_hour, minute,
             is_pm_p ? "pm" : "am");
-    snprintf(the_temp, 6, "%2ld C",
+    snprintf(the_temp, 5, "%2d C",
             static_cast<int>(round(rtc.getTemperature())));
 }
 

@@ -41,15 +41,17 @@ class ModeAlarm final : public LBMode {
         Defe& defe;
         AudioController& jefa;
 
-        elapsedMillis blink_timer;
+        uint8_rc blink_on_p;
+        uint8_rc alarm_sounding_p;
+        uint64_rc time_alarm_sounded;
+        uint8_rc reupped_alarm_p;
+        Timeout set_alarm_TMO;
 
-        // TODO: no
-        uint64_rc set_alarm_time;
+        elapsedMillis blink_timer;
 
         const uint32_rc SET_ALARM_TIMEOUT {5000};
         const uint16_rc BLINK_FREQUENCY    {500};
 
-        Timeout set_alarm_TMO;
 
         uint8_rc selected_hour;
         uint8_rc selected_minute;
@@ -58,10 +60,6 @@ class ModeAlarm final : public LBMode {
 
         uint8_rc selection_bookmark;
         
-        uint8_rc blink_on_p;
 
-        uint8_rc alarm_sounding_p;
-        uint64_rc time_alarm_sounded;
-        uint8_rc reupped_alarm_p;
 };
 

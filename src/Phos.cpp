@@ -4,7 +4,9 @@
 
 Phos::Phos(const uint8_rc  _neopixel_pin,
            const uint8_rc _num_neopixels)
-    : pixels        {_num_neopixels, _neopixel_pin, NEO_GRBW + NEO_KHZ800},
+    : pixels        {static_cast<uint16_t>(_num_neopixels),
+                     static_cast<int16_t>(_neopixel_pin),
+                     NEO_GRBW + NEO_KHZ800},
       NUM_NEOPIXELS {_num_neopixels} {
 }
 

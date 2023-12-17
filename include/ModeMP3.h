@@ -45,11 +45,12 @@ class ModeMP3 final : public LBMode {
         Sixteen& sixteen;
         AudioController& jefa;
 
-        const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
+        bool is_engaged_p;
         Timeout playlist_select_TMO;
+
+        const uint16_rc PLAYLIST_SELECT_TIMEOUT {5000};
 
         uint8_rc playlist_select_index;
 
-        bool is_engaged_p;
 };
 

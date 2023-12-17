@@ -27,8 +27,8 @@ class Kerl {
         WiFiClient client;
 
     private:
-        const WifiCredential* WIFI_CREDENTIALS;
         const uint8_rc num_wifi_credentials;
+        const WifiCredential* WIFI_CREDENTIALS;
         uint8_rc connected_p;
         uint8_rc using_index;
 };

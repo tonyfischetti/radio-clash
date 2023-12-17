@@ -251,6 +251,8 @@ void update_ir() noexcept {
     const RemCom remote_command = mick.update();
 
     switch (remote_command) {
+        case RemCom::unknown:
+            break;
         case RemCom::volumeup:
             deebug("update_ir", "    volume up");
             CURRENT_MODE->remVolumeUp();
@@ -393,10 +395,15 @@ void update_rotary_encoder() noexcept {
                 --TMI;
             }
             return;
+        case REEvent::RECODER_NIL:
+            break;
+        case REEvent::RECODER_PRESS:
+            break;
+        case REEvent::RECODER_PRESS_AND_HOLD:
+            break;
     }
     // button
     switch (bres) {
-        deebug("tmp", "bres: %d", bres);
         case REEvent::RECODER_PRESS:
             // TODO (EXPLAIN BETTER) POTENTIALLY OVERRIDES MEMBER FUNCTION
             if (!mode_select_time)
@@ -416,6 +423,12 @@ void update_rotary_encoder() noexcept {
             else
                 mode_select_time = millis();
             return;
+        case REEvent::RECODER_NIL:
+            break;
+        case REEvent::RECODER_CW:
+            break;
+        case REEvent::RECODER_CCW:
+            break;
     }
 }
 

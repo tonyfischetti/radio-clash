@@ -11,6 +11,7 @@
     #define deebug(...) (void)0
 #endif
 
+[[maybe_unused]]
 static void secret_debug_helper(const char* mod_name, const char* fmt, ...) {
     va_list vargs;
     va_start(vargs, fmt);
