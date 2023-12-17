@@ -39,7 +39,7 @@ COMMONCSTARFLAGS += -fno-exceptions -fno-unwind-tables -Wno-frame-address -ffunc
 WARNCFLAGS  	 := -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wunreachable-code -Wmissing-braces -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch
 # WARNCXXFLAGS  	 := $(WARNCFLAGS) -Weffc++ -Wnon-virtual-dtor -Wold-style-cast -Wsuggest-final-types -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign -Winline 
 
-WARNCXXFLAGS := -Wall -Wextra -Werror
+WARNCXXFLAGS := -Wall -Wextra -Werror #-Wpedantic
 WARNCXXFLAGS += -Wno-format-truncation
 
 CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS) $(WARNCFLAGS)
@@ -100,16 +100,13 @@ OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
 # --------------------------------------------------------------- #
 
 
-all: begin $(OBJS) $(BUILDDIR)/arduino.ar \
+all: begin createbuilddir $(OBJS) $(BUILDDIR)/arduino.ar \
 	 $(BUILDDIR)/user_obj.ar $(BUILDDIR)/radio-clash.elf \
 	 $(BUILDDIR)/radio-clash.partitions.bin $(BUILDDIR)/radio-clash.bin \
 	 $(BUILDDIR)/radio-clash.bootloader.bin size done
 
 # core objects must be built before downstream objects
 $(OBJS): $(COREOBJS)
-
-# builddir must be created before compiling first set of sources
-$(COREOBJS): createbuilddir
 
 begin:
 	@echo "$$(tput bold)$$(tput setaf 3)Building radio-clash$$(tput sgr0)"
