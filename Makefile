@@ -283,8 +283,7 @@ MOS  := HWCDC FirmwareMSC IPAddress Stream WMath MD5Builder cbuf USBMSC USB \
 		Print WString FunctionalInterrupt Tone USBCDC IPv6Address \
 		StreamString HardwareSerial base64 Esp main Wire SPI WiFi WiFiAP \
 		WiFiClient WiFiGeneric WiFiMulti WiFiSTA WiFiScan WiFiScan WiFiServer \
-		WiFiUdp Adafruit_BusIO_Register Adafruit_I2CDevice Adafruit_SPIDevice \
-		Adafruit_GFX Adafruit_GrayOLED Adafruit_SPITFT glcdfont \
+		WiFiUdp Adafruit_I2CDevice Adafruit_SPIDevice Adafruit_GFX glcdfont \
 		Adafruit_LEDBackpack Adafruit_NeoPixel esp esp8266 kendyte_k210 \
 		DFPlay VS1053 LiquidCrystal_I2C RTC_DS1307 RTC_DS3231 RTC_Micros \
 		RTC_Millis RTC_PCF8523 RTC_PCF8563 RTClib Recoder Sixteen Timeout \
@@ -393,9 +392,6 @@ $(BUILDDIR)/RTClib.o: build/Adafruit_I2CDevice.o
 (BUILDDIR)/VS1053.o: $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
 $(BUILDDIR)/Sixteen.o: build/LiquidCrystal_I2C.o
 
-# WHAT USES include/Adafruit_BusIO_Register.h ??!!
-# or include/Adafruit_I2CRegister.h ??!! (depands on above)
-# or include/Adafruit_GrayOLED.h
 
 
 #################################
