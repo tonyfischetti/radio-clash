@@ -1,5 +1,5 @@
 
-# .DELETE_ON_ERROR: !!!!!!!!!!!!!!!!!!! TODO TODO
+.DELETE_ON_ERROR:
 
 COMPTYPE  	:= debug
 
@@ -39,11 +39,18 @@ COMMONCSTARFLAGS += -fno-exceptions -fno-unwind-tables -Wno-frame-address -ffunc
 WARNCFLAGS  	 := -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wunreachable-code -Wmissing-braces -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch
 # WARNCXXFLAGS  	 := $(WARNCFLAGS) -Weffc++ -Wnon-virtual-dtor -Wold-style-cast -Wsuggest-final-types -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign -Winline 
 
-WARNCXXFLAGS := -Wall -Wextra -Werror #-Wpedantic
+WARNCXXFLAGS := -Wall -Wextra -Werror
+WARNCXXFLAGS += -Wshadow -Wnormalized -Wreturn-local-addr -Wswitch-enum -Wswitch -Wuninitialized
+# WARNCXXFLAGS += -Wpedantic
+# WARNCXXFLAGS += -Wconversion
+# WARNCXXFLAGS += -Wsign-conversion
+# WARNCXXFLAGS += -Wmissing-braces
+WARNCXXFLAGS += -Wunreachable-code
 WARNCXXFLAGS += -Wno-format-truncation
+# WARNCXXFLAGS += -Wnon-virtual-dtor
 
-CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS) $(WARNCFLAGS)
-CXXFLAGS    := -Os -std=gnu++17 $(COMMONCSTARFLAGS) $(WARNCXXFLAGS)
+CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS)
+CXXFLAGS    := -Os -std=gnu++17 $(COMMONCSTARFLAGS)
 ifeq ($(COMPTYPE), debug)
 	CXXFLAGS += -DDEBUG # -fsanitize=address -fsanitize=undefined DCORE_DEBUG_LEVEL=X???
 endif
@@ -131,7 +138,7 @@ createbuilddir:
 COMPINFO 	= $(info [*] compiling		{ $@ })
 
 COMPCMDC 	= @$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
-COMPCMDMAIN = @$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+COMPCMDMAIN = @$(CXX) -c -o $@ $< $(CXXFLAGS) $(WARNCXXFLAGS) $(CPPFLAGS)
 # COMPCMDMAIN = @$(CXX) -c -w -o $@ $< $(CXXFLAGS) $(CPPFLAGS) !!!!!!!!!!!!!
 COMPCMDCXX  = @$(CXX) -c -w -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 

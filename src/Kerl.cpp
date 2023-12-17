@@ -7,7 +7,6 @@ Kerl::Kerl(const uint8_rc _numwebcredentials,
     : num_wifi_credentials {_numwebcredentials},
       WIFI_CREDENTIALS     {_wificredentials},
       connected_p          {0} {
-    WiFiClient client;
 }
 
 void Kerl::init() noexcept {

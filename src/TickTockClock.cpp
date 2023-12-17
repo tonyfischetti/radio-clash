@@ -9,7 +9,6 @@ TickTockClock::TickTockClock()
       display_hour  {2},
       minute        {46},
       is_pm_p       {false} {
-    RTC_DS3231 rtc;
 }
 
 

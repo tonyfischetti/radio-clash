@@ -321,7 +321,7 @@ bool IRrecv::decodeDistanceWidth() {
     unsigned int tMarkMicrosLong = tMarkTicksLong * MICROS_PER_TICK;
     unsigned int tSpaceMicrosLong = tSpaceTicksLong * MICROS_PER_TICK;
 
-    for (uint_fast8_t i = 0; i <= tNumberOfAdditionalArrayValues; ++i) {
+    for (uint_fast8_t j = 0; i <= tNumberOfAdditionalArrayValues; ++j) {
         uint8_t tNumberOfBitsForOneDecode = tNumberOfBits;
         /*
          * Decode in 32/64 bit chunks. Only the last chunk can contain less than 32/64 bits
