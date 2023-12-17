@@ -36,23 +36,6 @@ ELFSIZE  	:= $(ESPMAINROOT)/tools/xtensa-esp32-elf/bin/xtensa-esp32-elf-size
 COMMONCSTARFLAGS := -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DHAVE_CONFIG_H -DUNITY_INCLUDE_CONFIG_H -DWITH_POSIX -D_GNU_SOURCE -DIDF_VER=\"v4.4.3\" -DESP_PLATFORM -D_POSIX_READER_WRITER_LOCKS -DF_CPU=240000000L -DARDUINO=10605 -DARDUINO_Node32s -DARDUINO_ARCH_ESP32 -DARDUINO_BOARD=\"Node32s\" -DARDUINO_VARIANT=\"node32s\" -DARDUINO_PARTITION_default -DESP32 -DCORE_DEBUG_LEVEL=0 -DARDUINO_USB_CDC_ON_BOOT=0
 COMMONCSTARFLAGS += -fno-exceptions -fno-unwind-tables -Wno-frame-address -ffunction-sections -fdata-sections -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=deprecated-declarations -Wno-unused-parameter -Wno-sign-compare -freorder-blocks -Wwrite-strings -fstack-protector -fstrict-volatile-bitfields -Wno-error=unused-but-set-variable -fno-jump-tables -fno-tree-switch-conversion -fno-rtti -mlongcalls
 
-WARNCFLAGS  	:= -Wall -Wextra -Werror
-# WARNCFLAGS  	+= -Wpedantic
-WARNCFLAGS  	+= -Wshadow -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch
-# WARNCFLAGS    += -Wconversion
-# WARNCFLAGS    += -Wsign-conversion
-WARNCFLAGS    += -Wunreachable-code
-# WARNCFLAGS    += -Wmissing-braces
-# WARNCFLAGS    += -Wswitch-enum
-# WARNCFLAGS    += -Wswitch
-
-# WARNCXXFLAGS  	 := $(WARNCFLAGS) -Weffc++ -Wnon-virtual-dtor -Wold-style-cast -Wsuggest-final-types -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign -Winline 
-
-WARNCXXFLAGS 	:= $(WARNCFLAGS)
-# WARNCXXFLAGS 	+= -Wnon-virtual-dtor
-# WARNCXXFLAGS 	+= -Wsuggest-override
-WARNCXXFLAGS 	+= -Wno-format-truncation
-WARNCXXFLAGS 	+= -Wsuggest-final-types
 
 CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS)
 CXXFLAGS    := -Os -std=gnu++17 $(COMMONCSTARFLAGS)
@@ -62,6 +45,10 @@ endif
 CXXFLAGS    += -DROTARY_REVERSED
 
 
+WARNCFLAGS  	:= -Wall -Wextra -Werror -Wshadow -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch -Wunreachable-code -Wswitch-enum -Wswitch
+# WARNCFLAGS  	+= -Wpedantic -Wconversion -Wsign-conversion -Wmissing-braces
+WARNCXXFLAGS 	:= $(WARNCFLAGS) -Werror -Wno-format-truncation -Wsuggest-final-types -Wsuggest-final-types -Wvirtual-inheritance -Wvirtual-move-assign -Winline
+# WARNCXXFLAGS 	:= -Weffc++ -Wold-style-cast -Wsuggest-override
 
 
 ESPSRCFILESROOT := $(ESPMAINROOT)cores/esp32/
