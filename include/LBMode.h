@@ -13,7 +13,7 @@ class LBMode {
         LBMode() noexcept;
 
         virtual const char* getModeName()  const noexcept;
-        virtual const bool isAudioNeeder() const noexcept;
+        virtual bool isAudioNeeder() const noexcept;
 
         virtual uint8_rc tick()      noexcept;
         virtual uint8_rc engage()    noexcept;

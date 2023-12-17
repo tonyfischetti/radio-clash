@@ -39,7 +39,7 @@ COMMONCSTARFLAGS += -fno-exceptions -fno-unwind-tables -Wno-frame-address -ffunc
 WARNCFLAGS  	 := -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wunreachable-code -Wmissing-braces -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch
 # WARNCXXFLAGS  	 := $(WARNCFLAGS) -Weffc++ -Wnon-virtual-dtor -Wold-style-cast -Wsuggest-final-types -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign -Winline 
 
-WARNCXXFLAGS := -Wall -Werror
+WARNCXXFLAGS := -Wall -Wextra -Werror
 WARNCXXFLAGS += -Wno-format-truncation
 
 CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS) $(WARNCFLAGS)

@@ -242,7 +242,9 @@ void Defe::setVolume(uint8_rc _volume) noexcept {
         deebug("defe", "alarm sounding... rejecting volume change");
         return;
     }
-    volume = constrain(_volume, 0, MAX_MP3_VOLUME);
+    volume = _volume;
+    if (volume > MAX_MP3_VOLUME)
+        volume = MAX_MP3_VOLUME;
     deebug("defe", "setting volume to %d", volume);
     MP3Player.setVolume(volume);
 }
@@ -340,7 +342,7 @@ void Defe::dumpInfo() noexcept {
 #endif
 }
 
-const uint8_rc Defe::getPlaylistIndex() const noexcept {
+uint8_rc Defe::getPlaylistIndex() const noexcept {
     return folder-1;
 }
 
@@ -352,35 +354,35 @@ const char* Defe::getPlaylistName(uint8_rc specific_playlist) const noexcept {
     return (char*)PLAYLIST_NAMES[specific_playlist-1];
 }
 
-const uint8_rc Defe::getTrackNum() const noexcept {
+uint8_rc Defe::getTrackNum() const noexcept {
     return queue[track-1];
 }
 
-const uint8_rc Defe::getNumTracks() const noexcept {
+uint8_rc Defe::getNumTracks() const noexcept {
     return num_tracks;
 }
 
-const uint8_rc Defe::getVolume() const noexcept {
+uint8_rc Defe::getVolume() const noexcept {
     return volume;
 }
 
-const uint8_rc Defe::getNumPlaylists() const noexcept {
+uint8_rc Defe::getNumPlaylists() const noexcept {
     return NUM_PLAYLISTS;
 }
 
-const uint8_rc Defe::isPlaying() const noexcept {
+uint8_rc Defe::isPlaying() const noexcept {
     return playing_p;
 }
 
-const uint8_rc Defe::isStopped() const noexcept {
+uint8_rc Defe::isStopped() const noexcept {
     return stopped_p;
 }
 
-const uint8_rc Defe::isOnRepeat() const noexcept {
+uint8_rc Defe::isOnRepeat() const noexcept {
     return repeat_p;
 }
 
-const uint8_rc Defe::isOnShuffle() const noexcept {
+uint8_rc Defe::isOnShuffle() const noexcept {
     return shuffle_p;
 }
 

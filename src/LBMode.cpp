@@ -9,7 +9,7 @@ const char* LBMode::getModeName() const {
     return mode_name;
 }
 
-const bool LBMode::isAudioNeeder() const {
+bool LBMode::isAudioNeeder() const {
     return false;
 }
 

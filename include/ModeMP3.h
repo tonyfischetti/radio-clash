@@ -16,7 +16,7 @@ class ModeMP3 final : public LBMode {
         ModeMP3(Defe&, Sixteen&, AudioController&) noexcept;
 
         const char* getModeName()  const noexcept override;
-        const bool isAudioNeeder() const noexcept override;
+        bool isAudioNeeder() const noexcept override;
 
         void resume()             noexcept;
         uint8_rc engage()         noexcept override;

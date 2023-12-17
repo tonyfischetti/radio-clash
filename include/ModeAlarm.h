@@ -28,7 +28,7 @@ class ModeAlarm final : public LBMode {
         uint8_rc remCircleRight()         noexcept override;
         uint8_rc display()                noexcept override;
 
-        const uint8_rc isSounding() const noexcept;
+        uint8_rc isSounding()       const noexcept;
         void soundAlarm()                 noexcept;
         void turnOffAlarm()               noexcept;
 

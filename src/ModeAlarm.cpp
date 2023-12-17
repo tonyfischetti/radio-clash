@@ -48,7 +48,7 @@ uint8_rc ModeAlarm::tick() {
     return 0;
 }
 
-const uint8_rc ModeAlarm::isSounding() const {
+uint8_rc ModeAlarm::isSounding() const {
     return alarm_sounding_p;
 }
 

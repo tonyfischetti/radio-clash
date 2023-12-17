@@ -47,18 +47,18 @@ class Defe {
         void manage()                       noexcept;
         void dumpInfo()                     noexcept;
 
-        const uint8_rc getPlaylistIndex()     const noexcept;
+        uint8_rc getPlaylistIndex()     const noexcept;
         const char* getPlaylistName()         const noexcept;
         const char* getPlaylistName(uint8_rc) const noexcept;
-        const uint8_rc getTrackNum()          const noexcept;
-        const uint8_rc getNumTracks()         const noexcept;
-        const uint8_rc getVolume()            const noexcept;
-        const uint8_rc getNumPlaylists()      const noexcept;
+        uint8_rc getTrackNum()          const noexcept;
+        uint8_rc getNumTracks()         const noexcept;
+        uint8_rc getVolume()            const noexcept;
+        uint8_rc getNumPlaylists()      const noexcept;
 
-        const uint8_rc isPlaying()     const noexcept;
-        const uint8_rc isStopped()     const noexcept;
-        const uint8_rc isOnRepeat()    const noexcept;
-        const uint8_rc isOnShuffle()   const noexcept;
+        uint8_rc isPlaying()     const noexcept;
+        uint8_rc isStopped()     const noexcept;
+        uint8_rc isOnRepeat()    const noexcept;
+        uint8_rc isOnShuffle()   const noexcept;
 
     private:
         const uint8_rc NUM_PLAYLISTS;

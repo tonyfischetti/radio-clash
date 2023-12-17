@@ -28,7 +28,7 @@ const char* ModeWebRadio::getModeName() const {
     return mode_name;
 }
 
-const bool ModeWebRadio::isAudioNeeder() const {
+bool ModeWebRadio::isAudioNeeder() const {
     return true;
 }
 

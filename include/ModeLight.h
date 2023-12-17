@@ -15,7 +15,7 @@ class ModeLight final : public LBMode {
         ModeLight(Phos&, Sixteen&) noexcept;
 
         const char* getModeName()  const noexcept override;
-        const bool isAudioNeeder() const noexcept override;
+        bool isAudioNeeder() const noexcept override;
 
         uint8_rc engage()  noexcept override;
         uint8_rc suspend() noexcept override;

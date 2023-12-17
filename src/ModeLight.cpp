@@ -11,7 +11,7 @@ const char* ModeLight::getModeName() const {
     return mode_name;
 }
 
-const bool ModeLight::isAudioNeeder() const {
+bool ModeLight::isAudioNeeder() const {
     return false;
 }
 

@@ -25,7 +25,7 @@ class ModeWebRadio final : public LBMode {
                      const uint8_rc, AudioController&) noexcept;
 
         const char* getModeName()  const noexcept override;
-        const bool isAudioNeeder() const noexcept override;
+        bool isAudioNeeder() const noexcept override;
 
         uint8_rc init()           noexcept;
         uint8_rc engage()         noexcept override;

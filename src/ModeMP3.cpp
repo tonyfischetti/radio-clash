@@ -14,7 +14,7 @@ const char* ModeMP3::getModeName() const {
     return mode_name;
 }
 
-const bool ModeMP3::isAudioNeeder() const {
+bool ModeMP3::isAudioNeeder() const {
     return true;
 }
 
