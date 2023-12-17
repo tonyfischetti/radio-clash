@@ -53,8 +53,6 @@
 #include "deebug.hpp"
 #include "common.h"
 
-#include <WiFi.h>
-
 #include <elapsedMillis.h>
 #include <VS1053.h>
 
@@ -79,7 +77,6 @@
 #include "net_secrets.h"
 #include "web_station_registry.h"
 #include "playlist_names.h"
-// #include "remote_commands.h"
 
 
 

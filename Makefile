@@ -334,8 +334,11 @@ COMPCMDC 	= @$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 
 MCCOMMON 	 := $(INCDIR)/deebug.hpp $(INCDIR)/common.h
 IRDEPS 		 := $(INCDIR)/remote_commands.h $(INCDIR)/remote_codes.h $(INCDIRcntrb)/IRremote.hpp $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
-ABSTRACTDEPS := $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h
-TIMEOUTDEPS  := $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h 
+ABSTRACTDEPS := $(BUILDDIR)/LBMode.o
+TIMEOUTDEPS  := $(BUILDDIR)/Timeout.o
+SIXTEENDEPS  := $(BUILDDIR)/Sixteen.o
+TIMEDEPS     := $(BUILDDIR)/RTC_DS3231.o $(BUILDDIR)/RTClib.o $(BUILDDIR)/TickTockClock.o
+WIFIDEPS 	 := $(INCDIR)/WifiCredential.h $(INCDIR)/WebStation.h $(BUILDDIR)/SPI.o $(BUILDDIR)/WiFi.o build/WiFiClient.o
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/%.h $(MCCOMMON)
 	$(COMPINFO)
@@ -345,13 +348,24 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(MCCOMMON)
 	$(COMPINFO)
 	$(COMPCMDCXX)
 
+$(BUILDDIR)/Alarm.o: 		$(SIXTEENDEPS) $(TIMEDEPS)
+$(BUILDDIR)/Amber.o: 		$(BUILDDIR)/Adafruit_LEDBackpack.o $(TIMEDEPS)
+$(BUILDDIR)/Defe.o: 		$(BUILDDIR)/DFPlay.o
+$(BUILDDIR)/Kerl.o: 		$(WIFIDEPS)
+$(BUILDDIR)/LBMode.o: 		$(TIMEOUTDEPS)
 $(BUILDDIR)/Mick.o: 		$(IRDEPS)
-$(BUILDDIR)/ModeLight.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
-$(BUILDDIR)/ModeWebRadio.o: $(TIMEOUTDEPS)
-$(BUILDDIR)/ModeAlarm.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
-$(BUILDDIR)/ModeMP3.o: 		$(ABSTRACTDEPS) $(TIMEOUTDEPS)
-$(BUILDDIR)/ModeTime.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
-$(BUILDDIR)/radio-clash.o: 	$(IRDEPS) $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h
+$(BUILDDIR)/ModeAlarm.o: 	$(INCDIRcntrb)/elapsedMillis.h $(BUILDDIR)/Alarm.o $(TIMEDEPS) $(BUILDDIR)/Defe.o $(BUILDDIR)/AudioController.o
+### SKIPPING ModeLight FOR NOW
+$(BUILDDIR)/ModeMP3.o: 		$(BUILDDIR)/Defe.o $(BUILDDIR)/AudioController.o
+$(BUILDDIR)/ModeTime.o: 	$(INCDIRcntrb)/elapsedMillis.h $(TIMEDEPS)
+$(BUILDDIR)/ModeWebRadio.o: $(BUILDDIR)/VS1053.o $(BUILDDIR)/Kerl.o $(INCDIR)/WebStation.h
+### SKIPPING Phos FOR NOW
+$(BUILDDIR)/TickTockClock.o:$(BUILDDIR)/RTClib.o
+
+$(BUILDDIR)/radio-clash.o: 	$(IRDEPS) $(BUILDDIR)/VS1053.o $(BUILDDIR)/Sixteen.o $(BUILDDIR)/Recoder.o $(BUILDDIR)/Mick.o $(BUILDDIR)/Kerl.o $(BUILDDIR)/TickTockClock.o $(BUILDDIR)/Defe.o $(BUILDDIR)/Alarm.o $(BUILDDIR)/AudioController.o $(BUILDDIR)/Amber.o $(BUILDDIR)/Phos.o $(BUILDDIR)/LBMode.o $(BUILDDIR)/ModeMP3.o $(BUILDDIR)/ModeTime.o $(BUILDDIR)/ModeAlarm.o $(BUILDDIR)/ModeWebRadio.o $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h
+
+# all modes depend on abstract interface (LBMode), Sixteen, and Timeout
+$(BUILDDIR)/ModeLight.o $(BUILDDIR)/ModeWebRadio.o $(BUILDDIR)/ModeAlarm.o $(BUILDDIR)/ModeMP3.o $(BUILDDIR)/ModeTime.o: $(ABSTRACTDEPS) $(TIMEOUTDEPS) $(SIXTEENDEPS)
 
 
 
@@ -371,9 +385,17 @@ $(BUILDDIR)/%.o: $(SRCDIRcntrb)/%.c
 	$(COMPINFO)
 	$(COMPCMDC)
 
-$(BUILDDIR)/VS1053.o: $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
-$(BUILDDIR)/Sixteen.o: $(INCDIRcntrb)/LiquidCrystal_I2C.h $(SRCDIRcntrb)/LiquidCrystal_I2C.cpp
+build/Adafruit_LEDBackpack.o: build/Adafruit_GFX.o build/Adafruit_I2CDevice.o
+build/Adafruit_GFX.o: build/Adafruit_I2CDevice.o build/Adafruit_SPIDevice.o $(INCDIRcntrb)/gfxfont.h
 
+$(BUILDDIR)/RTC_DS3231.o: $(BUILDDIR)/RTClib.o
+$(BUILDDIR)/RTClib.o: build/Adafruit_I2CDevice.o
+(BUILDDIR)/VS1053.o: $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
+$(BUILDDIR)/Sixteen.o: build/LiquidCrystal_I2C.o
+
+# WHAT USES include/Adafruit_BusIO_Register.h ??!!
+# or include/Adafruit_I2CRegister.h ??!! (depands on above)
+# or include/Adafruit_GrayOLED.h
 
 
 #################################
