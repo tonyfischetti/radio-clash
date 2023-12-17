@@ -184,7 +184,7 @@ uint8_rc ModeWebRadio::remVolumeUp() {
 }
 
 uint8_rc ModeWebRadio::remVolumeDown() {
-    deebug("MWR", "volume down");
+    deebug("web radio mode", "volume down");
     if (volume == 0)
         return 1;
     deebug("web radio mode", "turning volume down");

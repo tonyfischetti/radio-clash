@@ -206,7 +206,8 @@ static ModeWebRadio      webradio_mode(vica, kerl, sixteen, WEB_STATIONS,
  * MUTABLE GLOBALS                                                      */
 
 // holds pointers to all available mode objects
-static LBMode *M[NUM_MODES] = { &mp3_mode, &time_mode, &alarm_mode, &webradio_mode };
+static LBMode *M[NUM_MODES] = { &mp3_mode, &time_mode,
+                                &alarm_mode, &webradio_mode };
 
 // holds the index of the current active mode
 static uint8_rc CMI {INDEX_MP3};
@@ -239,7 +240,7 @@ static elapsedMillis alarm_timer;
  * (SOME) PROTOTYPES                                                    */
 
 uint8_rc analog_changed_sufficiently_p(const uint8_t, const uint8_t,
-                                      const uint8_rc) noexcept;
+                                       const uint8_rc) noexcept;
 
 void change_mode(const uint8_rc new_index) noexcept;
 
@@ -361,8 +362,8 @@ void update_ir() noexcept {
 }
 
 void update_rotary_encoder() noexcept {
-    const REEvent mres = recoder.readMovement();
-    const REEvent bres = recoder.readButton();
+    const REEvent mres { recoder.readMovement() };
+    const REEvent bres { recoder.readButton() };
     // movement
     switch (mres) {
         case REEvent::RECODER_CW:
