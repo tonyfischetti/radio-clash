@@ -34,33 +34,19 @@ ELFSIZE  	:= $(ESPMAINROOT)/tools/xtensa-esp32-elf/bin/xtensa-esp32-elf-size
 # TODO: should have CFLAGS? -std=gnu99
 
 COMMONCSTARFLAGS := -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DHAVE_CONFIG_H -DUNITY_INCLUDE_CONFIG_H -DWITH_POSIX -D_GNU_SOURCE -DIDF_VER=\"v4.4.3\" -DESP_PLATFORM -D_POSIX_READER_WRITER_LOCKS -DF_CPU=240000000L -DARDUINO=10605 -DARDUINO_Node32s -DARDUINO_ARCH_ESP32 -DARDUINO_BOARD=\"Node32s\" -DARDUINO_VARIANT=\"node32s\" -DARDUINO_PARTITION_default -DESP32 -DCORE_DEBUG_LEVEL=0 -DARDUINO_USB_CDC_ON_BOOT=0
-# COMMONCSTARFLAGS += 
+COMMONCSTARFLAGS += -fno-exceptions -fno-unwind-tables -Wno-frame-address -ffunction-sections -fdata-sections -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=deprecated-declarations -Wno-unused-parameter -Wno-sign-compare -freorder-blocks -Wwrite-strings -fstack-protector -fstrict-volatile-bitfields -Wno-error=unused-but-set-variable -fno-jump-tables -fno-tree-switch-conversion -fno-rtti -mlongcalls
+WARNCFLAGS  := -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wunreachable-code -Wmissing-braces -Wnormalized -Wreturn-local-addr -Wuninitialized -Wswitch-enum -Wswitch
+WARNCXXFLAGS:= $(WARNCFLAGS) -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wunreachable-code -Weffc++ -Wmissing-braces -Wnon-virtual-dtor -Wnormalized -Wold-style-cast -Wreturn-local-addr -Wsuggest-final-types -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign -Wuninitialized -Wswitch-enum -Wswitch
+#-Winline 
 
-CFLAGS    	:= -Wall -Os -w -c -std=gnu11 $(COMMONCSTARFLAGS)
-CXXFLAGS    := -Wall -Os -w -c -MMD $(COMMONCSTARFLAGS)
-CXXFLAGS    += -std=gnu++17 -ggdb ##### TRY OTHERS
+CFLAGS    	:= -Os -w -std=gnu11   $(COMMONCSTARFLAGS) $(WARNCFLAGS)
+CXXFLAGS    := -Os -std=gnu++17 $(COMMONCSTARFLAGS) $(WARNCXXFLAGS)
 ifeq ($(COMPTYPE), debug)
 	CXXFLAGS += -DDEBUG # -fsanitize=address -fsanitize=undefined DCORE_DEBUG_LEVEL=X???
 endif
-
 CXXFLAGS    += -DROTARY_REVERSED
 
-# some (most?) of these don't work
-CXXFLAGS    += -fno-exceptions -fno-unwind-tables -Wno-frame-address
-CXXFLAGS    += -ffunction-sections -fdata-sections -Wno-error=unused-function
-CXXFLAGS    += -Wno-error=unused-variable -Wno-error=deprecated-declarations
-CXXFLAGS    += -Wno-unused-parameter -Wno-sign-compare -freorder-blocks
-CXXFLAGS    += -Wwrite-strings -fstack-protector -fstrict-volatile-bitfields
-CXXFLAGS    += -Wno-error=unused-but-set-variable -fno-jump-tables
-CXXFLAGS    += -fno-tree-switch-conversion -fno-rtti -mlongcalls
 
-CXXFLAGSX   := -Wall -Wextra -Werror -Wpedantic -Wshadow
-CXXFLAGSX   += -Wconversion -Wsign-conversion -Wunreachable-code
-CXXFLAGSX   += -Weffc++ -Wmissing-braces -Wnon-virtual-dtor #-Winline
-CXXFLAGSX   += -Wnormalized -Wold-style-cast 
-CXXFLAGSX   += -Wreturn-local-addr -Wsuggest-final-types
-CXXFLAGSX   += -Wsuggest-override -Wvirtual-inheritance -Wvirtual-move-assign
-CXXFLAGSX   += -Wuninitialized -Wswitch-enum -Wswitch
 
 
 ESPSRCFILESROOT := $(ESPMAINROOT)cores/esp32/
@@ -143,8 +129,11 @@ createbuilddir:
 
 
 COMPINFO 	= $(info [*] compiling		{ $@ })
-COMPCMDCXX 	= @$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-COMPCMDC 	= @$(CC) -c -o $@ $< $(CFLAGS) $(CXXFLAGS) $(CPPFLAGS)
+
+COMPCMDC 	= @$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+# COMPCMDMAIN = @$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS) !!!!!!!!!!!!!!!!!!
+COMPCMDMAIN = @$(CXX) -c -w -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+COMPCMDCXX  = @$(CXX) -c -w -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
 
 #################################
 ##          main code          ##
@@ -160,11 +149,11 @@ WIFIDEPS 	 := $(INCDIR)/WifiCredential.h $(INCDIR)/WebStation.h $(BUILDDIR)/SPI.
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/%.h $(MCCOMMON)
 	$(COMPINFO)
-	$(COMPCMDCXX)
+	$(COMPCMDMAIN)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(MCCOMMON)
 	$(COMPINFO)
-	$(COMPCMDCXX)
+	$(COMPCMDMAIN)
 
 $(BUILDDIR)/Alarm.o: 		$(SIXTEENDEPS) $(TIMEDEPS)
 $(BUILDDIR)/Amber.o: 		$(BUILDDIR)/Adafruit_LEDBackpack.o $(TIMEDEPS)
