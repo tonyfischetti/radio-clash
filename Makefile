@@ -1,7 +1,7 @@
 
 .DELETE_ON_ERROR:
 
-COMPTYPE  := debug
+COMPTYPE  	:= debug
 
 HOME 		:= /home/tony
 
@@ -27,7 +27,7 @@ ELFSIZE  	:= $(ESPMAINROOT)/tools/xtensa-esp32-elf/bin/xtensa-esp32-elf-size
 # --------------------------------------------------------------- #
 
 .PHONY: all clean mrproper dist check test install begin help done verify \
-	    size flash monitor
+	    size flash monitor createbuilddir
 
 # --------------------------------------------------------------- #
 
@@ -297,12 +297,10 @@ OBJS := $(addsuffix .o, $(addprefix $(BUILDDIR)/, $(MOS)))
 # --------------------------------------------------------------- #
 
 
-all: begin $(COREOBJS) $(OBJS) $(BUILDDIR)/arduino.ar $(BUILDDIR)/user_obj.ar \
-	 $(BUILDDIR)/radio-clash.elf $(BUILDDIR)/radio-clash.partitions.bin \
-	 $(BUILDDIR)/radio-clash.bin \
-	 $(BUILDDIR)/radio-clash.bootloader.bin \
-	 size \
-	 done
+all: begin createbuilddir $(COREOBJS) $(OBJS) $(BUILDDIR)/arduino.ar \
+	 $(BUILDDIR)/user_obj.ar $(BUILDDIR)/radio-clash.elf \
+	 $(BUILDDIR)/radio-clash.partitions.bin $(BUILDDIR)/radio-clash.bin \
+	 $(BUILDDIR)/radio-clash.bootloader.bin size done
 
 
 begin:
@@ -321,51 +319,39 @@ flash: $(BUILDDIR)/radio-clash.bootloader.bin $(BUILDDIR)/radio-clash.partitions
 monitor:
 	$(PYTHON3) -m serial.tools.miniterm --rts=0 --dtr=0 $(TTY) $(BAUDRATE)
 
+createbuilddir:
+	@mkdir -p $(BUILDDIR)
+
+
+COMPINFO 	= $(info [*] compiling		{ $@ })
+COMPCMDCXX 	= @$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+COMPCMDC 	= @$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
 
 
 #################################
 ##          main code          ##
 #################################
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/%.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+MCCOMMON 	 := $(INCDIR)/deebug.hpp $(INCDIR)/common.h
+IRDEPS 		 := $(INCDIR)/remote_commands.h $(INCDIR)/remote_codes.h $(INCDIRcntrb)/IRremote.hpp $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
+ABSTRACTDEPS := $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h
+TIMEOUTDEPS  := $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h 
 
-$(BUILDDIR)/Mick.o: $(SRCDIR)/Mick.cpp $(INCDIR)/Mick.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h $(INCDIR)/remote_commands.h $(INCDIR)/remote_codes.h $(INCDIRcntrb)/IRremote.hpp $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/%.h $(MCCOMMON)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
-$(BUILDDIR)/ModeLight.o: $(SRCDIR)/ModeLight.cpp $(INCDIR)/ModeLight.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(MCCOMMON)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
-$(BUILDDIR)/ModeWebRadio.o: $(SRCDIR)/ModeWebRadio.cpp $(INCDIR)/ModeWebRadio.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-
-$(BUILDDIR)/ModeAlarm.o: $(SRCDIR)/ModeAlarm.cpp $(INCDIR)/ModeAlarm.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-
-$(BUILDDIR)/ModeMP3.o: $(SRCDIR)/ModeMP3.cpp $(INCDIR)/ModeMP3.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-
-$(BUILDDIR)/ModeTime.o: $(SRCDIR)/ModeTime.cpp $(INCDIR)/ModeTime.h $(SRCDIR)/LBMode.cpp $(INCDIR)/LBMode.h $(SRCDIR)/Timeout.cpp $(INCDIR)/Timeout.h $(INCDIR)/deebug.hpp $(INCDIR)/common.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
-
-$(BUILDDIR)/radio-clash.o: $(SRCDIR)/radio-clash.cpp $(INCDIR)/deebug.hpp $(INCDIR)/common.h $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h $(INCDIR)/remote_commands.h $(INCDIRcntrb)/IRremoteInt.h $(INCDIRcntrb)/digitalWriteFast.h $(INCDIRcntrb)/private/IRTimer.hpp $(INCDIRcntrb)/IRFeedbackLED.hpp $(INCDIRcntrb)/LongUnion.h $(INCDIRcntrb)/IRProtocol.hpp $(INCDIRcntrb)/IRReceive.hpp $(INCDIRcntrb)/IRSend.hpp $(INCDIRcntrb)/ir_BangOlufsen.hpp $(INCDIRcntrb)/ir_BoseWave.hpp $(INCDIRcntrb)/ir_Denon.hpp $(INCDIRcntrb)/ir_JVC.hpp $(INCDIRcntrb)/ir_Kaseikyo.hpp $(INCDIRcntrb)/ir_Lego.hpp $(INCDIRcntrb)/ir_LG.hpp $(INCDIRcntrb)/ir_MagiQuest.hpp $(INCDIRcntrb)/ir_NEC.hpp $(INCDIRcntrb)/ir_RC5_RC6.hpp $(INCDIRcntrb)/ir_Samsung.hpp $(INCDIRcntrb)/ir_Sony.hpp $(INCDIRcntrb)/ir_FAST.hpp $(INCDIRcntrb)/ir_Others.hpp $(INCDIRcntrb)/ir_Pronto.hpp $(INCDIRcntrb)/ir_DistanceWidthProtocol.hpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CXXFLAGSX) $(CPPFLAGS)
+$(BUILDDIR)/Mick.o: 		$(IRDEPS)
+$(BUILDDIR)/ModeLight.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
+$(BUILDDIR)/ModeWebRadio.o: $(TIMEOUTDEPS)
+$(BUILDDIR)/ModeAlarm.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
+$(BUILDDIR)/ModeMP3.o: 		$(ABSTRACTDEPS) $(TIMEOUTDEPS)
+$(BUILDDIR)/ModeTime.o: 	$(ABSTRACTDEPS) $(TIMEOUTDEPS)
+$(BUILDDIR)/radio-clash.o: 	$(IRDEPS) $(INCDIR)/net_secrets.h $(INCDIR)/web_station_registry.h $(INCDIR)/playlist_names.h
 
 
 
@@ -373,30 +359,20 @@ $(BUILDDIR)/radio-clash.o: $(SRCDIR)/radio-clash.cpp $(INCDIR)/deebug.hpp $(INCD
 ## contrib Arduino lib sources ##
 #################################
 
-$(BUILDDIR)/%.o: %.cpp %.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+$(BUILDDIR)/%.o: $(SRCDIRcntrb)/%.cpp $(INCDIRcntrb)/%.h
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
-$(BUILDDIR)/%.o: %.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+$(BUILDDIR)/%.o: $(SRCDIRcntrb)/%.cpp
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
-$(BUILDDIR)/%.o: %.c
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+$(BUILDDIR)/%.o: $(SRCDIRcntrb)/%.c
+	$(COMPINFO)
+	$(COMPCMDC)
 
-$(BUILDDIR)/VS1053.o: $(SRCDIRcntrb)/VS1053.cpp $(INCDIRcntrb)/VS1053.h $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
-
-$(BUILDDIR)/Sixteen.o: $(SRCDIRcntrb)/Sixteen.cpp $(INCDIRcntrb)/Sixteen.h $(INCDIRcntrb)/LiquidCrystal_I2C.h $(SRCDIRcntrb)/LiquidCrystal_I2C.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+$(BUILDDIR)/VS1053.o: $(INCDIRcntrb)/ConsoleLogger.h $(INCDIRcntrb)/patches/vs1053b-patches.h
+$(BUILDDIR)/Sixteen.o: $(INCDIRcntrb)/LiquidCrystal_I2C.h $(SRCDIRcntrb)/LiquidCrystal_I2C.cpp
 
 
 
@@ -405,34 +381,28 @@ $(BUILDDIR)/Sixteen.o: $(SRCDIRcntrb)/Sixteen.cpp $(INCDIRcntrb)/Sixteen.h $(INC
 #################################
 
 $(BUILDDIR)/%.o: $(ESPSRCFILESROOT)/%.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
 $(BUILDDIR)/%.o: $(ESPSRCFILESROOT)/%.c
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDC)
 
 $(BUILDDIR)/%.o: $(ESPSRCFILESROOT)/libb64/%.c
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CC) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDC)
 
 $(BUILDDIR)/%.o: $(ESPMAINROOT)/libraries/Wire/src/%.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
 $(BUILDDIR)/%.o: $(ESPMAINROOT)/libraries/WiFi/src/%.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
 $(BUILDDIR)/%.o: $(ESPMAINROOT)/libraries/SPI/src/%.cpp
-	@mkdir -p $(BUILDDIR)
-	$(info [*] compiling		{ $@ })
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) $(CPPFLAGS)
+	$(COMPINFO)
+	$(COMPCMDCXX)
 
 
 
